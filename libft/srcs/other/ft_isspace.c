@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tuple_list.c                                       :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 14:51:08 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/04 15:38:20 by krwongwa         ###   ########.fr       */
+/*   Created: 2024/03/04 01:12:27 by jikarunw          #+#    #+#             */
+/*   Updated: 2024/03/04 01:13:35 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./header/minishell.h"
+#include "../../includes/libft.h"
 
-
-void	print_tuple(t_tuple *data)
+int	ft_isspace(char c)
 {
-	while (data != NULL)
-	{
-		dprintf(2, "%s=%s\n",data->key, data->value);
-		data = data->next;
-	}
+	return (c == ' ' || ((unsigned char)c >= 9 && (unsigned char)c <= 13));
 }

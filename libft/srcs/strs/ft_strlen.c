@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ltuple_list.c                                      :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 14:51:08 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/04 14:53:54 by krwongwa         ###   ########.fr       */
+/*   Created: 2023/08/23 23:26:53 by jikarunw          #+#    #+#             */
+/*   Updated: 2024/02/04 15:59:13 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-
-void	print_tuple(t_tuple *data)
+size_t	ft_strlen(const char *str)
 {
-	while (data != NULL)
-	{
-		dprintf(2, "Key is %s Value is %s\n");
-		data = data->next;
-	}
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }
