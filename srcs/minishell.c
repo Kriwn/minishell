@@ -3,45 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/06 23:40:58 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:43:46 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-char	*ft_readline()
+char	*ft_readline(t_env *var)
 {
 	char	*input;
 	char	*promt;
 
-	promt = getcwd(NULL, 0);
+	promt = get_promt(var);
 	input = readline(promt);
-	// add_history(input);
+	if (promt)
+		free(promt);
+	add_history(input);
 	return (input);
 }
 
-// -lreadline
-// int	main(int ac,char **av,char **env)
-// {
-// 	t_env	var;
-// 	char	*input;
-
-// 	var.tuple = NULL;
-// 	// init_minishell()
-// 	init_tuple(&var.tuple, env);
-// 	print_tuple(var.tuple);
-// 	// while (1)
-// 	// {
-// 	// 	input = ft_readline();
-// 	// }
-// 	return (0);
-// }
-
-int	main(void)
+int	main(int ac,char **av,char **env)
 {
-	
+	t_env	var;
+	char	*input;
+
+	init_minishell(&var, env);
+	while (1)
+	{
+		input = ft_readline(&var);
+		if (input)
+			free(input);
+		if (input == NULL)
+			break;
+	}
+	ft_free(&var);
+	print_tuple(var.tuple);
+	rl_clear_history();
 	return (0);
 }
