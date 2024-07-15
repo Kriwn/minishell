@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tuple_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:51:08 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/06 22:10:11 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:20:02 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,76 @@ void	print_tuple(t_tuple *data)
 {
 	while (data != NULL)
 	{
-		dprintf(2, "Key is %s Value is %s\n");
+		dprintf(2, "Key is %s Value is %s\n",data->key,data->value);
 		data = data->next;
 	}
+}
+
+char	*get_value_from_key(t_tuple *data,char *key)
+{
+	char	*value;
+
+	value = NULL;
+	while (data)
+	{
+		if (!ft_strncmp(data->key, key, ft_strlen(key)))
+			value = data->value;
+		data = data->next;
+	}
+	return (value);
+}
+
+void	updata_value_from_key(t_tuple *data, char *key, char *new_value)
+{
+	while (data)
+	{
+		if (!ft_strncmp(data->key, key, ft_strlen(key)))
+		{
+			free(data->value);
+			data->value = new_value;
+		}
+		data = data->next;
+	}
+}
+
+void	remove_tuple(t_tuple **data, char *key)
+{
+	t_tuple *cur;
+	t_tuple	*temp;
+
+	cur = *data;
+	temp = NULL;
+	while (cur)
+	{
+		if (!ft_strncmp(cur->key, key, ft_strlen(key)))
+		{
+			if (temp == NULL)  // head
+				*data = cur->next;
+			else if (cur->next == NULL) // tail
+				(*data)->tail = temp;
+			else
+				temp->next = cur->next;
+			free(cur->key);
+			free(cur->value);
+		}
+		temp = *data;
+		cur = cur->next;
+	}
+}
+
+void	clear_tuple(t_tuple **data)
+{
+	t_tuple *cur;
+	t_tuple	*temp;
+
+	cur = *data;
+	while (cur)
+	{
+		temp = cur;
+		cur = cur->next;
+		free(temp->key);
+		free(temp->value);
+		free(temp);
+	}
+	*data = NULL;
 }

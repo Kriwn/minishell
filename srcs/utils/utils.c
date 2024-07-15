@@ -6,42 +6,22 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/04 14:32:14 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:15:19 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	ft_strlen(const char *s)
+void	ft_free(t_env *data)
 {
-	size_t	count;
-
-	count = 0;
-	if (!s)
-		return (count);
-	while (s[count])
-		count++;
-	return (count);
+	data->home_path = NULL;
+	clear_tuple(&data->tuple);
+	print_tuple(data->tuple);
 }
 
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
+void	ft_error(t_env *data,char *word)
 {
-	size_t	i;
-	size_t	j;
-
-	if (!dst && !src)
-		return (0);
-	if (size == 0)
-		return (ft_strlen(src));
-	j = 0;
-	i = ft_strlen(dst);
-	if (size <= ft_strlen(dst))
-		return (ft_strlen(src) + size);
-	while (src[j] && i + j + 1 < size)
-	{
-		dst[i + j] = src[j];
-		j++;
-	}
-	dst[i + j] = '\0';
-	return (i + ft_strlen(src));
+	dprintf(2,"%s",word);
+	ft_free(data);
+	exit(1);
 }

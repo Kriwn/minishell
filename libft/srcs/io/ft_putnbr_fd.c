@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 15:40:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/03/11 11:15:24 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:41:27 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_putnbr_fd(int n, int fd)
 	length = 0;
 	while (n != 0)
 	{
-		str[length++] = '0' + ft_abs(n % 10);
+		str[length++] = '0' + n % 10;
 		n = (n / 10);
 	}
 	if (is_neg)

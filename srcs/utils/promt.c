@@ -1,43 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exe.h                                              :+:      :+:    :+:   */
+/*   promt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/06 22:08:15 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/14 21:27:02 by krwongwa         ###   ########.fr       */
+/*   Created: 2024/07/14 21:17:02 by krwongwa          #+#    #+#             */
+/*   Updated: 2024/07/15 16:19:35 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXE_H
-# define EXE_H
+#include "minishell.h"
 
-typedef struct tuple
+char	*get_promt(t_env *data)
 {
-	char		*key;
-	char		*value;
-	struct	tuple *next;
-	struct	tuple *tail;
-} t_tuple;
+	char	*ans;
+	char	*temp;
 
-typedef struct p_pipe
-{
-	int		*process_pid;
-	int		status_pid;
-	char	**env;
-	char	**path;
-	char	*cmd;
-	int		fd_in;
-	int		fd_out;
-}	t_p;
-
-typedef struct	e_env
-{
-	t_tuple	*tuple;
-	char	**env;
-	char	*home_path;
-	int		code;
-}	t_env;
-
-#endif
+	ans = ft_pwd(data->tuple);
+	temp = ft_strjoin(ans, " ");
+	ans = temp;
+	temp = ft_itoa(data->code);
+	ans = ft_strjoin(ans, temp);
+	free(temp);
+	temp = ft_strjoin(ans, "$ ");
+	ans = temp;
+	return (ans);
+}
