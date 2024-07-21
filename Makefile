@@ -23,7 +23,11 @@ BUILDIN_DIR = srcs/buildin/
 BUILDIN_FILE = ft_pwd.c
 BUILDIN_SRC = $(addprefix $(BUILDIN_DIR), $(BUILDIN_FILE))
 
-SRC = $(UTILS_SRC) $(INIT_SRC) $(BUILDIN_SRC) ./srcs/minishell.c
+PARSER_DIR = srcs/parser/
+PARSER_FILE = parser.c
+PARSER_SRC = $(addprefix $(PARSER_DIR), $(PARSER_FILE))
+
+SRC = $(UTILS_SRC) $(INIT_SRC) $(BUILDIN_SRC) $(PARSER_SRC) ./srcs/minishell.c
 
 OBJ = $(SRC:$(PATH_SRCS)/%.c=$(OBJ_DIR)/%.o)
 

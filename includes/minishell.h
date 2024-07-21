@@ -11,15 +11,13 @@
 # include "exe.h"
 # include "parser.h"
 
-
-/***************************
- * SRCS/BUILDIN/FT_PWD.C ***
- ***************************/
+/*************************
+ * SRCS/BUILDIN/FT_PWD.C *
+ *************************/
 char	*ft_pwd(t_tuple *list);
 
-
 /***************************
- * SRCS/utils/TUPLE_LIST.C *
+ * SRCS/UTILS/TUPLE_LIST.C *
  ***************************/
 void	print_tuple(t_tuple *data);
 char	*get_value_from_key(t_tuple *data,char *key);
@@ -27,15 +25,15 @@ void	updata_value_from_key(t_tuple *data, char *key, char *new_value);
 void	remove_tuple(t_tuple **data, char *key);
 void	clear_tuple(t_tuple **data);
 
-/***************************
- * SRCS/utils/utils.C ******
- ***************************/
+/**********************
+ * SRCS/UTILS/UTILS.C *
+ **********************/
 void	ft_free(t_env *data);
 void	ft_error(t_env *data,char *word);
 
-/***************************
- * SRCS/utils/PRIMT.C ******
- ***************************/
+/**********************
+ * SRCS/UTILS/PROMT.C *
+ **********************/
 char	*get_promt(t_env *data);
 
 /******************************
@@ -48,5 +46,15 @@ void	init_minishell(t_env *data, char **env);
  **************************/
 int	init_tuple(t_tuple **data,char **env);
 void	*make_tuple(t_tuple *new_node,char *str,char c);
+
+/************************
+ * SRCS/PARSER/PARSER.C *
+ ************************/
+int		check_pipe(char *input);
+
+/****************************
+ * SRCS/PARSER/PARSER_UTILS *
+ ****************************/
+char	**ft_split_pipe(char *str);
 
 #endif
