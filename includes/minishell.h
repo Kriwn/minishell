@@ -6,8 +6,8 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <signal.h>
 # include "../libft/includes/libft.h"
-
 # include "exe.h"
 # include "parser.h"
 

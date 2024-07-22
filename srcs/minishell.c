@@ -6,11 +6,13 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/15 17:43:46 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:39:17 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static volatile sig_atomic_t g_signal;
 
 char	*ft_readline(t_env *var)
 {
