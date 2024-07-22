@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/21 23:20:03 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/22 23:02:12 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int ac,char **av,char **env)
 		if (input)
 			free(input);
 		if (input == NULL)
-			break;
+			break ;
 	}
 	ft_free(&var);
 	print_tuple(var.tuple);
