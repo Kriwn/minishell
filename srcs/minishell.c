@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/22 14:39:17 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:47:30 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*ft_readline(t_env *var)
 
 	promt = get_promt(var);
 	input = readline(promt);
+	check_pipe(input);
 	if (promt)
 		free(promt);
 	add_history(input);
