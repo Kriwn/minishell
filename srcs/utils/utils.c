@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/15 17:15:19 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/07/23 13:11:49 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	ft_free(t_env *data)
 	print_tuple(data->tuple);
 }
 
-void	ft_error(t_env *data,char *word)
+void	ft_error(t_env *data, char *word)
 {
-	dprintf(2,"%s",word);
+	ft_putstr_fd(word, 2);
 	ft_free(data);
 	exit(1);
 }
