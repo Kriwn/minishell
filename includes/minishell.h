@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/22 12:29:57 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/26 16:49:50 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,19 @@ void	init_minishell(t_env *data, char **env);
 /**************************
  * SRCS/INIT/INIT_TUPLE.C *
  **************************/
-int	init_tuple(t_tuple **data,char **env);
+int		init_tuple(t_tuple **data,char **env);
 void	*make_tuple(t_tuple *new_node,char *str,char c);
 
 /************************
  * SRCS/PARSER/PARSER.C *
  ************************/
-int		check_pipe(char *input);
+char	*msh_get_input_cmd(char *input);
+int		msh_parsing(char *input);
 
 /****************************
  * SRCS/PARSER/PARSER_UTILS *
  ****************************/
-char	**ft_split_pipe(char *str);
+char	**msh_split_pipe(char *str);
+void	trim_first_space(char *input, t_token *token);
 
 #endif

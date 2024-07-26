@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/22 23:02:12 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:57:41 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char	*ft_readline(t_env *var)
 
 	promt = get_promt(var);
 	input = readline(promt);
-	check_pipe(input);
 	if (promt)
 		free(promt);
 	add_history(input);
@@ -29,12 +28,14 @@ char	*ft_readline(t_env *var)
 int	main(int ac,char **av,char **env)
 {
 	t_env	var;
+	t_token	token;
 	char	*input;
 
 	init_minishell(&var, env);
 	while (1)
 	{
 		input = ft_readline(&var);
+		parsing(input);
 		if (input)
 			free(input);
 		if (input == NULL)

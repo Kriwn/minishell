@@ -58,6 +58,9 @@ STRS_SRC =		strs/ft_atoi.c					\
 				strs/ft_tolower.c				\
 				strs/ft_toupper.c
 
+ADD_ON_SRC = 	add_on/ft_strcmp.c 				\
+				add_on/ft_abs.c
+
 GNL_SRC =		ft_gnl/get_next_line.c
 
 FT_PRINTF_SRC = ft_printf/ft_printf_char.c		\
@@ -68,10 +71,12 @@ FT_PRINTF_SRC = ft_printf/ft_printf_char.c		\
 				ft_printf/ft_printf_unit.c		\
 				ft_printf/ft_printf.c
 
+
 IO_SRCS = ${addprefix ${LOCAL_SRC_PATH}/, ${IO_SRC}}
 LSTS_SRCS = ${addprefix ${LOCAL_SRC_PATH}/, ${LSTS_SRC}}
 MEMS_SRCS = ${addprefix ${LOCAL_SRC_PATH}/, ${MEMS_SRC}}
 STRS_SRCS = ${addprefix ${LOCAL_SRC_PATH}/, ${STRS_SRC}}
+ADD_ON_SRCS = ${addprefix ${LOCAL_SRC_PATH}/, ${ADD_ON_SRC}}
 FT_PRINTF_SRCS = ${addprefix ${LOCAL_SRC_PATH}/, ${FT_PRINTF_SRC}}
 GNL_SRCS = ${addprefix ${LOCAL_SRC_PATH}/, ${GNL_SRC}}
 
@@ -79,6 +84,7 @@ IO_OBJS = $(patsubst ${LOCAL_SRC_PATH}/%.c, ${OBJ_DIR}/%.o, $(IO_SRCS))
 LSTS_OBJS = $(patsubst ${LOCAL_SRC_PATH}/%.c, ${OBJ_DIR}/%.o, $(LSTS_SRCS))
 MEMS_OBJS = $(patsubst ${LOCAL_SRC_PATH}/%.c, ${OBJ_DIR}/%.o, $(MEMS_SRCS))
 STRS_OBJS = $(patsubst ${LOCAL_SRC_PATH}/%.c, ${OBJ_DIR}/%.o, $(STRS_SRCS))
+ADD_ON_OBJS = $(patsubst ${LOCAL_SRC_PATH}/%.c, ${OBJ_DIR}/%.o, $(ADD_ON_SRCS))
 FT_PRINTF_OBJS = $(patsubst ${LOCAL_SRC_PATH}/%.c, ${OBJ_DIR}/%.o, $(FT_PRINTF_SRCS))
 GNL_OBJS = $(patsubst ${LOCAL_SRC_PATH}/%.c, ${OBJ_DIR}/%.o, $(GNL_SRCS))
 
@@ -87,8 +93,8 @@ CFLAGS =	-Wall -Wextra -Werror -I $(LOCAL_HEADER_PATH)
 
 all: $(NAME)
 
-$(NAME): $(IO_OBJS) $(LSTS_OBJS) $(MEMS_OBJS) $(STRS_OBJS) $(FT_PRINTF_OBJS) $(GNL_OBJS)
-	@ar rcs $(NAME) $(IO_OBJS) $(LSTS_OBJS) $(MEMS_OBJS) $(STRS_OBJS) $(FT_PRINTF_OBJS) $(GNL_OBJS)
+$(NAME): $(IO_OBJS) $(LSTS_OBJS) $(MEMS_OBJS) $(STRS_OBJS) $(ADD_ON_OBJS) $(FT_PRINTF_OBJS) $(GNL_OBJS)
+	@ar rcs $(NAME) $(IO_OBJS) $(LSTS_OBJS) $(MEMS_OBJS) $(STRS_OBJS) $(ADD_ON_OBJS) $(FT_PRINTF_OBJS) $(GNL_OBJS)
 	@echo "[$(COLOR_YELLOW)$(NAME) --> OK$(COLOR_RESET)]\n ${COLOR_GREEN}Success!${COLOR_RESET}"
 	@echo "$(COLOR_PINK)\tUsage: libft.a$(COLOR_RESET)"
 
