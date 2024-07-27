@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/27 17:48:59 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/07/28 01:22:45 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,6 @@ int	main(int ac, char **av, char **env)
 			free(input);
 		if (input == NULL)
 			break ;
-		check_pipe(input);
-		if (input)
-			free(input);
 	}
 	ft_free(&var);
 	print_tuple(var.tuple);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/26 16:49:50 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/28 01:18:57 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@
 # include <unistd.h>
 # include <signal.h>
 # include "../libft/includes/libft.h"
-# include "exe.h"
-# include "parser.h"
+# include <stdbool.h>
+
+# include "../libft/includes/libft.h"
+# include "./struct.h"
 
 /*************************
  * SRCS/BUILDIN/FT_PWD.C *
@@ -62,13 +64,13 @@ void	*make_tuple(t_tuple *new_node,char *str,char c);
 /************************
  * SRCS/PARSER/PARSER.C *
  ************************/
-char	*msh_get_input_cmd(char *input);
+char	*msh_input_cmd(char *input);
 int		msh_parsing(char *input);
 
 /****************************
  * SRCS/PARSER/PARSER_UTILS *
  ****************************/
-char	**msh_split_pipe(char *str);
+char	**msh_split_pipe(char *str, char c);
 void	trim_first_space(char *input, t_token *token);
 
 #endif
