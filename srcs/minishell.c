@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/23 13:19:16 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:23:59 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,16 @@ static volatile sig_atomic_t g_signal;
 void	check_signal(int signal)
 {
 
-	// dprintf(2, "check work\n");
 	if (signal ==  SIGINT && g_signal == 0)
 	{
 		rl_on_new_line();
-		write(1,"\n",1);
+		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_redisplay();
 		return ;
 	}
-	if (signal == SIGQUIT || signal == SIGTSTP)
+	if (signal == SIGQUIT)
 	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
 		rl_redisplay();
 		return ;
 	}
@@ -57,14 +54,13 @@ char	*ft_readline(t_env *var)
 
 	promt = get_promt(var);
 	input = readline(promt);
-	check_pipe(input);
 	if (promt)
 		free(promt);
 	add_history(input);
 	return (input);
 }
 
-int	main(int ac,char **av,char **env)
+int	main(int ac, char **av, char **env)
 {
 	t_env	var;
 	char	*input;
@@ -74,10 +70,11 @@ int	main(int ac,char **av,char **env)
 	while (1)
 	{
 		input = ft_readline(&var);
+		if (input == NULL)
+			break ;
+		check_pipe(input);
 		if (input)
 			free(input);
-		if (input == NULL)
-			break;
 	}
 	ft_free(&var);
 	print_tuple(var.tuple);
