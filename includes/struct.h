@@ -1,18 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exe.h                                              :+:      :+:    :+:   */
+/*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/06 22:08:15 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/14 21:27:02 by krwongwa         ###   ########.fr       */
+/*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
+/*   Updated: 2024/07/26 17:45:52 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXE_H
-# define EXE_H
+#ifndef STRCUT_H
+# define STRCUT_H
 
+#include "./minishell.h"
+
+/***************
+ * PARSER TYPE *
+ ***************/
+typedef struct s_token
+{
+	char	*input_cmd;
+	char	**cmd;
+	int		code_out;
+}	t_token;
+
+/******************
+ * EXECUTION TYPE *
+ ******************/
 typedef struct tuple
 {
 	char		*key;
@@ -39,5 +54,14 @@ typedef struct	e_env
 	char	*home_path;
 	int		code;
 }	t_env;
+
+/*****************
+ * PROGRAM TRAIN *
+ *****************/
+
+// typedef struct	s_msh
+// {
+// 	// Wait for use nextime;
+// }	t_msh;
 
 #endif

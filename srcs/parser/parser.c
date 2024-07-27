@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/26 16:57:18 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/26 17:35:59 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,10 @@ int	msh_parsing(char *input)
 	if (!input)
 		return (-1);
 	token.input_cmd = msh_input_cmd(input);
-
-	while (token.cmd[i] != NULL)
+	if (ft_strcmp(token.input_cmd, "exit") == 0)
 	{
-		if (ft_strcmp(token.input_cmd, token.cmd[i]) != 0)
-			printf("%s: command not found\n", token.cmd[i]);
-		i++;
+		free(token.input_cmd);
+		return (1);
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   promt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:17:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/15 16:19:35 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/07/26 20:05:20 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ char	*get_promt(t_env *data)
 	char	*ans;
 	char	*temp;
 
-	ans = ft_pwd(data->tuple);
+	// ans = ft_pwd(data->tuple);
+	ans = ft_strdup("minishell:");
 	temp = ft_strjoin(ans, " ");
 	ans = temp;
 	temp = ft_itoa(data->code);

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/26 15:57:41 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/26 17:33:26 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int ac,char **av,char **env)
 	while (1)
 	{
 		input = ft_readline(&var);
-		parsing(input);
+		msh_parsing(input);
 		if (input)
 			free(input);
 		if (input == NULL)
