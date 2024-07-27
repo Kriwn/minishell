@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/26 17:45:52 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/28 01:02:29 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ typedef struct s_token
 {
 	char	*input_cmd;
 	char	**cmd;
-	int		code_out;
+	char	**tokens;
+	int		count;
 }	t_token;
 
 /******************

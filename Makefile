@@ -24,7 +24,7 @@ BUILDIN_FILE = ft_pwd.c
 BUILDIN_SRC = $(addprefix $(BUILDIN_DIR), $(BUILDIN_FILE))
 
 PARSER_DIR = srcs/parser/
-PARSER_FILE = parser.c parser_utile.c msh_split_pipe.c
+PARSER_FILE = parser.c parser_utile.c msh_split.c
 PARSER_SRC = $(addprefix $(PARSER_DIR), $(PARSER_FILE))
 
 SRC = $(UTILS_SRC) $(INIT_SRC) $(BUILDIN_SRC) $(PARSER_SRC) ./srcs/minishell.c

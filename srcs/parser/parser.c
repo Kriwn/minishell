@@ -6,64 +6,76 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/26 17:35:59 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/28 01:13:23 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// char	*check_pipe(char *input)
-// {
-// 	t_token	token;
-// 	char	**tmp;
-// 	int		i;
-
-// 	i = 0;
-// 	tmp = ft_split(input, '|');
-// 	while (tmp[i])
-// 	{
-// 		trim_first_space(tmp[i], &token);
-// 		// printf("[%d]: %s\n", i, token.input_cmd);
-// 		free(token.input_cmd);
-// 		free(tmp[i]);
-// 		i++;
-// 	}
-// 	free(tmp);
-// 	return (token.input_cmd);
-// }
-
-char	*msh_input_cmd(char *input)
+t_token *msh_input(char *input)
 {
-	t_token	token;
-	char	**tmp;
+	t_token	*token;
+	char	**split_tokens;
 	int		i;
 
 	i = 0;
-	tmp = ft_split(input, '|');
-	while (tmp[i])
+	if (!input)
+		return (NULL);
+	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	split_tokens = msh_split(input, "|&<>");
+	if (!split_tokens)
 	{
-		trim_first_space(tmp[i], &token);
-		free(token.input_cmd);
-		free(tmp[i]);
+		free(token);
+		return (NULL);
+	}
+	while (split_tokens[i])
+		i++;
+	token->count = i;
+	token->tokens = malloc((i + 1) * sizeof(char *));
+	if (!token->tokens)
+	{
+		free_split_result(split_tokens);
+		free(token);
+		return (NULL);
+	}
+	i = 0;
+	while (split_tokens[i])
+	{
+		token->tokens[i] = ft_strdup(split_tokens[i]);
+		if (!token->tokens[i])
+		{
+			while (i-- > 0)
+				free(token->tokens[i]);
+			free(token->tokens);
+			free_split_result(split_tokens);
+			free(token);
+			return (NULL);
+		}
 		i++;
 	}
-	free(tmp);
-	return (token.input_cmd);
+	token->tokens[i] = NULL;
+	free_split_result(split_tokens);
+	return (token);
 }
 
-int	msh_parsing(char *input)
+int msh_parsing(char *input)
 {
-	t_token	token;
-	char	**tmp;
+	t_token	*token;
 	int		i;
-	
+
+	i = 0;
 	if (!input)
 		return (-1);
-	token.input_cmd = msh_input_cmd(input);
-	if (ft_strcmp(token.input_cmd, "exit") == 0)
+	token = msh_input(input);
+	if (!token)
+		return (-1);
+	while (i < token->count)
 	{
-		free(token.input_cmd);
-		return (1);
+		printf("token print[%d]: %s\n", i, token->tokens[i]);
+		i++;
 	}
+	free_token(token);
 	return (0);
 }
