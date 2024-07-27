@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   promt.c                                            :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/14 21:17:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/27 22:12:18 by jikarunw         ###   ########.fr       */
+/*   Created: 2024/07/28 00:13:26 by jikarunw          #+#    #+#             */
+/*   Updated: 2024/07/28 00:28:14 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/libft.h"
 
-char	*get_promt(t_env *data)
+char	*ft_strndup(const char *s, size_t size)
 {
-	char	*ans;
-	char	*temp;
+	char	*str;
+	size_t	i;
+	size_t	len;
 
-	// ans = ft_pwd(data->tuple);
-	ans = ft_strdup("minishell:");
-	temp = ft_strjoin(ans, " ");
-	ans = temp;
-	temp = ft_itoa(data->code);
-	ans = ft_strjoin(ans, temp);
-	free(temp);
-	temp = ft_strjoin(ans, "$ ");
-	ans = temp;
-	return (ans);
+	if (size > ft_strlen(s))
+		len = ft_strlen(s);
+	else
+		len = size;
+	str = malloc(len * sizeof(char) + 1);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		str[i] = ((char *)s)[i];
+		i++;
+	}
+	str[i] = 0;
+	return (str);
 }

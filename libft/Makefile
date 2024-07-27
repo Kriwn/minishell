@@ -59,7 +59,9 @@ STRS_SRC =		strs/ft_atoi.c					\
 				strs/ft_toupper.c
 
 ADD_ON_SRC = 	add_on/ft_strcmp.c 				\
-				add_on/ft_abs.c
+				add_on/ft_abs.c					\
+				add_on/ft_isspace.c				\
+				add_on/ft_strndup.c
 
 GNL_SRC =		ft_gnl/get_next_line.c
 

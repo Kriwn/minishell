@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/26 20:04:28 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/28 01:11:28 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,19 @@ void	*make_tuple(t_tuple *new_node,char *str,char c);
 /************************
  * SRCS/PARSER/PARSER.C *
  ************************/
-char	*msh_input_cmd(char *input);
+t_token	*msh_input(char *input);
 int		msh_parsing(char *input);
 
 /****************************
  * SRCS/PARSER/PARSER_UTILS *
  ****************************/
-char	**msh_split_pipe(char *str, char c);
 void	trim_first_space(char *input, t_token *token);
+void	free_split_result(char **result);
+void	free_token(t_token *token);
+
+/*************************
+ * SRCS/PARSER/MSH_SPLIT *
+ *************************/
+char	**msh_split(char *str, const char *symbol);
 
 #endif

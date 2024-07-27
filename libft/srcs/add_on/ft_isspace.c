@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   promt.c                                            :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/14 21:17:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/27 22:12:18 by jikarunw         ###   ########.fr       */
+/*   Created: 2024/07/27 23:01:20 by jikarunw          #+#    #+#             */
+/*   Updated: 2024/07/27 23:02:56 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/libft.h"
 
-char	*get_promt(t_env *data)
+int	ft_isspace(int c)
 {
-	char	*ans;
-	char	*temp;
-
-	// ans = ft_pwd(data->tuple);
-	ans = ft_strdup("minishell:");
-	temp = ft_strjoin(ans, " ");
-	ans = temp;
-	temp = ft_itoa(data->code);
-	ans = ft_strjoin(ans, temp);
-	free(temp);
-	temp = ft_strjoin(ans, "$ ");
-	ans = temp;
-	return (ans);
+	return ((c >= 9 && c <= 13) || c == 32);
 }
