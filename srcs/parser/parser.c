@@ -3,31 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/22 22:59:46 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:46:26 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
-void	trim_first_space(char *input, t_token *token)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (input[i] == ' ')
-		i++;
-	token->input_cmd = malloc(strlen(input) - i + 1);
-	while (input[i])
-		token->input_cmd[j++] = input[i++];
-	token->input_cmd[j] = '\0';
-}
-
-int	check_pipe(char *input)
+char	*check_pipe(char *input)
 {
 	t_token	token;
 	char	**tmp;
@@ -38,11 +23,49 @@ int	check_pipe(char *input)
 	while (tmp[i])
 	{
 		trim_first_space(tmp[i], &token);
-		printf("[%d]: %s\n", i, token.input_cmd);
+		// printf("[%d]: %s\n", i, token.input_cmd);
 		free(token.input_cmd);
 		free(tmp[i]);
 		i++;
 	}
 	free(tmp);
+	return (token.input_cmd);
+}
+
+char	*msh_input_cmd(char *input)
+{
+	t_token	token;
+	char	**tmp;
+	int		i;
+
+	i = 0;
+	tmp = ft_split(input, '|');
+	while (tmp[i])
+	{
+		trim_first_space(tmp[i], &token);
+		free(token.input_cmd);
+		free(tmp[i]);
+		i++;
+	}
+	free(tmp);
+	return (token.input_cmd);
+}
+
+int	msh_parsing(char *input)
+{
+	t_token	token;
+	char	**tmp;
+	int		i;
+
+	if (!input)
+		return (-1);
+	token.input_cmd = msh_input_cmd(input);
+
+	while (token.cmd[i] != NULL)
+	{
+		if (ft_strcmp(token.input_cmd, token.cmd[i]) != 0)
+			printf("%s: command not found\n", token.cmd[i]);
+		i++;
+	}
 	return (0);
 }

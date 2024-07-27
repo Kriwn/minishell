@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:07:52 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/07 00:32:52 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/26 16:56:07 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,9 @@ void	*ft_memmove(void *dst, const void *src, size_t len);
 void	*ft_memset(void *b, int c, size_t len);
 void	*ft_memchr(const void *s, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
+
+/* ---------------------!! add_on !!---------------------*/
+int		ft_strcmp(const char *s1, const char *s2);
+int		ft_abs(int n);
 
 #endif

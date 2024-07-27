@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/27 16:23:59 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:48:59 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char	*ft_readline(t_env *var)
 int	main(int ac, char **av, char **env)
 {
 	t_env	var;
+	t_token	token;
 	char	*input;
 
 	init_minishell(&var, env);
@@ -70,6 +71,9 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		input = ft_readline(&var);
+		msh_parsing(input);
+		if (input)
+			free(input);
 		if (input == NULL)
 			break ;
 		check_pipe(input);

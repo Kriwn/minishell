@@ -6,13 +6,28 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:00 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/21 23:53:13 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/26 16:55:06 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parser.h"
+#include "../../includes/minishell.h"
 
-char	**ft_split_pipe(char *str)
+void	trim_first_space(char *input, t_token *token)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (input[i] == ' ')
+		i++;
+	token->input_cmd = malloc(ft_strlen(input) - i + 1);
+	while (input[i])
+		token->input_cmd[j++] = input[i++];
+	token->input_cmd[j] = '\0';
+}
+
+char	**msh_split_pipe(char *str)
 {
 	char	**ans;
 	int		i;
