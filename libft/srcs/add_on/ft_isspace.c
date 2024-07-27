@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/28 01:41:42 by krwongwa         ###   ########.fr       */
+/*   Created: 2024/07/27 23:01:20 by jikarunw          #+#    #+#             */
+/*   Updated: 2024/07/27 23:02:56 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/libft.h"
 
-void	ft_free(t_msh *data)
+int	ft_isspace(int c)
 {
-	data->home_path = NULL;
-	clear_tuple(&data->tuple);
-}
-
-void	ft_error(t_msh *data, char *word)
-{
-	ft_putstr_fd(word, 2);
-	ft_free(data);
-	exit(1);
+	return ((c >= 9 && c <= 13) || c == 32);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/26 17:45:52 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/28 01:44:47 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ typedef struct s_token
 {
 	char	*input_cmd;
 	char	**cmd;
-	int		code_out;
+	char	**tokens;
+	int		count;
 }	t_token;
 
 /******************
@@ -47,21 +48,17 @@ typedef struct p_pipe
 	int		fd_out;
 }	t_p;
 
-typedef struct	e_env
-{
-	t_tuple	*tuple;
-	char	**env;
-	char	*home_path;
-	int		code;
-}	t_env;
-
 /*****************
  * PROGRAM TRAIN *
  *****************/
 
-// typedef struct	s_msh
-// {
-// 	// Wait for use nextime;
-// }	t_msh;
+typedef struct	s_msh
+{
+	t_tuple	*tuple;
+	t_token *token;
+
+	char	*home_path;
+	int		code;
+}	t_msh;
 
 #endif

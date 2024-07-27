@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/28 01:22:45 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/07/28 01:47:04 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	setup_signal()
 	ft_bzero(&act, sizeof(sigaction));
 }
 
-char	*ft_readline(t_env *var)
+char	*ft_readline(t_msh *var)
 {
 	char	*input;
 	char	*promt;
@@ -62,23 +62,23 @@ char	*ft_readline(t_env *var)
 
 int	main(int ac, char **av, char **env)
 {
-	t_env	var;
+	t_msh 	msh;
 	t_token	token;
 	char	*input;
 
-	init_minishell(&var, env);
+	init_minishell(&msh, env);
 	setup_signal();
 	while (1)
 	{
-		input = ft_readline(&var);
+		input = ft_readline(&msh);
 		msh_parsing(input);
 		if (input)
 			free(input);
 		if (input == NULL)
 			break ;
 	}
-	ft_free(&var);
-	print_tuple(var.tuple);
+	ft_free(&msh);
+	print_tuple(msh.tuple);
 	rl_clear_history();
 	return (0);
 }

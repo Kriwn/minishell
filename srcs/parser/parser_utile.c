@@ -3,19 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utile.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:00 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/26 19:30:43 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/07/28 01:48:22 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	trim_first_space(char *input, t_token *token)
+void print_error(char *err)
+{
+	t_msh *msh;
+
+	msh->code = 2;
+	printf("syntax error near unexpected token `%s'\n", err);
+}
+
+void free_split_result(char **result)
+{
+	char **temp = result;
+	while (*temp)
+	{
+		free(*temp);
+		temp++;
+	}
+	free(result);
+}
+
+void free_token(t_token *token)
 {
 	int	i;
-	int	j;
+
+	i = 0;
+	if (!token)
+		return;
+	if (token->tokens)
+	{
+		while (token->tokens[i++])
+			free(token->tokens[i]);
+		free(token->tokens);
+	}
+	free(token);
+}
+
+void trim_first_space(char *input, t_token *token)
+{
+	int i;
+	int j;
 
 	i = 0;
 	j = 0;

@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/28 01:18:57 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/07/28 01:46:30 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,18 @@ void	clear_tuple(t_tuple **data);
 /**********************
  * SRCS/UTILS/UTILS.C *
  **********************/
-void	ft_free(t_env *data);
-void	ft_error(t_env *data,char *word);
+void	ft_free(t_msh *data);
+void	ft_error(t_msh *data,char *word);
 
 /**********************
  * SRCS/UTILS/PROMT.C *
  **********************/
-char	*get_promt(t_env *data);
+char	*get_promt(t_msh *data);
 
 /******************************
  * SRCS/INIT/INIT_MINISHELL.C *
  ******************************/
-void	init_minishell(t_env *data, char **env);
+void	init_minishell(t_msh *data, char **env);
 
 /**************************
  * SRCS/INIT/INIT_TUPLE.C *
@@ -64,13 +64,19 @@ void	*make_tuple(t_tuple *new_node,char *str,char c);
 /************************
  * SRCS/PARSER/PARSER.C *
  ************************/
-char	*msh_input_cmd(char *input);
+t_token	*msh_input(char *input);
 int		msh_parsing(char *input);
 
 /****************************
  * SRCS/PARSER/PARSER_UTILS *
  ****************************/
-char	**msh_split_pipe(char *str, char c);
 void	trim_first_space(char *input, t_token *token);
+void	free_split_result(char **result);
+void	free_token(t_token *token);
+
+/*************************
+ * SRCS/PARSER/MSH_SPLIT *
+ *************************/
+char	**msh_split(char *str, const char *symbol);
 
 #endif
