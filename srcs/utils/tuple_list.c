@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:51:08 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/15 17:20:02 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:18:24 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_tuple(t_tuple *data)
 {
 	while (data != NULL)
 	{
-		dprintf(2, "Key is %s Value is %s\n",data->key,data->value);
+		printf("Key is %s Value is %s\n",data->key,data->value);
 		data = data->next;
 	}
 }

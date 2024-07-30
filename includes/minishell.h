@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/28 01:46:30 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/07/29 15:56:00 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 # include "../libft/includes/libft.h"
 # include "./struct.h"
+# include <termios.h>
 
 /*************************
  * SRCS/BUILDIN/FT_PWD.C *

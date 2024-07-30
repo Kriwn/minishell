@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/28 01:41:42 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:19:05 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ void	ft_error(t_msh *data, char *word)
 {
 	ft_putstr_fd(word, 2);
 	ft_free(data);
-	exit(1);
+	exit(EXIT_FAILURE);
 }

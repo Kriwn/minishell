@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/28 01:47:04 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/07/30 13:46:21 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,32 @@ void	check_signal(int signal)
 	}
 }
 
-int	setup_signal()
+int		setup_termios()
 {
-	struct sigaction act;
+	struct termios config;
+
+	if (!isatty (STDIN_FILENO))
+	{
+		ft_putstr_fd("Not a terminal.\n", 2);
+		return (-1);
+	}
+	tcgetattr (STDIN_FILENO, &config);
+	config.c_lflag &= ~(ECHOCTL|ICANON);
+	config.c_cc[VMIN] = 0;
+	config.c_cc[VTIME] = 0;
+	tcsetattr (STDIN_FILENO, TCSANOW, &config);
+	return (1);
+}
+
+
+void	setup_signal()
+{
+	struct sigaction	act;
 
 	g_signal = 0;
 	ft_bzero(&act, sizeof(sigaction));
 	act.sa_handler =  &check_signal;
 	act.sa_flags = SA_RESTART;
-
 	sigaction(SIGINT, &act, NULL);
 	sigaction(SIGQUIT, &act, NULL);
 
@@ -68,6 +85,8 @@ int	main(int ac, char **av, char **env)
 
 	init_minishell(&msh, env);
 	setup_signal();
+	if (setup_termios() == -1)
+		ft_error(&msh, "Termios setup error\n");
 	while (1)
 	{
 		input = ft_readline(&msh);
