@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/28 01:44:47 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/09/07 01:04:35 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,21 @@
 
 #include "./minishell.h"
 
+# define EMPTY 0
+# define CMD 1
+
 /***************
  * PARSER TYPE *
  ***************/
 typedef struct s_token
 {
-	char	*input_cmd;
-	char	**cmd;
-	char	**tokens;
-	int		count;
+	char			*cmd;
+	int				type;
+	int				quote_end;
+	int				quote_type;
+	int				quote_space;
+	struct s_token	*next;
+	struct s_token	*prev;
 }	t_token;
 
 /******************
