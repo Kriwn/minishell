@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/09/07 01:04:35 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/09/07 01:48:56 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,20 @@
 
 # define EMPTY 0
 # define CMD 1
+# define INDIRECT 2 
+# define REDIRECT 3
+# define PIPE 4
+# define APPEND 5
+# define HEREDOC 6
+# define ARG 7
+# define END 8
 
 /***************
  * PARSER TYPE *
  ***************/
 typedef struct s_token
 {
-	char			*cmd;
+	char			*str;
 	int				type;
 	int				quote_end;
 	int				quote_type;
@@ -31,6 +38,14 @@ typedef struct s_token
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
+
+typedef struct s_env
+{
+	struct s_env	*next;
+	char			var_cpy[1024];
+	char			*expanded_value;
+	char			*value;
+}	t_env;
 
 /******************
  * EXECUTION TYPE *
