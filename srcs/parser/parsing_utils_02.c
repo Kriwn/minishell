@@ -6,30 +6,54 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 00:44:48 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/09/07 01:39:26 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:15:46 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ph_get_type(t_token *token, int is_delimited)
+t_type msh_get_type(const char *token_str)
 {
-	if (ft_strcmp(token->str, "") == 0)
-		token->type = EMPTY;
-	else if (ft_strcmp(token->str, ">") == 0 && is_delimited == 0)
-		token->type = REDIRECT;
-	else if (ft_strcmp(token->str, ">>") == 0 && is_delimited == 0)
-		token->type = APPEND;
-	else if (ft_strcmp(token->str, "<") == 0 && is_delimited == 0)
-		token->type = INDIRECT;
-	else if (ft_strcmp(token->str, "<<") == 0 && is_delimited == 0)
-		token->type = HEREDOC;
-	else if (ft_strcmp(token->str, "|") == 0 && is_delimited == 0)
-		token->type = PIPE;
-	else if (ft_strcmp(token->str, ";") == 0 && is_delimited == 0)
-		token->type = END;
-	else if (token->prev == NULL || token->prev->type >= REDIRECT)
-		token->type = CMD;
+	if (ft_strcmp(token_str, "|") == 0)
+		return (PIPE);
+	else if (ft_strcmp(token_str, ">") == 0)
+		return (REDIRECT);
+	else if (ft_strcmp(token_str, ">>") == 0)
+		return (APPEND);
+	else if (ft_strcmp(token_str, "<") == 0)
+		return (INDIRECT);
+	else if (ft_strcmp(token_str, "<<") == 0)
+		return (HEREDOC);
+	else if (ft_strcmp(token_str, ";") == 0)
+		return (END);
 	else
-		token->type = ARG;
+		return (CMD);
+}
+
+/** Debug Function; dont forgot to comment or delete*/
+const char *msh_name_type(t_type type)
+{
+	switch (type)
+	{
+	case EMPTY:
+		return "EMPTY";
+	case REDIRECT:
+		return "REDIRECT";
+	case APPEND:
+		return "APPEND";
+	case INDIRECT:
+		return "INDIRECT";
+	case HEREDOC:
+		return "HEREDOC";
+	case PIPE:
+		return "PIPE";
+	case END:
+		return "END";
+	case CMD:
+		return "CMD";
+	case ARG:
+		return "ARG";
+	default:
+		return "UNKNOWN";
+	}
 }

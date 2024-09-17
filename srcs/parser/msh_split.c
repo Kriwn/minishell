@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:29:53 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/28 01:09:31 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/09/07 02:26:52 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static int count_tokens(const char *str, const char *symbol)
 {
-	int	count = 0;
-	int	in_token = 0;
-	int	in_quotes = 0;
+	int count = 0;
+	int in_token = 0;
+	int in_quotes = 0;
 
 	while (*str)
 	{
@@ -24,7 +24,7 @@ static int count_tokens(const char *str, const char *symbol)
 		{
 			in_quotes = !in_quotes;
 			str++;
-			continue ;
+			continue;
 		}
 		if (in_quotes || (!ft_strchr(symbol, *str) && !ft_isspace(*str)))
 		{
@@ -38,13 +38,13 @@ static int count_tokens(const char *str, const char *symbol)
 			in_token = 0;
 		str++;
 	}
-	return (count);
+	return count;
 }
 
 static char *copy_token(const char **str, const char *symbol)
 {
-	const char	*start = *str;
-	int			in_quotes = 0;
+	const char *start = *str;
+	int in_quotes = 0;
 
 	while (**str && (in_quotes || (!ft_strchr(symbol, **str) && !ft_isspace(**str))))
 	{
@@ -52,32 +52,39 @@ static char *copy_token(const char **str, const char *symbol)
 			in_quotes = !in_quotes;
 		(*str)++;
 	}
-	return (ft_strndup(start, *str - start));
+	return ft_strndup(start, *str - start);
 }
 
-char **msh_split(char *str, const char *symbol)
+t_token *msh_split(char *str, const char *symbol)
 {
-	int		token_count = count_tokens(str, symbol);
-	char	**result = malloc((token_count + 1) * sizeof(char *));
-	char	*current_str = str;
-	int		i = 0;
+	t_token *result = malloc(sizeof(t_token));
+	char *current_str = str;
+	int i = 0;
 
 	if (!result)
-		return (NULL);
-	while (i < token_count)
+		return NULL;
+	result->count = count_tokens(str, symbol);
+	result->tokens = malloc((result->count + 1) * sizeof(char *));
+	if (!result->tokens)
+	{
+		free(result);
+		return NULL;
+	}
+	while (i < result->count)
 	{
 		while (*current_str && (ft_isspace(*current_str) || ft_strchr(symbol, *current_str)))
 			current_str++;
-		result[i] = copy_token((const char **)&current_str, symbol);
-		if (!result[i])
+		result->tokens[i] = copy_token((const char **)&current_str, symbol);
+		if (!result->tokens[i])
 		{
 			while (i-- > 0)
-				free(result[i]);
+				free(result->tokens[i]);
+			free(result->tokens);
 			free(result);
-			return (NULL);
+			return NULL;
 		}
 		i++;
 	}
-	result[token_count] = NULL;
-	return (result);
+	result->tokens[result->count] = NULL;
+	return result;
 }

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/09/07 01:48:56 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:18:31 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,18 @@
 
 #include "./minishell.h"
 
-# define EMPTY 0
-# define CMD 1
-# define INDIRECT 2 
-# define REDIRECT 3
-# define PIPE 4
-# define APPEND 5
-# define HEREDOC 6
-# define ARG 7
-# define END 8
+typedef enum s_type
+{
+	CMD,
+	EMPTY,	// ""
+	INDIRECT, // <
+	REDIRECT, // >
+	PIPE, // |
+	APPEND, // >>
+	HEREDOC, // <<
+	ARG, // argument
+	END // ;
+}	t_type;
 
 /***************
  * PARSER TYPE *
@@ -31,12 +34,12 @@
 typedef struct s_token
 {
 	char			*str;
-	int				type;
-	int				quote_end;
-	int				quote_type;
-	int				quote_space;
-	struct s_token	*next;
+	t_type			type;
 	struct s_token	*prev;
+	struct s_token	*next;
+	int				count;
+	char			**tokens;
+	char			*cmd;
 }	t_token;
 
 typedef struct s_env
