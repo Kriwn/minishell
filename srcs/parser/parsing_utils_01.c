@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utile.c                                     :+:      :+:    :+:   */
+/*   parsing_utils_01.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:00 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/28 01:48:22 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/10/05 14:03:47 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,4 @@ void free_token(t_token *token)
 		free(token->tokens);
 	}
 	free(token);
-}
-
-void trim_first_space(char *input, t_token *token)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (input[i] == ' ')
-		i++;
-	token->input_cmd = malloc(ft_strlen(input) - i + 1);
-	while (input[i])
-		token->input_cmd[j++] = input[i++];
-	token->input_cmd[j] = '\0';
 }
