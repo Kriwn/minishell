@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/30 13:46:21 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/16 18:07:52 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,25 +79,26 @@ char	*ft_readline(t_msh *var)
 
 int	main(int ac, char **av, char **env)
 {
-	t_msh 	msh;
+	t_msh	*msh;
 	t_token	token;
 	char	*input;
 
-	init_minishell(&msh, env);
+	msh = initialize_msh_context(env);
+	init_minishell(msh, env);
 	setup_signal();
 	if (setup_termios() == -1)
-		ft_error(&msh, "Termios setup error\n");
+		ft_error(msh, "Termios setup error\n");
 	while (1)
 	{
-		input = ft_readline(&msh);
+		input = ft_readline(msh);
 		msh_parsing(input);
 		if (input)
 			free(input);
 		if (input == NULL)
 			break ;
 	}
-	ft_free(&msh);
-	print_tuple(msh.tuple);
+	ft_free(msh);
+	print_tuple(msh->tuple);
 	rl_clear_history();
 	return (0);
 }

@@ -1,48 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils_01.c                                 :+:      :+:    :+:   */
+/*   msh_buildin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/20 02:01:00 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/16 21:20:18 by jikarunw         ###   ########.fr       */
+/*   Created: 2024/11/16 17:47:52 by jikarunw          #+#    #+#             */
+/*   Updated: 2024/11/16 20:54:27 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	print_error(char *err)
-{
-	t_msh *msh;
-
-	msh->code = 2;
-	printf("syntax error near unexpected token `%s'\n", err);
-}
-
-void	free_split_result(char **result)
-{
-	char **temp = result;
-	while (*temp)
-	{
-		free(*temp);
-		temp++;
-	}
-	free(result);
-}
-
-void	free_token(t_token *token)
+int	(*init_builtin(char *str))(t_msh *msh)
 {
 	int	i;
+	static void	*builtins[7][2] = {
+		{"echo", msh_echo},
+		{"cd", msh_cd},
+		{"pwd", msh_pwd},
+		{"export", NULL},
+		{"unset", NULL},
+		{"env", get_env},
+		{"exit", NULL}};
 
+	if (!str)
+		return (NULL);
 	i = 0;
-	if (!token)
-		return;
-	if (token->tokens)
+	while (i < 7)
 	{
-		while (token->tokens[i++])
-			free(token->tokens[i]);
-		free(token->tokens);
+		if (!ft_strcmp(builtins[i][0], str))
+			return (builtins[i][1]);
+		i++;
 	}
-	free(token);
+
+	return (NULL);
 }

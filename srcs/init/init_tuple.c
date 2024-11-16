@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   init_tuple.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:24:33 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/15 17:13:22 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/16 19:23:07 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*make_tuple(t_tuple *new_node,char *str,char c)
+void	*make_tuple(t_tuple *new_node, char *str, char c)
 {
 	size_t i;
-	size_t	n;
-	char	*temp;
+	size_t n;
+	char *temp;
 
 	i = 0;
 	while (str[i] != c)
@@ -38,17 +38,17 @@ void	*make_tuple(t_tuple *new_node,char *str,char c)
 	return ((void *)(1));
 }
 
-int	init_tuple(t_tuple **data,char **env)
+int	init_tuple(t_tuple **data, char **env)
 {
-	size_t	i;
-	t_tuple	*new_node;
-	char	**temp;
+	size_t i;
+	t_tuple *new_node;
+	char **temp;
 
 	i = 0;
 	while (env[i])
 	{
 		new_node = malloc(sizeof(t_tuple) * 1);
-		if (new_node == NULL || make_tuple(new_node,env[i], '=') == NULL)
+		if (new_node == NULL || make_tuple(new_node, env[i], '=') == NULL)
 			return (-1);
 		new_node->next = NULL;
 		if (!*data)

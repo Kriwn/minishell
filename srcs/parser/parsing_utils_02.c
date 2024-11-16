@@ -6,13 +6,13 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 00:44:48 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/09/17 14:15:46 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/16 21:14:57 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_type msh_get_type(const char *token_str)
+t_type	msh_get_type(const char *token_str)
 {
 	if (ft_strcmp(token_str, "|") == 0)
 		return (PIPE);
@@ -31,7 +31,7 @@ t_type msh_get_type(const char *token_str)
 }
 
 /** Debug Function; dont forgot to comment or delete*/
-const char *msh_name_type(t_type type)
+const char	*msh_name_type(t_type type)
 {
 	switch (type)
 	{

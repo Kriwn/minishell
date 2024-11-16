@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/09/17 14:23:05 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/16 20:56:13 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int			msh_parsing(char *input);
 /****************************
  * SRCS/PARSER/PARSER_UTILS *
  ****************************/
-void		trim_first_space(char *input, t_token *token);
 void		free_split_result(char **result);
 void		free_token(t_token *token);
 
@@ -89,4 +88,16 @@ const char	*msh_name_type(t_type type);
  *************************/
 t_token		*msh_split(char *str, const char *symbol);
 
+
+/** ------------------ */
+
+int			get_env(t_msh *msh);
+int			(*init_builtin(char *str))(t_msh *msh);
+
+t_msh *init_msh_context(char **envp)
+void		free_msh_context(t_msh *msh);
+
+int			msh_echo(t_msh *msh, t_token *token);
+int			msh_pwd(t_msh *msh);
+int			msh_cd(t_msh *msh, t_token *token);
 #endif

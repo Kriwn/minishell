@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/09/17 14:18:31 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/16 21:13:54 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,6 @@ typedef struct s_token
 	char			*cmd;
 }	t_token;
 
-typedef struct s_env
-{
-	struct s_env	*next;
-	char			var_cpy[1024];
-	char			*expanded_value;
-	char			*value;
-}	t_env;
-
 /******************
  * EXECUTION TYPE *
  ******************/
@@ -82,7 +74,9 @@ typedef struct	s_msh
 	t_token *token;
 
 	char	*home_path;
-	int		code;
+	int		code; // -> status code
+	char	**env;
+	char	*cwd;
 }	t_msh;
 
 #endif

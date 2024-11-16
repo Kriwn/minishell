@@ -6,13 +6,13 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 19:29:53 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/09/07 02:26:52 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/16 21:19:46 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int count_tokens(const char *str, const char *symbol)
+static int	count_tokens(const char *str, const char *symbol)
 {
 	int count = 0;
 	int in_token = 0;
@@ -41,7 +41,7 @@ static int count_tokens(const char *str, const char *symbol)
 	return count;
 }
 
-static char *copy_token(const char **str, const char *symbol)
+static char	*copy_token(const char **str, const char *symbol)
 {
 	const char *start = *str;
 	int in_quotes = 0;
@@ -55,7 +55,7 @@ static char *copy_token(const char **str, const char *symbol)
 	return ft_strndup(start, *str - start);
 }
 
-t_token *msh_split(char *str, const char *symbol)
+t_token	*msh_split(char *str, const char *symbol)
 {
 	t_token *result = malloc(sizeof(t_token));
 	char *current_str = str;

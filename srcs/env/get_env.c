@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/14 21:08:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/15 12:30:08 by krwongwa         ###   ########.fr       */
+/*   Created: 2024/11/16 17:42:26 by jikarunw          #+#    #+#             */
+/*   Updated: 2024/11/16 18:31:53 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
-char	*ft_pwd(t_tuple *list)
+int	get_env(t_msh *msh)
 {
-	char	*ans;
+	t_tuple	*current;
 
-	ans = getcwd(NULL, 0);
-	if (ans == NULL)
-		ans = get_value_from_key(list, "PWD=");
-	return (ans);
+	current = msh->env;
+	while (current)
+	{
+		printf("%s=%s\n", current->key, current->value);
+		current = current->next;
+	}
+	return (0);
 }
