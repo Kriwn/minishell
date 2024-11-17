@@ -14,17 +14,20 @@
 
 static int	count_tokens(const char *str, const char *symbol)
 {
-	int count = 0;
-	int in_token = 0;
-	int in_quotes = 0;
+	int	count;
+	int	in_token;
+	int	in_quotes;
 
+	count = 0;
+	in_token = 0;
+	in_quotes = 0;
 	while (*str)
 	{
 		if (*str == '"')
 		{
 			in_quotes = !in_quotes;
 			str++;
-			continue;
+			continue ;
 		}
 		if (in_quotes || (!ft_strchr(symbol, *str) && !ft_isspace(*str)))
 		{
@@ -38,41 +41,48 @@ static int	count_tokens(const char *str, const char *symbol)
 			in_token = 0;
 		str++;
 	}
-	return count;
+	return (count);
 }
 
 static char	*copy_token(const char **str, const char *symbol)
 {
-	const char *start = *str;
-	int in_quotes = 0;
+	const char	*start;
+	int			in_quotes;
 
-	while (**str && (in_quotes || (!ft_strchr(symbol, **str) && !ft_isspace(**str))))
+	start = *str;
+	in_quotes = 0;
+	while (**str && (in_quotes || (!ft_strchr(symbol, **str)
+				&& !ft_isspace(**str))))
 	{
 		if (**str == '"')
 			in_quotes = !in_quotes;
 		(*str)++;
 	}
-	return ft_strndup(start, *str - start);
+	return (ft_strndup(start, *str - start));
 }
 
 t_token	*msh_split(char *str, const char *symbol)
 {
-	t_token *result = malloc(sizeof(t_token));
-	char *current_str = str;
-	int i = 0;
+	t_token	*result;
+	char	*current_str;
+	int		i;
 
+	result = malloc(sizeof(t_token));
+	current_str = str;
+	i = 0;
 	if (!result)
-		return NULL;
+		return (NULL);
 	result->count = count_tokens(str, symbol);
 	result->tokens = malloc((result->count + 1) * sizeof(char *));
 	if (!result->tokens)
 	{
 		free(result);
-		return NULL;
+		return (NULL);
 	}
 	while (i < result->count)
 	{
-		while (*current_str && (ft_isspace(*current_str) || ft_strchr(symbol, *current_str)))
+		while (*current_str && (ft_isspace(*current_str) || ft_strchr(symbol,
+					*current_str)))
 			current_str++;
 		result->tokens[i] = copy_token((const char **)&current_str, symbol);
 		if (!result->tokens[i])
@@ -81,10 +91,10 @@ t_token	*msh_split(char *str, const char *symbol)
 				free(result->tokens[i]);
 			free(result->tokens);
 			free(result);
-			return NULL;
+			return (NULL);
 		}
 		i++;
 	}
 	result->tokens[result->count] = NULL;
-	return result;
+	return (result);
 }

@@ -6,23 +6,23 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:00 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/16 21:20:18 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/17 15:30:44 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	print_error(char *err)
+void	free_msh_context(t_msh *msh)
 {
-	t_msh *msh;
-
-	msh->code = 2;
-	printf("syntax error near unexpected token `%s'\n", err);
+	free(msh->cwd);
+	free(msh);
 }
 
 void	free_split_result(char **result)
 {
-	char **temp = result;
+	char	**temp;
+
+	temp = result;
 	while (*temp)
 	{
 		free(*temp);
@@ -37,7 +37,7 @@ void	free_token(t_token *token)
 
 	i = 0;
 	if (!token)
-		return;
+		return ;
 	if (token->tokens)
 	{
 		while (token->tokens[i++])

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:07:15 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/16 21:20:47 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/17 15:46:08 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	msh_cd(t_msh *msh, t_token *token)
 
 	if (!msh || !token)
 		return (ft_putstr_fd("minishell: cd: internal error\n", STDERR_FILENO),
-			EXIT_FAILURE);
+				EXIT_FAILURE);
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
 	{

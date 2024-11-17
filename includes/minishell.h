@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/17 13:09:46 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/17 15:36:04 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@
  * SRCS/BUILDIN/FT_PWD.C *
  *************************/
 char		*ft_pwd(t_tuple *list);
+int			(*init_builtin(char *str))(t_msh *msh);
+
+int			msh_echo(t_msh *msh, t_token *token);
+int			msh_pwd(t_msh *msh);
+int			msh_cd(t_msh *msh, t_token *token);
+
+int			get_env(t_msh *msh);
 
 /***************************
  * SRCS/UTILS/TUPLE_LIST.C *
@@ -72,14 +79,20 @@ void		*make_tuple(t_tuple *new_node,char *str,char c);
  * SRCS/PARSER/PARSER.C *
  ************************/
 t_token		*msh_input(char *input);
+int			msh_execute_commands(t_token *tokens);
+t_token		*msh_parse_tokens(char *input);
 int			msh_parsing(char *input);
 
 /****************************
  * SRCS/PARSER/PARSER_UTILS *
  ****************************/
+void		free_msh_context(t_msh *msh);
 void		free_split_result(char **result);
 void		free_token(t_token *token);
 
+t_token		*msh_init_token(char *token_str, t_token *prev);
+void		msh_check_cmd(t_token *token);
+t_msh		*init_msh_context(char **envp);
 t_type		msh_get_type(const char *token_str);
 const char	*msh_name_type(t_type type);
 
@@ -88,16 +101,4 @@ const char	*msh_name_type(t_type type);
  *************************/
 t_token		*msh_split(char *str, const char *symbol);
 
-
-/** ------------------ */
-
-int			get_env(t_msh *msh);
-int			(*init_builtin(char *str))(t_msh *msh);
-
-t_msh		*init_msh_context(char **envp);
-void		free_msh_context(t_msh *msh);
-
-int			msh_echo(t_msh *msh, t_token *token);
-int			msh_pwd(t_msh *msh);
-int			msh_cd(t_msh *msh, t_token *token);
 #endif

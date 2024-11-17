@@ -1,3 +1,10 @@
+COLOR_RESET = \033[0m
+COLOR_YELLOW = \033[1;33m
+COLOR_CYAN = \033[1;36m
+COLOR_RED = \033[91m
+COLOR_GREEN = \033[92m
+COLOR_PINK = \033[95m
+
 NAME = minishell
 PATH_HEADER = includes
 PATH_LIBFT = libft
@@ -48,15 +55,19 @@ $(OBJ_DIR)/%.o: $(PATH_SRCS)/%.c $(PATH_HEADER)
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	make -C $(PATH_LIBFT)
+	@make -C $(PATH_LIBFT)
 	$(CC) $(OBJ) $(CFLAGS) $(LDFLAGS) -o $(NAME)
+	@echo "[$(COLOR_YELLOW)$(NAME) --> OK$(COLOR_RESET)]\n ${COLOR_GREEN}Success!${COLOR_RESET}"
+	@echo "$(COLOR_PINK)\tUsage: ./minishell$(COLOR_RESET)"
 
 clean :
-	make clean -C $(PATH_LIBFT)
+	@echo "$(COLOR_RED)Cleaning object minishell files...$(COLOR_RESET)"
+	@make clean -C $(PATH_LIBFT)
 	@$(RM) $(OBJ_DIR)
 
 fclean : clean
-	make fclean -C $(PATH_LIBFT)
+	@echo "$(COLOR_RED)Cleaning Minishell$(COLOR_RESET)$(COLOR_PINK) $(NAME)!$(COLOR_RESET)"
+	@make fclean -C $(PATH_LIBFT)
 	@$(RM) $(NAME)
 
 re : fclean all
