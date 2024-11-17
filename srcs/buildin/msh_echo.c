@@ -35,9 +35,11 @@ void	put_arg(t_token *current)
 
 int	msh_echo(t_msh *msh, t_token *token)
 {
-	int nl_flag = 1;
-	t_token *current = token->next;
+	int		nl_flag;
+	t_token	*current;
 
+	nl_flag = 1;
+	current = token->next;
 	if (!current)
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
@@ -48,7 +50,7 @@ int	msh_echo(t_msh *msh, t_token *token)
 		if (only_n(current->str + 2, &nl_flag))
 			current = current->next;
 		else
-			break;
+			break ;
 	}
 	while (current)
 	{

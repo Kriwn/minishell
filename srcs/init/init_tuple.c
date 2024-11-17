@@ -14,16 +14,15 @@
 
 void	*make_tuple(t_tuple *new_node, char *str, char c)
 {
-	size_t i;
-	size_t n;
-	char *temp;
+	size_t	i;
+	size_t	n;
+	char	*temp;
 
 	i = 0;
 	while (str[i] != c)
 		i++;
 	temp = malloc(sizeof(char) * (i + 1));
 	temp[0] = '\0';
-
 	if (temp == NULL)
 		return (NULL);
 	new_node->key = temp;
@@ -40,9 +39,9 @@ void	*make_tuple(t_tuple *new_node, char *str, char c)
 
 int	init_tuple(t_tuple **data, char **env)
 {
-	size_t i;
-	t_tuple *new_node;
-	char **temp;
+	size_t	i;
+	t_tuple	*new_node;
+	char	**temp;
 
 	i = 0;
 	while (env[i])

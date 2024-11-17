@@ -12,10 +12,11 @@
 
 #include "../../includes/minishell.h"
 
-int	(*init_builtin(char *str))(t_msh *msh)
+int (*init_builtin(char *str))(t_msh *msh)
 {
 	int	i;
-	static void	*builtins[7][2] = {
+
+	static void *builtins[7][2] = {
 		{"echo", msh_echo},
 		{"cd", msh_cd},
 		{"pwd", msh_pwd},
@@ -23,7 +24,6 @@ int	(*init_builtin(char *str))(t_msh *msh)
 		{"unset", NULL},
 		{"env", get_env},
 		{"exit", NULL}};
-
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -33,6 +33,5 @@ int	(*init_builtin(char *str))(t_msh *msh)
 			return (builtins[i][1]);
 		i++;
 	}
-
 	return (NULL);
 }
