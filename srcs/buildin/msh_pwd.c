@@ -19,12 +19,13 @@ int	msh_pwd(t_msh *msh)
 	current_path = ft_pwd(msh->tuple);
 	if (!current_path)
 	{
-		ft_putstr_fd("Error: Could not get current working directory\n", STDERR_FILENO);
-		return EXIT_FAILURE;
+		ft_putstr_fd("Error: Could not get current working directory\n",
+				STDERR_FILENO);
+		return (EXIT_FAILURE);
 	}
 	ft_putendl_fd(current_path, STDOUT_FILENO);
 	free(current_path);
-	return EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
 }
 
 char	*ft_pwd(t_tuple *list)

@@ -20,7 +20,7 @@ void	update_env_variable(t_tuple *env, const char *key, const char *value)
 		{
 			free(env->value);
 			env->value = ft_strdup(value);
-			return;
+			return ;
 		}
 		env = env->next;
 	}
@@ -39,13 +39,13 @@ char	*get_env_variable(t_tuple *env, const char *key)
 
 int	msh_cd(t_msh *msh, t_token *token)
 {
-	char *target;
-	char *old_pwd;
-	char *new_pwd;
+	char	*target;
+	char	*old_pwd;
+	char	*new_pwd;
 
 	if (!msh || !token)
-		return (ft_putstr_fd("minishell: cd: internal error\n", STDERR_FILENO), EXIT_FAILURE);
-
+		return (ft_putstr_fd("minishell: cd: internal error\n", STDERR_FILENO),
+			EXIT_FAILURE);
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
 	{
@@ -90,12 +90,9 @@ int	msh_cd(t_msh *msh, t_token *token)
 		free(old_pwd);
 		return (EXIT_FAILURE);
 	}
-
 	update_env_variable(msh->tuple, "OLDPWD=", old_pwd);
 	update_env_variable(msh->tuple, "PWD=", new_pwd);
-
 	free(old_pwd);
 	free(new_pwd);
-
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/16 20:56:13 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/17 13:09:46 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_token		*msh_split(char *str, const char *symbol);
 int			get_env(t_msh *msh);
 int			(*init_builtin(char *str))(t_msh *msh);
 
-t_msh *init_msh_context(char **envp)
+t_msh		*init_msh_context(char **envp);
 void		free_msh_context(t_msh *msh);
 
 int			msh_echo(t_msh *msh, t_token *token);

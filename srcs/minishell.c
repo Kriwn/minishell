@@ -6,18 +6,17 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/16 18:07:52 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/17 13:11:44 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static volatile sig_atomic_t g_signal;
+static volatile sig_atomic_t	g_signal;
 
 void	check_signal(int signal)
 {
-
-	if (signal ==  SIGINT && g_signal == 0)
+	if (signal == SIGINT && g_signal == 0)
 	{
 		rl_on_new_line();
 		write(1, "\n", 1);
@@ -32,35 +31,33 @@ void	check_signal(int signal)
 	}
 }
 
-int		setup_termios()
+int	setup_termios(void)
 {
-	struct termios config;
+	struct termios	config;
 
-	if (!isatty (STDIN_FILENO))
+	if (!isatty(STDIN_FILENO))
 	{
 		ft_putstr_fd("Not a terminal.\n", 2);
 		return (-1);
 	}
-	tcgetattr (STDIN_FILENO, &config);
-	config.c_lflag &= ~(ECHOCTL|ICANON);
+	tcgetattr(STDIN_FILENO, &config);
+	config.c_lflag &= ~(ECHOCTL | ICANON);
 	config.c_cc[VMIN] = 0;
 	config.c_cc[VTIME] = 0;
-	tcsetattr (STDIN_FILENO, TCSANOW, &config);
+	tcsetattr(STDIN_FILENO, TCSANOW, &config);
 	return (1);
 }
 
-
-void	setup_signal()
+void	setup_signal(void)
 {
 	struct sigaction	act;
 
 	g_signal = 0;
 	ft_bzero(&act, sizeof(sigaction));
-	act.sa_handler =  &check_signal;
+	act.sa_handler = &check_signal;
 	act.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &act, NULL);
 	sigaction(SIGQUIT, &act, NULL);
-
 	ft_bzero(&act, sizeof(sigaction));
 }
 
@@ -83,7 +80,7 @@ int	main(int ac, char **av, char **env)
 	t_token	token;
 	char	*input;
 
-	msh = initialize_msh_context(env);
+	msh = init_msh_context(env);
 	init_minishell(msh, env);
 	setup_signal();
 	if (setup_termios() == -1)
