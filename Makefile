@@ -38,7 +38,7 @@ ENV_SRC = $(addprefix $(ENV_DIR), $(ENV_FILE))
 # BUILDIN_SRC = $(addprefix $(BUILDIN_DIR), $(BUILDIN_FILE))
 
 PARSER_DIR = srcs/parser/
-PARSER_FILE =	parsing.c \
+PARSER_FILE =	msh_parsing.c \
 				parsing_utils_01.c
 PARSER_SRC = $(addprefix $(PARSER_DIR), $(PARSER_FILE))
 
