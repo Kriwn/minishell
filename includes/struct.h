@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/16 21:13:54 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:15:55 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef struct tuple
 typedef struct p_pipe
 {
 	int		*process_pid;
-	int		status_pid;
 	char	**env;
 	char	**path;
 	char	*cmd;
@@ -75,6 +74,7 @@ typedef struct	s_msh
 
 	char	*home_path;
 	int		code; // -> status code
+	t_p		*list;
 	char	**env;
 	char	*cwd;
 }	t_msh;
