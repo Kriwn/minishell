@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:07:15 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/17 15:46:08 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:31:07 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	msh_cd(t_msh *msh, t_token *token)
 		perror("minishell: cd: getcwd");
 		return (EXIT_FAILURE);
 	}
-	if (!token->next || !token->next->str)
+	if (!token->next || !token->next->cmd)
 	{
 		target = get_env_variable(msh->tuple, "HOME=");
 		if (!target)
@@ -62,7 +62,7 @@ int	msh_cd(t_msh *msh, t_token *token)
 			return (EXIT_FAILURE);
 		}
 	}
-	else if (!ft_strcmp(token->next->str, "-"))
+	else if (!ft_strcmp(token->next->cmd, "-"))
 	{
 		target = get_env_variable(msh->tuple, "OLDPWD=");
 		if (!target)
@@ -75,7 +75,7 @@ int	msh_cd(t_msh *msh, t_token *token)
 	}
 	else
 	{
-		target = token->next->str;
+		target = token->next->cmd;
 	}
 	if (chdir(target) == -1)
 	{

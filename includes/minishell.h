@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/17 15:36:04 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:37:30 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,40 @@ int			msh_parsing(char *input);
 /****************************
  * SRCS/PARSER/PARSER_UTILS *
  ****************************/
+/** Old Function Do's It */
 void		free_msh_context(t_msh *msh);
 void		free_split_result(char **result);
-void		free_token(t_token *token);
 
 t_token		*msh_init_token(char *token_str, t_token *prev);
 void		msh_check_cmd(t_token *token);
 t_msh		*init_msh_context(char **envp);
 t_type		msh_get_type(const char *token_str);
 const char	*msh_name_type(t_type type);
+/** New Function*/
+t_ast		*msh_init_ast(t_type type);
+void		msh_free_ast(t_ast *node);
+t_ast		*create_file_list_redir(t_token **tokens, t_token *tmp);
+int			count_cmd_arg(t_token *current);
+void		add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count);
 
-/*************************
- * SRCS/PARSER/MSH_SPLIT *
- *************************/
-t_token		*msh_split(char *str, const char *symbol);
+t_ast		*file_ast_node(t_token *token);
+t_ast		*msh_get_cmd(t_token **tokens);
+t_ast		*msh_get_redirect(t_token **tokens);
+t_ast		*msh_get_pipe(t_token **tokens);
+t_ast		*msh_get_tokens(t_token **tokens);
 
+/***************
+ * SRCS/TOKEN/ *
+ ***************/
+/** It try to do lexer node
+ */
+t_token		*new_token(t_type type, char *value);
+void		parse_cmd(char **input, t_token **tokens);
+void		parse_cmd(char **input, t_token **tokens);
+void		parse_type(char **input, t_token **tokens);
+t_type		get_token_type(const char **input);
+
+t_token		*token_input(char *input);
+t_token		*msh_parsing_input(char *input);
+void		display_tokens(t_token *tokens);
 #endif
