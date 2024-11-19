@@ -1,3 +1,10 @@
+COLOR_RESET = \033[0m
+COLOR_YELLOW = \033[1;33m
+COLOR_CYAN = \033[1;36m
+COLOR_RED = \033[91m
+COLOR_GREEN = \033[92m
+COLOR_PINK = \033[95m
+
 NAME = minishell
 PATH_HEADER = includes
 PATH_LIBFT = libft
@@ -23,21 +30,24 @@ ENV_DIR = srcs/env/
 ENV_FILE =		get_env.c
 ENV_SRC = $(addprefix $(ENV_DIR), $(ENV_FILE))
 
-BUILDIN_DIR = srcs/buildin/
-BUILDIN_FILE =	msh_buildin.c \
-				msh_pwd.c	\
-				msh_echo.c	\
-				msh_cd.c
-BUILDIN_SRC = $(addprefix $(BUILDIN_DIR), $(BUILDIN_FILE))
+# BUILDIN_DIR = srcs/buildin/
+# BUILDIN_FILE =	msh_buildin.c \
+# 				msh_pwd.c	\
+# 				msh_echo.c	\
+# 				msh_cd.c
+# BUILDIN_SRC = $(addprefix $(BUILDIN_DIR), $(BUILDIN_FILE))
 
 PARSER_DIR = srcs/parser/
 PARSER_FILE =	parsing.c \
-				parsing_utils_01.c \
-				parsing_utils_02.c \
-				msh_split.c
+				parsing_utils_01.c
 PARSER_SRC = $(addprefix $(PARSER_DIR), $(PARSER_FILE))
 
-SRC = $(UTILS_SRC) $(INIT_SRC) $(BUILDIN_SRC) $(ENV_SRC) $(PARSER_SRC) ./srcs/minishell.c
+TOKEN_DIR = srcs/token/
+TOKEN_FILE =	token_utils_01.c \
+				msh_token.c
+TOKEN_SRC = $(addprefix $(TOKEN_DIR), $(TOKEN_FILE))
+
+SRC = $(UTILS_SRC) $(INIT_SRC) $(ENV_SRC) $(TOKEN_SRC) $(PARSER_SRC) ./srcs/minishell.c
 
 OBJ = $(SRC:$(PATH_SRCS)/%.c=$(OBJ_DIR)/%.o)
 
@@ -48,15 +58,19 @@ $(OBJ_DIR)/%.o: $(PATH_SRCS)/%.c $(PATH_HEADER)
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	make -C $(PATH_LIBFT)
+	@make -C $(PATH_LIBFT)
 	$(CC) $(OBJ) $(CFLAGS) $(LDFLAGS) -o $(NAME)
+	@echo "[$(COLOR_YELLOW)$(NAME) --> OK$(COLOR_RESET)]\n ${COLOR_GREEN}Success!${COLOR_RESET}"
+	@echo "$(COLOR_PINK)\tUsage: ./minishell$(COLOR_RESET)"
 
 clean :
-	make clean -C $(PATH_LIBFT)
+	@echo "$(COLOR_RED)Cleaning object minishell files...$(COLOR_RESET)"
+	@make clean -C $(PATH_LIBFT)
 	@$(RM) $(OBJ_DIR)
 
 fclean : clean
-	make fclean -C $(PATH_LIBFT)
+	@echo "$(COLOR_RED)Cleaning Minishell$(COLOR_RESET)$(COLOR_PINK) $(NAME)!$(COLOR_RESET)"
+	@make fclean -C $(PATH_LIBFT)
 	@$(RM) $(NAME)
 
 re : fclean all

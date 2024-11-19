@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/16 21:13:54 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:18:34 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,20 @@
 
 typedef enum s_type
 {
-	CMD,
+	CMD, // command, built-in
+	ARG, // argument
+	ENV_VAR, // -> "$HOME"
 	EMPTY,	// ""
 	INDIRECT, // <
 	REDIRECT, // >
 	PIPE, // |
 	APPEND, // >>
 	HEREDOC, // <<
-	ARG, // argument
-	END // ;
+	END // ; -> maybe this's not use for now.
+	/** Maybe this two type to use the lexer
+	 * &&
+	 * ||
+	 */
 }	t_type;
 
 /***************
@@ -33,14 +38,20 @@ typedef enum s_type
  ***************/
 typedef struct s_token
 {
-	char			*str;
-	t_type			type;
-	struct s_token	*prev;
-	struct s_token	*next;
-	int				count;
-	char			**tokens;
+	// char			*str;
 	char			*cmd;
+	t_type			type;
+	struct s_token	*next;
+	int				count_pipe;
 }	t_token;
+
+typedef struct s_ast
+{
+	t_type				type;
+	char				**args;
+	struct s_ast		*left;
+	struct s_ast		*right;
+}	t_ast;
 
 /******************
  * EXECUTION TYPE *
