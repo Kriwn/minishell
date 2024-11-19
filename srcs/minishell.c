@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/17 13:11:44 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:18:14 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,22 +77,32 @@ char	*ft_readline(t_msh *var)
 int	main(int ac, char **av, char **env)
 {
 	t_msh	*msh;
-	t_token	token;
+	t_token	*token;
+	t_ast	*ast;
 	char	*input;
 
-	msh = init_msh_context(env);
+	msh = malloc(sizeof(t_msh));
+	if (!msh)
+		return (1);
 	init_minishell(msh, env);
 	setup_signal();
 	if (setup_termios() == -1)
+	{
 		ft_error(msh, "Termios setup error\n");
+		ft_free(msh);
+		return (1);
+	}
 	while (1)
 	{
 		input = ft_readline(msh);
-		msh_parsing(input);
-		if (input)
-			free(input);
-		if (input == NULL)
+		if (!input)
+		{
+			printf("exit\n");
 			break ;
+		}
+		token = msh_parsing_input(input);
+		if (token)
+			ast = msh_get_tokens(&token);
 	}
 	ft_free(msh);
 	print_tuple(msh->tuple);

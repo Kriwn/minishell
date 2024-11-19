@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:11:22 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/16 21:21:00 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:30:44 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ int	only_n(char *str, int *flag)
 
 void	put_arg(t_token *current)
 {
-	ft_putstr_fd(current->str, STDOUT_FILENO);
+	if (!current || !current->cmd)
+		return ;
+	ft_putstr_fd(current->cmd, STDOUT_FILENO);
 	if (current->next)
 		ft_putchar_fd(' ', STDOUT_FILENO);
 }
@@ -38,6 +40,8 @@ int	msh_echo(t_msh *msh, t_token *token)
 	int		nl_flag;
 	t_token	*current;
 
+	if (!msh || !token)
+		return (EXIT_FAILURE);
 	nl_flag = 1;
 	current = token->next;
 	if (!current)
@@ -45,9 +49,9 @@ int	msh_echo(t_msh *msh, t_token *token)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		return (EXIT_SUCCESS);
 	}
-	while (current && ft_strncmp(current->str, "-n", 2) == 0)
+	while (current && current->cmd && ft_strncmp(current->cmd, "-n", 2) == 0)
 	{
-		if (only_n(current->str + 2, &nl_flag))
+		if (only_n(current->cmd + 2, &nl_flag))
 			current = current->next;
 		else
 			break ;
@@ -59,6 +63,6 @@ int	msh_echo(t_msh *msh, t_token *token)
 	}
 	if (nl_flag)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	msh->code = 0;
+	msh->code = 12;
 	return (EXIT_SUCCESS);
 }
