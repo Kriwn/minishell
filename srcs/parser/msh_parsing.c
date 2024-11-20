@@ -6,19 +6,11 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/19 16:43:24 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/20 23:26:36 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/**
- * Question ?
- * First: How to convert the AST to a command line string? !
- * Second: How to execute the command line string? // This not my part
- * Third: How to handle the exit status of the command?
- * Fourth: How to handle the signal of the command? // This's Correct
- */
 
 t_ast	*file_ast_node(t_token *token)
 {
@@ -113,6 +105,7 @@ t_ast	*msh_get_tokens(t_token **tokens)
 {
 	if (!tokens || !*tokens)
 		return (NULL);
-	display_tokens(*tokens);
+	// display_tokens(*tokens);
+	test_delete_heredoc(tokens);
 	return (msh_get_pipe(tokens));
 }
