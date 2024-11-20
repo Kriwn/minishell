@@ -6,76 +6,24 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:01 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/18 18:23:07 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/20 23:20:45 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	clear_here_doc(t_p *list, char *getline, int fd[2])
-{
-	if (getline)
-		free(getline);
-	getline = NULL;
-	list->fd_in = dup(fd[0]);
-	close(fd[0]);
-	close(fd[1]);
-}
+extern volatile sig_atomic_t	g_signal;
 
-int	check_new_line(char *str)
+void	do_here_doc_task(t_token *cur,t_p *list)
 {
-	if (str == NULL)
-		return (0);
-	while (*str)
+	while (cur)
 	{
-		if (*str == '\n')
-			return (1);
-		str++;
-	}
-	return (0);
-}
-
-int	check_here_doc(char *str, char *ans)
-{
-	char	*ans_newline;
-	int		n;
-	size_t	i;
-
-	i = 0;
-	ans_newline = ft_strjoin(ans, "\n");
-	n = 0;
-	while (str[i] != '\0' && ans_newline[i] != '\0')
-	{
-		if (str[i] != ans_newline[i])
+		if (cur->type == HEREDOC)
 		{
-			free(ans_newline);
-			return (0);
+			list->fd_in = do_here_doc(cur->next->cmd, list);
 		}
-		i++;
+		cur = cur->next;
 	}
-	n = 1;
-	if (str[i] != '\0' || ans_newline[i] != '\0')
-		n = 0;
-	free(ans_newline);
-	return (n);
-}
-
-int	gethere_doc(char **getline, char *str)
-{
-	char	buff[2];
-	char	*temp;
-
-	temp = NULL;
-	buff[1] = '\0';
-	while (!check_new_line(*getline))
-	{
-		if (read(0, &buff, 1) == 0)
-			return (-1);
-		temp = *getline;
-		*getline = ft_strjoin(*getline, buff);
-		free(temp);
-	}
-	return (0);
 }
 
 int	do_here_doc(char *str, t_p *list)
@@ -85,18 +33,19 @@ int	do_here_doc(char *str, t_p *list)
 
 	if (pipe(fd) == -1)
 		ft_puterror("Pipe error", errno, list);
+	// set mode for here file
 	while (1)
 	{
-		write(1, "> ", 2);
-		getline = ft_calloc(1, 1);
-		if (gethere_doc(&getline, str) == -1)
-			break ;
-		if (check_here_doc(getline, str))
+		getline = readline("> ");
+		if (getline == NULL || g_signal == 1 || ft_strncmp(getline, str, ft_strlen(str)) == 0)
 			break ;
 		write(fd[1], getline, ft_strlen(getline));
-		if (getline)
-			free(getline);
+		write(fd[1], "\n", 1);
+		free(getline);
 	}
-	clear_here_doc(list, getline, fd);
-	return (1);
+	// set to normal mode
+	if (getline)
+		free(getline);
+	close(fd[1]);
+	return (fd[0]);
 }

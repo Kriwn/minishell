@@ -44,6 +44,7 @@ PARSER_SRC = $(addprefix $(PARSER_DIR), $(PARSER_FILE))
 
 TOKEN_DIR = srcs/token/
 TOKEN_FILE =	token_utils_01.c \
+				token_utils_02.c \
 				msh_token.c
 TOKEN_SRC = $(addprefix $(TOKEN_DIR), $(TOKEN_FILE))
 

@@ -6,7 +6,11 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/11/19 22:01:06 by krwongwa         ###   ########.fr       */
+=======
+/*   Updated: 2024/11/20 23:26:44 by jikarunw         ###   ########.fr       */
+>>>>>>> 9f43007ac78223bc5dadc3f0a027a03f74310d4c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +92,6 @@ int			msh_parsing(char *input);
  * SRCS/PARSER/PARSER_UTILS *
  ****************************/
 /** Old Function Do's It */
-void		free_msh_context(t_msh *msh);
-void		free_split_result(char **result);
-
-t_token		*msh_init_token(char *token_str, t_token *prev);
-void		msh_check_cmd(t_token *token);
-t_msh		*init_msh_context(char **envp);
-t_type		msh_get_type(const char *token_str);
 const char	*msh_name_type(t_type type);
 /** New Function*/
 t_ast		*msh_init_ast(t_type type);
@@ -108,6 +105,8 @@ t_ast		*msh_get_cmd(t_token **tokens);
 t_ast		*msh_get_redirect(t_token **tokens);
 t_ast		*msh_get_pipe(t_token **tokens);
 t_ast		*msh_get_tokens(t_token **tokens);
+
+
 
 /***************
  * SRCS/TOKEN/ *
@@ -123,4 +122,6 @@ t_type		get_token_type(const char **input);
 t_token		*token_input(char *input);
 t_token		*msh_parsing_input(char *input);
 void		display_tokens(t_token *tokens);
+void		test_delete_heredoc(t_token **tokens);
+void		delete_token_heredoc(t_token **tokens);
 #endif
