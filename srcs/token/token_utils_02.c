@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 23:31:00 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/20 23:34:19 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/24 23:47:00 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,4 @@ void	delete_token_heredoc(t_token **tokens)
 			current = current->next;
 		}
 	}
-}
-
-void	test_delete_heredoc(t_token **tokens)
-{
-	if (!tokens || !*tokens)
-	{
-		printf("No tokens to display.\n");
-		return ;
-	}
-	printf("%sBefore deleting HEREDOC tokens:%s\n", YELLOW, RESET);
-	display_tokens(*tokens);
-	delete_token_heredoc(tokens);
-	printf("%sAfter deleting HEREDOC tokens:%s\n", YELLOW, RESET);
-	display_tokens(*tokens);
 }

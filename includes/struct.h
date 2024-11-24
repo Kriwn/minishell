@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/19 12:18:34 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/24 23:42:42 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ typedef enum s_type
 	PIPE, // |
 	APPEND, // >>
 	HEREDOC, // <<
-	END // ; -> maybe this's not use for now.
+	END, // ; -> maybe this's not use for now.
 	/** Maybe this two type to use the lexer
 	 * &&
 	 * ||
 	 */
+	CMD_GROUP, // -> (command child)
 }	t_type;
 
 /***************

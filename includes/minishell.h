@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/20 23:26:44 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/24 23:29:49 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,14 @@ t_token		*new_token(t_type type, char *value);
 void		parse_cmd(char **input, t_token **tokens);
 void		parse_cmd(char **input, t_token **tokens);
 void		parse_type(char **input, t_token **tokens);
-t_type		get_token_type(const char **input);
+// t_type		get_token_type(const char **input);
 
 t_token		*token_input(char *input);
 t_token		*msh_parsing_input(char *input);
 void		display_tokens(t_token *tokens);
 void		test_delete_heredoc(t_token **tokens);
 void		delete_token_heredoc(t_token **tokens);
+void		delete_token_list(t_token **tokens);
+void		display_ast(t_ast *ast, int idx);
+
 #endif

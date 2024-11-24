@@ -6,13 +6,11 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 20:56:54 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/20 23:31:15 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/24 23:47:17 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-/** function -> Prototype to change for list (try to do lexer) */
 
 t_token	*new_token(t_type type, char *value)
 {
