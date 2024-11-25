@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/21 15:04:58 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/25 14:09:50 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,12 @@ int	main(int ac, char **av, char **env)
 		token = msh_parsing_input(input);
 		if (token)
 			ast = msh_get_tokens(&token);
+			if (ast)
+			{
+				printf("\nAbstract Syntax Tree:\n");
+				display_ast(ast, 0);
+			}
+
 	}
 	ft_free(msh);
 	rl_clear_history();

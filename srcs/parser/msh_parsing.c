@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/21 21:26:44 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/25 13:56:52 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,49 @@ t_ast	*msh_get_redirect(t_token **tokens)
 	return (msh_get_cmd(&tmp));
 }
 
+// t_ast	*msh_get_pipe(t_token **tokens)
+// {
+// 	t_token	*tmp;
+// 	t_token	*next_token;
+// 	t_ast	*pipe_node;
+
+// 	tmp = *tokens;
+// 	while (*tokens && (*tokens)->next)
+// 	{
+// 		next_token = (*tokens)->next;
+// 		if ((*tokens)->next->type == PIPE)
+// 		{
+// 			pipe_node = msh_init_ast((*tokens)->next->type);
+// 			(*tokens)->next = NULL;
+// 			pipe_node->left = msh_get_redirect(&tmp);
+// 			pipe_node->right = msh_get_pipe(&(next_token->next));
+// 			free(next_token->cmd);
+// 			free(next_token);
+// 			return (pipe_node);
+// 		}
+// 		*tokens = next_token;
+// 	}
+// 	return (msh_get_redirect(&tmp));
+// }
+
 t_ast	*msh_get_pipe(t_token **tokens)
 {
 	t_token	*tmp;
 	t_token	*next_token;
 	t_ast	*pipe_node;
+	t_ast	*command_group;
 
 	tmp = *tokens;
 	while (*tokens && (*tokens)->next)
 	{
 		next_token = (*tokens)->next;
-		if ((*tokens)->next->type == PIPE)
+		if (next_token->type == PIPE)
 		{
-			pipe_node = msh_init_ast((*tokens)->next->type);
+			pipe_node = msh_init_ast(next_token->type);
 			(*tokens)->next = NULL;
-			pipe_node->left = msh_get_redirect(&tmp);
+			command_group = msh_init_ast(CMD_GROUP);
+			command_group->left = msh_get_redirect(&tmp);
+			pipe_node->left = command_group;
 			pipe_node->right = msh_get_pipe(&(next_token->next));
 			free(next_token->cmd);
 			free(next_token);
@@ -98,7 +126,9 @@ t_ast	*msh_get_pipe(t_token **tokens)
 		}
 		*tokens = next_token;
 	}
-	return (msh_get_redirect(&tmp));
+	command_group = msh_init_ast(CMD_GROUP);
+	command_group->left = msh_get_redirect(&tmp);
+	return (command_group);
 }
 
 t_ast	*msh_get_tokens(t_token **tokens)
