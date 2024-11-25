@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/20 23:26:36 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/21 21:26:44 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ t_ast	*msh_get_tokens(t_token **tokens)
 {
 	if (!tokens || !*tokens)
 		return (NULL);
-	// display_tokens(*tokens);
-	test_delete_heredoc(tokens);
+	display_tokens(*tokens);
+	// test_delete_heredoc(tokens);
 	return (msh_get_pipe(tokens));
 }

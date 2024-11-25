@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/19 16:18:14 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:04:58 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ int	main(int ac, char **av, char **env)
 			ast = msh_get_tokens(&token);
 	}
 	ft_free(msh);
-	print_tuple(msh->tuple);
 	rl_clear_history();
 	return (0);
 }

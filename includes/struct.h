@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/19 22:01:36 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:23:34 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,10 @@ typedef struct tuple
 
 typedef struct p_pipe
 {
+	int		pipe[2];
 	int		*process_pid;
-	char	**env;
 	char	**path;
+	char	**env;
 	char	*cmd;
 	int		fd_in;
 	int		fd_out;
