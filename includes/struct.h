@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/24 23:42:42 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:21:30 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,22 @@ typedef enum s_type
 	CMD_GROUP, // -> (command child)
 }	t_type;
 
+/*****************
+ * PROGRAM TRAIN *
+ *****************/
+
+typedef struct	s_msh
+{
+	struct tuple	*tuple;
+	struct s_token *token;
+	struct s_ast	*ast;
+
+	char	*home_path;
+	int		code; // -> status code
+	char	**env;
+	char	*cwd;
+}	t_msh;
+
 /***************
  * PARSER TYPE *
  ***************/
@@ -52,6 +68,7 @@ typedef struct s_ast
 	char				**args;
 	struct s_ast		*left;
 	struct s_ast		*right;
+	int					(*builtin)(t_msh *msh);
 }	t_ast;
 
 /******************
@@ -75,20 +92,5 @@ typedef struct p_pipe
 	int		fd_in;
 	int		fd_out;
 }	t_p;
-
-/*****************
- * PROGRAM TRAIN *
- *****************/
-
-typedef struct	s_msh
-{
-	t_tuple	*tuple;
-	t_token *token;
-
-	char	*home_path;
-	int		code; // -> status code
-	char	**env;
-	char	*cwd;
-}	t_msh;
 
 #endif

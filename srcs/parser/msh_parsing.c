@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/24 23:42:16 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:16:28 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_ast	*msh_get_cmd(t_token **tokens)
 	if (!command_node->args)
 		return (NULL);
 	add_cmd_arg(command_node, tokens, arg_count);
+	command_node->builtin = init_builtin(command_node->args[0]);
 	return (command_node);
 }
 
@@ -75,31 +76,6 @@ t_ast	*msh_get_redirect(t_token **tokens)
 	}
 	return (msh_get_cmd(&tmp));
 }
-
-// t_ast	*msh_get_pipe(t_token **tokens)
-// {
-// 	t_token	*tmp;
-// 	t_token	*next_token;
-// 	t_ast	*pipe_node;
-
-// 	tmp = *tokens;
-// 	while (*tokens && (*tokens)->next)
-// 	{
-// 		next_token = (*tokens)->next;
-// 		if ((*tokens)->next->type == PIPE)
-// 		{
-// 			pipe_node = msh_init_ast((*tokens)->next->type);
-// 			(*tokens)->next = NULL;
-// 			pipe_node->left = msh_get_redirect(&tmp);
-// 			pipe_node->right = msh_get_pipe(&(next_token->next));
-// 			free(next_token->cmd);
-// 			free(next_token);
-// 			return (pipe_node);
-// 		}
-// 		*tokens = next_token;
-// 	}
-// 	return (msh_get_redirect(&tmp));
-// }
 
 t_ast	*msh_get_pipe(t_token **tokens)
 {
@@ -133,9 +109,62 @@ t_ast	*msh_get_pipe(t_token **tokens)
 
 t_ast	*msh_get_tokens(t_token **tokens)
 {
+	t_msh	*msh;
+
 	if (!tokens || !*tokens)
 		return (NULL);
 	// display_tokens(*tokens);
 	test_delete_heredoc(tokens);
 	return (msh_get_pipe(tokens));
+}
+
+/**
+ * @brief Execute the abstract syntax tree : Test function
+ * @jikarunw
+ */
+
+int	execute_ast(t_ast *ast, t_msh *msh)
+{
+	pid_t	pid;
+	int		status;
+
+	if (!ast)
+		return (1);
+	if (ast->type == CMD && ast->builtin)
+		return (ast->builtin(msh));
+	if (ast->type == PIPE)
+	{
+		execute_ast(ast->left, msh);
+		execute_ast(ast->right, msh);
+		return (0);
+	}
+	if (ast->type == CMD)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			execvp(ast->args[0], ast->args);
+			perror("execvp");
+			msh->code = 1;
+			free(ast->args[0]);
+			exit(1);
+		}
+		else if (pid > 0)
+		{
+			waitpid(pid, &status, 0);
+			msh->code = 0;
+			return (WEXITSTATUS(status));
+		}
+		else
+		{
+			perror("fork");
+			msh->code = 1;
+			return (1);
+		}
+	}
+	execute_ast(ast->left, msh);
+	execute_ast(ast->right, msh);
+	printf("%s-----------------------------------------------------%s\n", GREEN,
+			RESET);
+	return (0);
 }

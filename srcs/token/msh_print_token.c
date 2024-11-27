@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:08:36 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/24 23:44:03 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:09:25 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,20 +91,20 @@ void	test_delete_heredoc(t_token **tokens)
 		printf("No tokens to display.\n");
 		return ;
 	}
-	printf("%sBefore delete HEREDOC tokens:%s\n\n", RED, RESET);
+	printf("%sBefore deleting HEREDOC tokens:%s\n\n", RED, RESET);
 	display_tokens(*tokens);
 	delete_token_heredoc(tokens);
-	printf("%sAfter delete HEREDOC tokens:%s\n\n", YELLOW, RESET);
+	printf("%sAfter deleting HEREDOC tokens:%s\n\n", BLUE, RESET);
 	display_tokens(*tokens);
 }
 
 void	display_ast(t_ast *ast, int idx)
 {
 	if (!ast)
-		return ;
+		return;
 	for (int i = 0; i < idx; i++)
 		printf("  ");
-	printf("%s(%s)%s\n", GREEN, msh_name_type(ast->type), RESET);
+	printf("(%s)\n", msh_name_type(ast->type));
 	if (ast->args)
 	{
 		for (int i = 0; i <= idx; i++)
@@ -116,7 +116,7 @@ void	display_ast(t_ast *ast, int idx)
 			if (ast->args[i + 1])
 				printf(" ");
 		}
-		printf("\n");
+		printf("\n\n");
 	}
 	display_ast(ast->left, idx + 1);
 	display_ast(ast->right, idx + 1);

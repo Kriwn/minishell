@@ -1,26 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   msh_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 17:42:26 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/25 01:02:06 by jikarunw         ###   ########.fr       */
+/*   Created: 2024/11/25 12:35:32 by jikarunw          #+#    #+#             */
+/*   Updated: 2024/11/25 13:14:42 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	get_env(t_msh *msh)
-{
-	t_tuple	*current;
-
-	current = msh->env;
-	while (current)
-	{
-		printf("%s=%s\n", current->key, current->value);
-		current = current->next;
-	}
-	return (0);
-}
