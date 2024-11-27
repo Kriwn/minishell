@@ -34,6 +34,7 @@ BUILDIN_DIR = srcs/buildin/
 BUILDIN_FILE =	msh_buildin.c \
 				msh_pwd.c	\
 				msh_echo.c	\
+				msh_exit.c	\
 				msh_cd.c
 BUILDIN_SRC = $(addprefix $(BUILDIN_DIR), $(BUILDIN_FILE))
 

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:47:52 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/16 20:54:27 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:44:02 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int (*init_builtin(char *str))(t_msh *msh)
 		{"export", NULL},
 		{"unset", NULL},
 		{"env", get_env},
-		{"exit", NULL}};
+		{"exit", msh_exit}};
 	if (!str)
 		return (NULL);
 	i = 0;

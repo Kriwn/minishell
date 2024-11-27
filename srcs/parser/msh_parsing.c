@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/27 15:16:28 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:56:13 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_ast	*msh_get_tokens(t_token **tokens)
 	if (!tokens || !*tokens)
 		return (NULL);
 	// display_tokens(*tokens);
-	test_delete_heredoc(tokens);
+	// test_delete_heredoc(tokens);
 	return (msh_get_pipe(tokens));
 }
 
@@ -122,6 +122,45 @@ t_ast	*msh_get_tokens(t_token **tokens)
  * @brief Execute the abstract syntax tree : Test function
  * @jikarunw
  */
+
+char	*heredoc_ast(t_ast *ast, t_msh *msh)
+{
+	int		fd;
+	char	*line;
+	char	*tmp;
+
+	fd = open("/tmp/heredoc", O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		perror("open");
+		return (NULL);
+	}
+	while (1)
+	{
+		line = readline("heredoc> ");
+		if (!line)
+			break ;
+		if (!ft_strcmp(line, ast->args[0]))
+		{
+			free(line);
+			break ;
+		}
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		free(line);
+	}
+	close(fd);
+	fd = open("/tmp/heredoc", O_RDONLY);
+	if (fd == -1)
+	{
+		perror("open");
+		return (NULL);
+	}
+	tmp = ft_strdup("/tmp/heredoc");
+	free(ast->args[0]);
+	ast->args[0] = tmp;
+	return (tmp);
+}
 
 int	execute_ast(t_ast *ast, t_msh *msh)
 {
@@ -164,7 +203,7 @@ int	execute_ast(t_ast *ast, t_msh *msh)
 	}
 	execute_ast(ast->left, msh);
 	execute_ast(ast->right, msh);
-	printf("%s-----------------------------------------------------%s\n", GREEN,
-			RESET);
+	// printf("%s---------------------------------------------------------------------------------------------%s\n",
+	// 		GREEN, RESET);
 	return (0);
 }

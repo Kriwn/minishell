@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/26 18:21:30 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:15:14 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef enum s_type
 typedef struct	s_msh
 {
 	struct tuple	*tuple;
-	struct s_token *token;
+	struct s_token	*token;
 	struct s_ast	*ast;
 
 	char	*home_path;

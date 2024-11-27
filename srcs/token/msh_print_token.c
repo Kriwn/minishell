@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:08:36 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/25 19:09:25 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:34:04 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,33 +57,6 @@ const char	*msh_name_type(t_type type)
 	}
 }
 
-void	display_tokens(t_token *tokens)
-{
-	t_token	*current;
-
-	if (!tokens)
-	{
-		printf("No tokens to display.\n");
-		return ;
-	}
-	printf("%s%-10s | %-10s | %-10s | %-10s %s\n", GREEN, "Input", "Type",
-			"Command", "Count Pipe", RESET);
-	printf("%s-----------------------------------------------------%s\n", GREEN,
-			RESET);
-	current = tokens;
-	while (current != NULL)
-	{
-		printf("%-10s | %-10s | %-10s | %-10d\n",
-				current->cmd ? current->cmd : "NULL",
-				msh_name_type(current->type),
-				current->cmd ? current->cmd : "NULL",
-				current->count_pipe);
-		current = current->next;
-	}
-	printf("%s-----------------------------------------------------%s\n", GREEN,
-			RESET);
-}
-
 void	test_delete_heredoc(t_token **tokens)
 {
 	if (!tokens || !*tokens)
@@ -91,33 +64,35 @@ void	test_delete_heredoc(t_token **tokens)
 		printf("No tokens to display.\n");
 		return ;
 	}
-	printf("%sBefore deleting HEREDOC tokens:%s\n\n", RED, RESET);
-	display_tokens(*tokens);
 	delete_token_heredoc(tokens);
-	printf("%sAfter deleting HEREDOC tokens:%s\n\n", BLUE, RESET);
-	display_tokens(*tokens);
 }
 
-void	display_ast(t_ast *ast, int idx)
+void	display_ast_table(t_ast *ast, int level)
 {
 	if (!ast)
 		return;
-	for (int i = 0; i < idx; i++)
-		printf("  ");
-	printf("(%s)\n", msh_name_type(ast->type));
-	if (ast->args)
+
+	if (level == 0)
 	{
-		for (int i = 0; i <= idx; i++)
-			printf("  ");
-		printf("Command: ");
-		for (int i = 0; ast->args[i]; i++)
-		{
-			printf("%s", ast->args[i]);
-			if (ast->args[i + 1])
-				printf(" ");
-		}
-		printf("\n\n");
+		printf("%s%-20s | %-15s | %-15s | %-20s | %-20s%s\n",
+				GREEN,
+				"AST Node Type",
+				"Arg",
+				"Level",
+				"Left Node",
+				"Right Node",
+				RESET);
+		printf("%s---------------------------------------------------------------------------------------------%s\n",
+				GREEN, RESET);
 	}
-	display_ast(ast->left, idx + 1);
-	display_ast(ast->right, idx + 1);
+	printf("%-20s | %-15s | %-15d | %-20s | %-20s\n",
+			msh_name_type(ast->type),
+			ast->args ? ast->args[0] : "NULL",
+			level,
+			ast->left ? msh_name_type(ast->left->type) : "NULL",
+			ast->right ? msh_name_type(ast->right->type) : "NULL");
+	if (ast->left)
+		display_ast_table(ast->left, level + 1);
+	if (ast->right)
+		display_ast_table(ast->right, level + 1);
 }
