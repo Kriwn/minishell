@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:04:43 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/27 18:54:52 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:45:07 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@ t_token	*msh_parsing_input(char *input)
 	free(input);
 	if (!trimmed_input)
 		return (NULL);
-	// if (ft_strlen(trimmed_input) == 0)
-	// {
-	// 	free(trimmed_input);
-	// 	return (NULL);
-	// }
 	// if (syntax_error_checker(trimmed_input))
 	// {
 	// 	// msh->code = 2;
@@ -51,6 +46,7 @@ t_token	*msh_parsing_input(char *input)
 	// 	return (NULL);
 	// }
 	tokens = token_input(trimmed_input);
+	display_tokens(tokens);
 	free(trimmed_input);
 	return (tokens);
 }

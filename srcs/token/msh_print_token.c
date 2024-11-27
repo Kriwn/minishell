@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:08:36 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/27 19:34:04 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:42:16 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,30 @@ void	display_ast_table(t_ast *ast, int level)
 		display_ast_table(ast->left, level + 1);
 	if (ast->right)
 		display_ast_table(ast->right, level + 1);
+}
+
+void	display_tokens(t_token *tokens)
+{
+	t_token	*current;
+
+	if (!tokens)
+	{
+		printf("No tokens to display.\n");
+		return ;
+	}
+	printf("%s%-10s | %-10s | %-10s | %-10s %s\n", GREEN, "Input", "Type",
+			"Command", "Count Pipe", RESET);
+	printf("%s-----------------------------------------------------%s\n", GREEN,
+			RESET);
+	current = tokens;
+	while (current != NULL)
+	{
+		printf("%-10s | %-10s | %-10s | %-10d\n",
+				current->cmd ? current->cmd : "NULL",
+				msh_name_type(current->type),
+				current->cmd ? current->cmd : "NULL",
+				current->count_pipe);
+		current = current->next;
+	}
+	printf("\n");
 }

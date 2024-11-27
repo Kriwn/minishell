@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/27 18:56:13 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:11:37 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,11 @@ char	*heredoc_ast(t_ast *ast, t_msh *msh)
 	char	*line;
 	char	*tmp;
 
+	if (!ast || !ast->args || !ast->args[0])
+	{
+		fprintf(stderr, "Error: Invalid HEREDOC AST node\n");
+		return (NULL);
+	}
 	fd = open("/tmp/heredoc", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd == -1)
 	{
@@ -157,9 +162,36 @@ char	*heredoc_ast(t_ast *ast, t_msh *msh)
 		return (NULL);
 	}
 	tmp = ft_strdup("/tmp/heredoc");
+	if (!tmp)
+	{
+		fprintf(stderr, "Error: Failed to duplicate heredoc path\n");
+		return (NULL);
+	}
 	free(ast->args[0]);
 	ast->args[0] = tmp;
 	return (tmp);
+}
+
+int	process_heredoc(t_ast *ast, t_msh *msh)
+{
+	if (!ast)
+		return (0);
+	if (ast->type == HEREDOC)
+	{
+		if (!ast->args || !ast->args[0])
+			return (0);
+		char *result = heredoc_ast(ast, msh);
+		if (!result)
+		{
+			fprintf(stderr, "Error processing heredoc\n");
+			return (1);
+		}
+	}
+	if (ast->left && process_heredoc(ast->left, msh))
+		return (1);
+	if (ast->right && process_heredoc(ast->right, msh))
+		return (1);
+	return (0);
 }
 
 int	execute_ast(t_ast *ast, t_msh *msh)

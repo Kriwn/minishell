@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/27 19:22:09 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:06:00 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,6 @@ void		update_quote_counts(char c, int *s_q_count, int *d_q_count);
 
 char		*heredoc_ast(t_ast *ast, t_msh *msh);
 
+void		display_tokens(t_token *tokens);
+int			process_heredoc(t_ast *ast, t_msh *msh);
 #endif
