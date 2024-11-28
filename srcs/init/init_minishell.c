@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:19:20 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/28 13:50:40 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:10:42 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	init_minishell(t_msh *data, char **env)
 	data->tuple = NULL;
 	data->list = NULL;
 	data->ast = NULL;
-	data->token = NULL;
 	if (init_tuple(&data->tuple, env) == -1)
 		ft_error(data, "malloc error\n");
 	if (init_pipe(&data->list) == -1)

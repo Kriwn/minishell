@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/28 14:17:25 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/28 19:31:29 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,8 @@ void		display_ast(t_ast *ast, int idx);
  * SRCS/EXE/
  ***********/
 int			find_slash(char *command);
-int			do_here_doc(t_ast *ast, t_p *list);
+int	do_here_doc(t_ast *ast,t_ast *temp ,t_p *list);
+// int			do_here_doc(t_ast *ast, t_p *list);
 void	do_here_doc_task(t_ast *ast,t_p *list);
 int			main_exe(t_msh *msh);
 

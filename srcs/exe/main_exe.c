@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/28 13:55:46 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:38:55 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,42 @@ void	init_pipe(t_p **temp, t_msh *msh)
 {
 	printf("Ininit\n");
 	t_p		*list;
+	size_t	size;
 	int		i;
 
 	i = 0;
 	list = *temp;
-	list->process_pid = malloc(sizeof(int) * (msh->token->count_pipe + 1));
+	size = msh->count_pipe + 1;
+	list->process_pid = malloc(sizeof(int) * (size));
 	list->env = msh->env;
-	list->path = get_value_from_key(msh->tuple, "PATH");
+
+
+	list->path = ft_split(get_value_from_key(msh->tuple, "PATH"), ':');
+	// for(int i = 0; list->path[i]; i++)
+	// 	printf("%s\n",list->path[i]);
+
 	list->pipe[0] = -1;
 	list->pipe[1] = -1;
 	list->fd_in = -1;
 	list->fd_out = -1;
-	while (i < msh->token->count_pipe)
+	while (i < size)
 	{
 		list->process_pid[i] = 0;
 		i++;
 	}
+	printf("Outinit\n");
 }
 
 int	main_exe(t_msh *msh)
 {
-	t_token	*token;
 	t_p		*list;
 
-	token = msh->token;
 	list = msh->list;
+	printf("%d\n",msh->count_pipe);
 	init_pipe(&list,msh);
 	do_here_doc_task(msh->ast, list);
 	// // delete_token_heredoc(&msh->token);
-	// // if (token->count_pipe == 0)
-	// // 	return (exe_single_cmd(ast, list));
+	// if (msh->count_pipe == 0)
+		// return (exe_single_cmd(ast, list));
 	// return (pipe_task(ast, list));
 }
