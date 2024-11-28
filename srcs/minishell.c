@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/28 20:10:03 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/28 21:01:42 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	main(int ac, char **av, char **env)
 {
 	t_msh	*msh;
 	t_ast	*ast;
-	t_token	*token;
 	char	*input;
 
 	msh = malloc(sizeof(t_msh));
@@ -100,12 +99,13 @@ int	main(int ac, char **av, char **env)
 			printf("exit\n");
 			break ;
 		}
-		token = msh_parsing_input(input);
-		msh->count_pipe = token->count_pipe;
-		if (token)
+		msh->token = msh_parsing_input(input);
+		msh->count_pipe = msh->token ->count_pipe;
+		if (msh->token)
 		{
-			msh->ast = msh_get_tokens(&token);
+			msh->ast = msh_get_tokens(&msh->token );
 			printf("Before go main exe %d\n",msh->count_pipe);
+			printf("Before go main Token count pipe %d\n",msh->token->count_pipe);
 			// if (msh->ast)
 			// {
 			// 	printf("\nAbstract Syntax Tree:\n");
