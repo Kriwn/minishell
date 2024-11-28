@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/27 20:04:06 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:46:11 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,8 @@ int	main(int ac, char **av, char **env)
 		{
 			// display_ast(ast, 0);
 			display_ast_table(ast, 0);
-			if (process_heredoc(ast, msh))
-			{
-				fprintf(stderr, "Heredoc-Error: process or something error\n");
-				continue ;
-			}
-			status = execute_ast(ast, msh);
+			printf("\n");
+			// status = execute_ast(ast, msh);
 		}
 	}
 	free(ast->args);

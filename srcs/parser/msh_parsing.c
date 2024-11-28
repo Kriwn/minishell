@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/27 20:11:37 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:45:37 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_ast	*file_ast_node(t_token *token)
 {
 	t_ast	*node;
 
+	if (!token || !token->cmd)
+		return (NULL);
 	node = malloc(sizeof(t_ast));
 	if (!node)
 		return (NULL);
@@ -26,13 +28,15 @@ t_ast	*file_ast_node(t_token *token)
 		free(node);
 		return (NULL);
 	}
-	node->args[0] = token->cmd;
+	node->args[0] = ft_strdup(token->cmd);
 	node->args[1] = NULL;
 	node->left = NULL;
 	node->right = NULL;
+	free(token->cmd);
 	free(token);
 	return (node);
 }
+
 
 t_ast	*msh_get_cmd(t_token **tokens)
 {
@@ -123,119 +127,41 @@ t_ast	*msh_get_tokens(t_token **tokens)
  * @jikarunw
  */
 
-char	*heredoc_ast(t_ast *ast, t_msh *msh)
-{
-	int		fd;
-	char	*line;
-	char	*tmp;
-
-	if (!ast || !ast->args || !ast->args[0])
-	{
-		fprintf(stderr, "Error: Invalid HEREDOC AST node\n");
-		return (NULL);
-	}
-	fd = open("/tmp/heredoc", O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (fd == -1)
-	{
-		perror("open");
-		return (NULL);
-	}
-	while (1)
-	{
-		line = readline("heredoc> ");
-		if (!line)
-			break ;
-		if (!ft_strcmp(line, ast->args[0]))
-		{
-			free(line);
-			break ;
-		}
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
-		free(line);
-	}
-	close(fd);
-	fd = open("/tmp/heredoc", O_RDONLY);
-	if (fd == -1)
-	{
-		perror("open");
-		return (NULL);
-	}
-	tmp = ft_strdup("/tmp/heredoc");
-	if (!tmp)
-	{
-		fprintf(stderr, "Error: Failed to duplicate heredoc path\n");
-		return (NULL);
-	}
-	free(ast->args[0]);
-	ast->args[0] = tmp;
-	return (tmp);
-}
-
-int	process_heredoc(t_ast *ast, t_msh *msh)
-{
-	if (!ast)
-		return (0);
-	if (ast->type == HEREDOC)
-	{
-		if (!ast->args || !ast->args[0])
-			return (0);
-		char *result = heredoc_ast(ast, msh);
-		if (!result)
-		{
-			fprintf(stderr, "Error processing heredoc\n");
-			return (1);
-		}
-	}
-	if (ast->left && process_heredoc(ast->left, msh))
-		return (1);
-	if (ast->right && process_heredoc(ast->right, msh))
-		return (1);
-	return (0);
-}
-
-int	execute_ast(t_ast *ast, t_msh *msh)
-{
-	pid_t	pid;
-	int		status;
-
-	if (!ast)
-		return (1);
-	if (ast->type == CMD && ast->builtin)
-		return (ast->builtin(msh));
-	if (ast->type == PIPE)
-	{
-		execute_ast(ast->left, msh);
-		execute_ast(ast->right, msh);
-		return (0);
-	}
-	if (ast->type == CMD)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			execvp(ast->args[0], ast->args);
-			perror("execvp");
-			msh->code = 1;
-			free(ast->args[0]);
-			exit(1);
-		}
-		else if (pid > 0)
-		{
-			waitpid(pid, &status, 0);
-			msh->code = 0;
-			return (WEXITSTATUS(status));
-		}
-		else
-		{
-			perror("fork");
-			msh->code = 1;
-			return (1);
-		}
-	}
-	execute_ast(ast->left, msh);
-	execute_ast(ast->right, msh);
-	// printf("%s---------------------------------------------------------------------------------------------%s\n",
-	// 		GREEN, RESET);
-	return (0);
-}
+// int	execute_ast(t_ast *ast, t_msh *msh)
+// {
+// 	if (!ast || !msh)
+// 		return (1);
+// 	if (ast->type == CMD && ast->builtin)
+// 		return (ast->builtin(msh));
+// 	if (ast->type == PIPE)
+// 	{
+// 		execute_ast(ast->left, msh);
+// 		execute_ast(ast->right, msh);
+// 		return (0);
+// 	}
+// 	if (ast->type == CMD)
+// 	{
+// 		pid_t pid = fork();
+// 		if (pid == 0)
+// 		{
+// 			execvp(ast->args[0], ast->args);
+// 			perror("execvp");
+// 			exit(1);
+// 		}
+// 		else if (pid > 0)
+// 		{
+// 			int status;
+// 			waitpid(pid, &status, 0);
+// 			msh->code = WEXITSTATUS(status);
+// 			return (msh->code);
+// 		}
+// 		else
+// 		{
+// 			perror("fork");
+// 			return (1);
+// 		}
+// 	}
+// 	execute_ast(ast->left, msh);
+// 	execute_ast(ast->right, msh);
+// 	return (0);
+// }

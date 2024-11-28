@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:47:52 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/27 18:44:02 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/28 02:27:31 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,29 @@
 
 int (*init_builtin(char *str))(t_msh *msh)
 {
-	int	i;
+	int i;
 
-	static void *builtins[7][2] = {
+	static struct {
+		char *name;
+		int (*func)(t_msh *);
+	} builtins[] = {
 		{"echo", msh_echo},
 		{"cd", msh_cd},
 		{"pwd", msh_pwd},
 		{"export", NULL},
 		{"unset", NULL},
 		{"env", get_env},
-		{"exit", msh_exit}};
+		{"exit", msh_exit},
+		{NULL, NULL}
+	};
+
 	if (!str)
 		return (NULL);
 	i = 0;
-	while (i < 7)
+	while (builtins[i].name)
 	{
-		if (!ft_strcmp(builtins[i][0], str))
-			return (builtins[i][1]);
+		if (!ft_strcmp(builtins[i].name, str))
+			return (builtins[i].func);
 		i++;
 	}
 	return (NULL);
