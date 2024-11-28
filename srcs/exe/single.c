@@ -6,15 +6,14 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 21:49:36 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/21 23:30:00 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/25 14:25:18 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exe_single_cmd(curr, list)
+int	exe_single_cmd(t_ast *ast,t_p *list)
 {
 
 
-	 
 }

@@ -30,6 +30,12 @@ ENV_DIR = srcs/env/
 ENV_FILE =		get_env.c
 ENV_SRC = $(addprefix $(ENV_DIR), $(ENV_FILE))
 
+EXE_DIR = srcs/exe/
+EXE_FILE =	exe_utils.c \
+			main_exe.c \
+			here_doc.c
+EXE_SRC = $(addprefix $(EXE_DIR), $(EXE_FILE))
+
 # BUILDIN_DIR = srcs/buildin/
 # BUILDIN_FILE =	msh_buildin.c \
 # 				msh_pwd.c	\
@@ -49,7 +55,7 @@ TOKEN_FILE =	token_utils_01.c \
 				msh_token.c
 TOKEN_SRC = $(addprefix $(TOKEN_DIR), $(TOKEN_FILE))
 
-SRC = $(UTILS_SRC) $(INIT_SRC) $(ENV_SRC) $(TOKEN_SRC) $(PARSER_SRC) ./srcs/minishell.c
+SRC = $(UTILS_SRC) $(INIT_SRC) $(ENV_SRC) $(TOKEN_SRC) $(PARSER_SRC) $(EXE_SRC) ./srcs/minishell.c
 
 OBJ = $(SRC:$(PATH_SRCS)/%.c=$(OBJ_DIR)/%.o)
 

@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/25 14:09:50 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:46:37 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ char	*ft_readline(t_msh *var)
 int	main(int ac, char **av, char **env)
 {
 	t_msh	*msh;
-	t_token	*token;
 	t_ast	*ast;
 	char	*input;
 
@@ -100,14 +99,17 @@ int	main(int ac, char **av, char **env)
 			printf("exit\n");
 			break ;
 		}
-		token = msh_parsing_input(input);
-		if (token)
-			ast = msh_get_tokens(&token);
-			if (ast)
-			{
-				printf("\nAbstract Syntax Tree:\n");
-				display_ast(ast, 0);
-			}
+		msh->token = msh_parsing_input(input);
+		if (msh->token)
+		{
+			msh->ast = msh_get_tokens(&msh->token);
+			// if (msh->ast)
+			// {
+			// 	printf("\nAbstract Syntax Tree:\n");
+			// 	display_ast(msh->ast, 0);
+			// }
+			main_exe(msh);
+		}
 
 	}
 	ft_free(msh);

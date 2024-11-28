@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_print_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:08:36 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/24 23:44:03 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:46:09 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	test_delete_heredoc(t_token **tokens)
 	}
 	printf("%sBefore delete HEREDOC tokens:%s\n\n", RED, RESET);
 	display_tokens(*tokens);
-	delete_token_heredoc(tokens);
+	// delete_token_heredoc(tokens);
 	printf("%sAfter delete HEREDOC tokens:%s\n\n", YELLOW, RESET);
 	display_tokens(*tokens);
 }

@@ -6,13 +6,13 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:19:20 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/18 18:20:32 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/28 13:50:40 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_pipe(t_p **list)
+static int	init_pipe(t_p **list)
 {
 	*list = malloc(sizeof(t_p));
 	if (!*list)
@@ -26,6 +26,8 @@ void	init_minishell(t_msh *data, char **env)
 {
 	data->tuple = NULL;
 	data->list = NULL;
+	data->ast = NULL;
+	data->token = NULL;
 	if (init_tuple(&data->tuple, env) == -1)
 		ft_error(data, "malloc error\n");
 	if (init_pipe(&data->list) == -1)

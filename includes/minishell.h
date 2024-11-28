@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/25 13:56:19 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:17:25 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include <signal.h>
 # include "../libft/includes/libft.h"
 # include <stdbool.h>
@@ -122,5 +123,16 @@ void		test_delete_heredoc(t_token **tokens);
 void		delete_token_heredoc(t_token **tokens);
 void		delete_token_list(t_token **tokens);
 void		display_ast(t_ast *ast, int idx);
+
+/***********
+ * SRCS/EXE/
+ ***********/
+int			find_slash(char *command);
+int			do_here_doc(t_ast *ast, t_p *list);
+void	do_here_doc_task(t_ast *ast,t_p *list);
+int			main_exe(t_msh *msh);
+
+
+
 
 #endif

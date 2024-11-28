@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/25 13:56:52 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:46:50 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ t_ast	*msh_get_tokens(t_token **tokens)
 {
 	if (!tokens || !*tokens)
 		return (NULL);
-	display_tokens(*tokens);
+	// display_tokens(*tokens);
 	// test_delete_heredoc(tokens);
 	return (msh_get_pipe(tokens));
 }

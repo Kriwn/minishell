@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/25 13:56:28 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/26 20:02:48 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct	s_msh
 	char	*home_path;
 	int		code; // -> status code
 	t_p		*list;
+	t_ast	*ast;
 	char	**env;
 	char	*cwd;
 }	t_msh;
