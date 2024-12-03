@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/28 14:45:37 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/03 19:59:29 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ t_ast	*msh_get_redirect(t_token **tokens)
 	while (*tokens && (*tokens)->next)
 	{
 		next_token = (*tokens)->next;
-		if ((*tokens)->next->type >= REDIRECT
-			&& (*tokens)->next->type <= HEREDOC)
+		if ((*tokens)->next->type >= INDIRECT
+			&& (*tokens)->next->type <= APPEND)
 		{
 			redirect_node = msh_init_ast((*tokens)->next->type);
 			(*tokens)->next = next_token->next->next;
