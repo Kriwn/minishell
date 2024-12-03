@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:08:36 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/27 19:42:16 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/03 20:15:11 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	display_ast_table(t_ast *ast, int level)
 void	display_tokens(t_token *tokens)
 {
 	t_token	*current;
+	int		pipe_count;
 
 	if (!tokens)
 	{
@@ -117,8 +118,10 @@ void	display_tokens(t_token *tokens)
 				current->cmd ? current->cmd : "NULL",
 				msh_name_type(current->type),
 				current->cmd ? current->cmd : "NULL",
-				current->count_pipe);
+				current->type == PIPE ? 1 : 0);
 		current = current->next;
 	}
+	pipe_count = count_pipes(tokens);
+	printf("%sTotal pipes: %d%s\n",YELLOW, pipe_count, RESET);
 	printf("\n");
 }

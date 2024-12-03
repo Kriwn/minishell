@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/28 12:37:10 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/03 20:11:20 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,6 @@ int			is_invalid_operator(const char **input);
 void		update_quote_counts(char c, int *s_q_count, int *d_q_count);
 
 void		display_tokens(t_token *tokens);
-int			process_heredoc(t_ast *ast, t_msh *msh);
+int			count_pipes(t_token *tokens);
+
 #endif
