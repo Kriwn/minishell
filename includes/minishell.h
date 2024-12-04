@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/24 23:29:49 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/03 20:11:20 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # include "../libft/includes/libft.h"
 # include <stdbool.h>
 
+#include <sys/wait.h>
+#include <fcntl.h>
+
 # include "../libft/includes/libft.h"
 # include "./struct.h"
 # include <termios.h>
@@ -38,9 +41,10 @@
 char		*ft_pwd(t_tuple *list);
 int			(*init_builtin(char *str))(t_msh *msh);
 
-int			msh_echo(t_msh *msh, t_token *token);
+int			msh_echo(t_msh **msh);
 int			msh_pwd(t_msh *msh);
 int			msh_cd(t_msh *msh, t_token *token);
+int			msh_exit(t_msh *msh);
 
 int			get_env(t_msh *msh);
 
@@ -78,10 +82,7 @@ void		*make_tuple(t_tuple *new_node,char *str,char c);
 /************************
  * SRCS/PARSER/PARSER.C *
  ************************/
-t_token		*msh_input(char *input);
-int			msh_execute_commands(t_token *tokens);
-t_token		*msh_parse_tokens(char *input);
-int			msh_parsing(char *input);
+
 
 /****************************
  * SRCS/PARSER/PARSER_UTILS *
@@ -101,8 +102,6 @@ t_ast		*msh_get_redirect(t_token **tokens);
 t_ast		*msh_get_pipe(t_token **tokens);
 t_ast		*msh_get_tokens(t_token **tokens);
 
-
-
 /***************
  * SRCS/TOKEN/ *
  ***************/
@@ -116,10 +115,22 @@ void		parse_type(char **input, t_token **tokens);
 
 t_token		*token_input(char *input);
 t_token		*msh_parsing_input(char *input);
-void		display_tokens(t_token *tokens);
 void		test_delete_heredoc(t_token **tokens);
 void		delete_token_heredoc(t_token **tokens);
 void		delete_token_list(t_token **tokens);
-void		display_ast(t_ast *ast, int idx);
+
+// void		display_ast(t_ast *ast, int idx);
+int			execute_ast(t_ast *ast, t_msh *msh);
+// void		display_execute_ast(t_ast *ast, int idx);
+
+void		display_ast_table(t_ast *ast, int level);
+
+int			syntax_error_checker(const char *input);
+
+int			is_invalid_operator(const char **input);
+void		update_quote_counts(char c, int *s_q_count, int *d_q_count);
+
+void		display_tokens(t_token *tokens);
+int			count_pipes(t_token *tokens);
 
 #endif

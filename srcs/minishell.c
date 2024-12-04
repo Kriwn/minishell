@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/24 23:29:41 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:46:11 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	main(int ac, char **av, char **env)
 	t_token	*token;
 	t_ast	*ast;
 	char	*input;
+	int		status;
 
 	msh = malloc(sizeof(t_msh));
 	if (!msh)
@@ -97,18 +98,23 @@ int	main(int ac, char **av, char **env)
 		input = ft_readline(msh);
 		if (!input)
 		{
-			printf("exit\n");
+			printf("%sEXIT!%s💥\n", RED, RESET);
+			exit(1);
 			break ;
 		}
 		token = msh_parsing_input(input);
 		if (token)
 			ast = msh_get_tokens(&token);
-			if (ast)
-			{
-				printf("\nAbstract Syntax Tree:\n");
-				display_ast(ast, 0);
-			}
+		if (ast)
+		{
+			// display_ast(ast, 0);
+			display_ast_table(ast, 0);
+			printf("\n");
+			// status = execute_ast(ast, msh);
+		}
 	}
+	free(ast->args);
+	free(ast->args[0]);
 	ft_free(msh);
 	print_tuple(msh->tuple);
 	rl_clear_history();

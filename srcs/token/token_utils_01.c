@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 20:56:54 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/24 23:47:17 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/03 20:12:41 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,21 @@ void	parse_type(char **input, t_token **tokens)
 	else if (**input == '|')
 	{
 		add_token_to_list(tokens, new_token(PIPE, "|"));
-		(*tokens)->count_pipe++;
+		count_pipes(*tokens);
 	}
 	(*input)++;
+}
+
+int	count_pipes(t_token *tokens)
+{
+	int	pipe_count;
+
+	pipe_count = 0;
+	while (tokens)
+	{
+		if (tokens->type == PIPE)
+			pipe_count++;
+		tokens = tokens->next;
+	}
+	return (pipe_count);
 }

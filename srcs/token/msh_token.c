@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:04:43 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/23 16:14:34 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/28 12:40:48 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,20 @@ t_token	*msh_parsing_input(char *input)
 {
 	char	*trimmed_input;
 	t_token	*tokens;
+	t_msh	*msh;
 
 	trimmed_input = ft_strtrim(input, " \t\n\v\f\r");
 	free(input);
 	if (!trimmed_input)
 		return (NULL);
+	// if (syntax_error_checker(trimmed_input))
+	// {
+	// 	// msh->code = 2;
+	// 	free(trimmed_input);
+	// 	return (NULL);
+	// }
 	tokens = token_input(trimmed_input);
+	display_tokens(tokens);
 	free(trimmed_input);
 	return (tokens);
 }
