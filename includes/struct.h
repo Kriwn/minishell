@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/28 20:57:58 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/30 10:16:51 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct	s_msh
 {
 	t_tuple	*tuple;
 	t_token	*token;
-	
+
 	char	*home_path;
 	int		count_pipe;
 	int		code; // -> status code

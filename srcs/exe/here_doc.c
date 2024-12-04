@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:01 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/28 20:52:59 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/30 10:20:33 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	do_here_doc_task(t_ast *ast,t_p *list)
 	}
 }
 
-
+// try << test < a >> d it should not have someting in d
+// if SIG INT exit code 130
 int	do_here_doc(t_ast *ast,t_ast *temp ,t_p *list)
 {
 	char	*getline;
