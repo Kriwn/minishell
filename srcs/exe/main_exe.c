@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/30 18:32:06 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:43:15 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	init_pipe(t_p **temp, t_msh *msh)
 	list = *temp;
 	size = msh->count_pipe + 1;
 	list->process_pid = malloc(sizeof(int) * (size));
-	list->env = msh->env;
 
 	// printf("Before split token count pipe %d\n",msh->token->count_pipe);
 	list->path = ft_split(get_value_from_key(msh->tuple, "PATH"), ':');
@@ -53,8 +52,7 @@ int	main_exe(t_msh *msh)
 	printf("token count pipe %d\n",msh->token->count_pipe);
 	init_pipe(&list,msh);
 	do_here_doc_task(msh->ast, list);
-	// delete_token_heredoc(&msh->token);
-	if (msh->count_pipe == 0)
-		return (exe_single_cmd(msh->ast, list));
+	// if (msh->count_pipe == 0)
+	// 	return (exe_single_cmd(msh->ast, list));
 	// return (pipe_task(ast, list));
 }

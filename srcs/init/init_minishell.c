@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:19:20 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/28 20:58:15 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:05:16 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static int	init_pipe(t_p **list)
 	if (!*list)
 		return -1;
 	(*list)->process_pid = NULL;
-	(*list)->env = NULL;
 	(*list)->path = NULL;
 }
 

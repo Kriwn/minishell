@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/30 10:16:51 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:05:03 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,24 @@ typedef enum s_type
 	CMD_GROUP, // -> (command child)
 }	t_type;
 
+/*****************
+ * PROGRAM TRAIN *
+ *****************/
+
+typedef struct	s_msh
+{
+	struct tuple	*tuple;
+	struct s_token	*token;
+	struct s_ast	*ast;
+	struct p_pipe	*list;
+
+	char	*home_path;
+	int		code; // -> status code
+	int		count_pipe;
+	char	*env;
+	char	*cwd;
+}	t_msh;
+
 /***************
  * PARSER TYPE *
  ***************/
@@ -52,6 +70,7 @@ typedef struct s_ast
 	char				**args;
 	struct s_ast		*left;
 	struct s_ast		*right;
+	int					(*builtin)(t_msh *msh);
 }	t_ast;
 
 /******************
@@ -70,28 +89,8 @@ typedef struct p_pipe
 	int		pipe[2];
 	int		*process_pid;
 	char	**path;
-	char	**env;
 	char	*cmd;
 	int		fd_in;
 	int		fd_out;
 }	t_p;
-
-/*****************
- * PROGRAM TRAIN *
- *****************/
-
-typedef struct	s_msh
-{
-	t_tuple	*tuple;
-	t_token	*token;
-
-	char	*home_path;
-	int		count_pipe;
-	int		code; // -> status code
-	t_p		*list;
-	t_ast	*ast;
-	char	**env;
-	char	*cwd;
-}	t_msh;
-
 #endif

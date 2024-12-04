@@ -46,6 +46,8 @@ EXE_SRC = $(addprefix $(EXE_DIR), $(EXE_FILE))
 
 PARSER_DIR = srcs/parser/
 PARSER_FILE =	msh_parsing.c \
+				msh_syntax.c \
+				syntax_utils_01.c \
 				parsing_utils_01.c
 PARSER_SRC = $(addprefix $(PARSER_DIR), $(PARSER_FILE))
 

@@ -6,63 +6,37 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:11:22 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/19 14:30:44 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/11/28 12:39:05 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	only_n(char *str, int *flag)
+int	msh_echo(t_msh **msh)
 {
-	if (!str)
+	int	i;
+	int	n_flag;
+
+	i = 1;
+	n_flag = 0;
+	if (!(*msh)->ast->args[i])
+	{
+		ft_putstr_fd("\n", STDOUT_FILENO);
 		return (0);
-	while (*str)
-	{
-		if (*str != 'n')
-			return (0);
-		str++;
 	}
-	*flag = 0;
-	return (1);
-}
-
-void	put_arg(t_token *current)
-{
-	if (!current || !current->cmd)
-		return ;
-	ft_putstr_fd(current->cmd, STDOUT_FILENO);
-	if (current->next)
-		ft_putchar_fd(' ', STDOUT_FILENO);
-}
-
-int	msh_echo(t_msh *msh, t_token *token)
-{
-	int		nl_flag;
-	t_token	*current;
-
-	if (!msh || !token)
-		return (EXIT_FAILURE);
-	nl_flag = 1;
-	current = token->next;
-	if (!current)
+	if (!ft_strncmp((*msh)->ast->args[i], "-n", 3))
 	{
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		return (EXIT_SUCCESS);
+		n_flag = 1;
+		i++;
 	}
-	while (current && current->cmd && ft_strncmp(current->cmd, "-n", 2) == 0)
+	while ((*msh)->ast->args[i])
 	{
-		if (only_n(current->cmd + 2, &nl_flag))
-			current = current->next;
-		else
-			break ;
+		ft_putstr_fd((*msh)->ast->args[i], STDOUT_FILENO);
+		if ((*msh)->ast->args[i + 1])
+			ft_putstr_fd(" ", STDOUT_FILENO);
+		i++;
 	}
-	while (current)
-	{
-		put_arg(current);
-		current = current->next;
-	}
-	if (nl_flag)
-		ft_putchar_fd('\n', STDOUT_FILENO);
-	msh->code = 12;
-	return (EXIT_SUCCESS);
+	if (!n_flag)
+		ft_putstr_fd("\n", STDOUT_FILENO);
+	return (0);
 }

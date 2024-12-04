@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/30 09:49:52 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/04 15:19:26 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	main(int ac, char **av, char **env)
 	t_msh	*msh;
 	t_ast	*ast;
 	char	*input;
+	int		status;
 
 	msh = malloc(sizeof(t_msh));
 	if (!msh)
@@ -96,7 +97,8 @@ int	main(int ac, char **av, char **env)
 		input = ft_readline(msh);
 		if (!input)
 		{
-			printf("exit\n");
+			printf("%sEXIT!%s💥\n", RED, RESET);
+			exit(1);
 			break ;
 		}
 		msh->token = msh_parsing_input(input);
@@ -109,13 +111,15 @@ int	main(int ac, char **av, char **env)
 			if (msh->ast)
 			{
 				printf("\nAbstract Syntax Tree:\n");
-				display_ast(msh->ast, 0);
+				display_ast_table(msh->ast, 0);
 			}
 			printf("\n\n\n");
 			main_exe(msh);
 		}
 
 	}
+	free(ast->args);
+	free(ast->args[0]);
 	ft_free(msh);
 	rl_clear_history();
 	return (0);

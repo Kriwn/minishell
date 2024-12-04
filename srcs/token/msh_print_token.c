@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:08:36 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/28 14:46:09 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/04 14:59:36 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,50 @@ const char	*msh_name_type(t_type type)
 	}
 }
 
+void	test_delete_heredoc(t_token **tokens)
+{
+	if (!tokens || !*tokens)
+	{
+		printf("No tokens to display.\n");
+		return ;
+	}
+	delete_token_heredoc(tokens);
+}
+
+void	display_ast_table(t_ast *ast, int level)
+{
+	if (!ast)
+		return;
+
+	if (level == 0)
+	{
+		printf("%s%-20s | %-15s | %-15s | %-20s | %-20s%s\n",
+				GREEN,
+				"AST Node Type",
+				"Arg",
+				"Level",
+				"Left Node",
+				"Right Node",
+				RESET);
+		printf("%s---------------------------------------------------------------------------------------------%s\n",
+				GREEN, RESET);
+	}
+	printf("%-20s | %-15s | %-15d | %-20s | %-20s\n",
+			msh_name_type(ast->type),
+			ast->args ? ast->args[0] : "NULL",
+			level,
+			ast->left ? msh_name_type(ast->left->type) : "NULL",
+			ast->right ? msh_name_type(ast->right->type) : "NULL");
+	if (ast->left)
+		display_ast_table(ast->left, level + 1);
+	if (ast->right)
+		display_ast_table(ast->right, level + 1);
+}
+
 void	display_tokens(t_token *tokens)
 {
 	t_token	*current;
+	int		pipe_count;
 
 	if (!tokens)
 	{
@@ -77,26 +118,13 @@ void	display_tokens(t_token *tokens)
 				current->cmd ? current->cmd : "NULL",
 				msh_name_type(current->type),
 				current->cmd ? current->cmd : "NULL",
-				current->count_pipe);
+				current->type == PIPE ? 1 : 0);
 		current = current->next;
 	}
 	printf("%s-----------------------------------------------------%s\n", GREEN,
 			RESET);
 }
 
-void	test_delete_heredoc(t_token **tokens)
-{
-	if (!tokens || !*tokens)
-	{
-		printf("No tokens to display.\n");
-		return ;
-	}
-	printf("%sBefore delete HEREDOC tokens:%s\n\n", RED, RESET);
-	display_tokens(*tokens);
-	// delete_token_heredoc(tokens);
-	printf("%sAfter delete HEREDOC tokens:%s\n\n", YELLOW, RESET);
-	display_tokens(*tokens);
-}
 
 void	display_ast(t_ast *ast, int idx)
 {
