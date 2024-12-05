@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/05 13:28:28 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/05 15:29:38 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,6 @@
 # include "../libft/includes/libft.h"
 # include "./struct.h"
 # include <termios.h>
-
-/*************************
- * SRCS/BUILDIN/FT_PWD.C *
- *************************/
-char		*ft_pwd(t_tuple *list);
-int			(*init_builtin(char *str))(t_msh *msh);
-
-int			msh_echo(t_msh **msh);
-int			msh_pwd(t_msh *msh);
-int			msh_cd(t_msh *msh, t_token *token);
-int			msh_exit(t_msh *msh);
-
-int			get_env(t_msh *msh);
 
 /***************************
  * SRCS/UTILS/TUPLE_LIST.C *
@@ -84,11 +71,18 @@ void		*make_tuple(t_tuple *new_node,char *str,char c);
 /****************
  * SRCS/BUILTIN *
  ****************/
-int			(*init_builtin(char *str))(t_msh *msh);
+int			msh_execute_builtin(t_msh *msh);
+
 int			msh_exit(t_msh *msh);
 int			msh_pwd(t_msh *msh);
 int			msh_echo(t_msh **msh);
 int			msh_cd(t_msh *msh, t_token *token);
+int			msh_env(t_msh *msh);
+int			msh_export(t_msh *msh, char *arg);
+int			msh_unset(t_msh *msh, char *arg);
+
+void		update_env_variable(t_tuple *env, const char *key, const char *value);
+char		*get_env_variable(t_tuple *env, const char *key);
 
 /***************
  * SRCS/PARSER *

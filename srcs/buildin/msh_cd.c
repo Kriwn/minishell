@@ -6,13 +6,13 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:07:15 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/05 13:28:20 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/05 15:29:05 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	update_env_variable(t_tuple *env, const char *key, const char *value)
+void	update_env_variable(t_tuple *env, const char *key, const char *value)
 {
 	while (env)
 	{
@@ -20,13 +20,13 @@ static void	update_env_variable(t_tuple *env, const char *key, const char *value
 		{
 			free(env->value);
 			env->value = ft_strdup(value);
-			return ;
+			return;
 		}
 		env = env->next;
 	}
 }
 
-static char	*get_env_variable(t_tuple *env, const char *key)
+char	*get_env_variable(t_tuple *env, const char *key)
 {
 	while (env)
 	{
@@ -46,6 +46,7 @@ int	msh_cd(t_msh *msh, t_token *token)
 	if (!msh || !token)
 		return (ft_putstr_fd("minishell: cd: internal error\n", STDERR_FILENO),
 				EXIT_FAILURE);
+
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
 	{
@@ -54,7 +55,7 @@ int	msh_cd(t_msh *msh, t_token *token)
 	}
 	if (!token->next || !token->next->cmd)
 	{
-		target = get_env_variable(msh->tuple, "HOME=");
+		target = get_env_variable(msh->tuple, "HOME");
 		if (!target)
 		{
 			free(old_pwd);
@@ -64,7 +65,7 @@ int	msh_cd(t_msh *msh, t_token *token)
 	}
 	else if (!ft_strcmp(token->next->cmd, "-"))
 	{
-		target = get_env_variable(msh->tuple, "OLDPWD=");
+		target = get_env_variable(msh->tuple, "OLDPWD");
 		if (!target)
 		{
 			free(old_pwd);
@@ -74,9 +75,7 @@ int	msh_cd(t_msh *msh, t_token *token)
 		ft_putendl_fd(target, STDOUT_FILENO);
 	}
 	else
-	{
 		target = token->next->cmd;
-	}
 	if (chdir(target) == -1)
 	{
 		perror("minishell: cd");
@@ -90,8 +89,8 @@ int	msh_cd(t_msh *msh, t_token *token)
 		free(old_pwd);
 		return (EXIT_FAILURE);
 	}
-	update_env_variable(msh->tuple, "OLDPWD=", old_pwd);
-	update_env_variable(msh->tuple, "PWD=", new_pwd);
+	update_env_variable(msh->tuple, "OLDPWD", old_pwd);
+	update_env_variable(msh->tuple, "PWD", new_pwd);
 	free(old_pwd);
 	free(new_pwd);
 	return (EXIT_SUCCESS);

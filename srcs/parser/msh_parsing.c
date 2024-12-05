@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/05 13:24:21 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/05 14:43:19 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ t_ast	*msh_get_cmd(t_token **tokens)
 	if (!command_node->args)
 		return (NULL);
 	add_cmd_arg(command_node, tokens, arg_count);
-	command_node->builtin = init_builtin(command_node->args[0]);
 	return (command_node);
 }
 
@@ -130,8 +129,6 @@ int	execute_ast(t_ast *ast, t_msh *msh)
 {
 	if (!ast || !msh)
 		return (1);
-	if (ast->type == CMD && ast->builtin)
-		return (ast->builtin(msh));
 	if (ast->type == PIPE)
 	{
 		execute_ast(ast->left, msh);
