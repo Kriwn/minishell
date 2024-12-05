@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/04 15:17:31 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/05 15:29:38 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,6 @@
 # include "../libft/includes/libft.h"
 # include "./struct.h"
 # include <termios.h>
-
-/*************************
- * SRCS/BUILDIN/FT_PWD.C *
- *************************/
-char		*ft_pwd(t_tuple *list);
-int			(*init_builtin(char *str))(t_msh *msh);
-
-int			msh_echo(t_msh **msh);
-int			msh_pwd(t_msh *msh);
-int			msh_cd(t_msh *msh, t_token *token);
-int			msh_exit(t_msh *msh);
-
-int			get_env(t_msh *msh);
 
 /***************************
  * SRCS/UTILS/TUPLE_LIST.C *
@@ -81,63 +68,71 @@ void		init_minishell(t_msh *data, char **env);
 int			init_tuple(t_tuple **data,char **env);
 void		*make_tuple(t_tuple *new_node,char *str,char c);
 
-/************************
- * SRCS/PARSER/PARSER.C *
- ************************/
+/****************
+ * SRCS/BUILTIN *
+ ****************/
+int			msh_execute_builtin(t_msh *msh);
 
+int			msh_exit(t_msh *msh);
+int			msh_pwd(t_msh *msh);
+int			msh_echo(t_msh **msh);
+int			msh_cd(t_msh *msh, t_token *token);
+int			msh_env(t_msh *msh);
+int			msh_export(t_msh *msh, char *arg);
+int			msh_unset(t_msh *msh, char *arg);
 
-/****************************
- * SRCS/PARSER/PARSER_UTILS *
- ****************************/
-/** Old Function Do's It */
-const char	*msh_name_type(t_type type);
-/** New Function*/
+void		update_env_variable(t_tuple *env, const char *key, const char *value);
+char		*get_env_variable(t_tuple *env, const char *key);
+
+/***************
+ * SRCS/PARSER *
+ ***************/
+t_ast		*msh_get_tokens(t_token **tokens);
+t_ast		*msh_get_pipe(t_token **tokens);
+t_ast		*msh_get_redirect(t_token **tokens);
+t_ast		*msh_get_cmd(t_token **tokens);
+t_ast		*file_ast_node(t_token *token);
+
 t_ast		*msh_init_ast(t_type type);
 void		msh_free_ast(t_ast *node);
 t_ast		*create_file_list_redir(t_token **tokens, t_token *tmp);
 int			count_cmd_arg(t_token *current);
 void		add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count);
 
-t_ast		*file_ast_node(t_token *token);
-t_ast		*msh_get_cmd(t_token **tokens);
-t_ast		*msh_get_redirect(t_token **tokens);
-t_ast		*msh_get_pipe(t_token **tokens);
-t_ast		*msh_get_tokens(t_token **tokens);
-
-/***************
- * SRCS/TOKEN/ *
- ***************/
-/** It try to do lexer node
- */
-t_token		*new_token(t_type type, char *value);
-void		parse_cmd(char **input, t_token **tokens);
-void		parse_cmd(char **input, t_token **tokens);
-void		parse_type(char **input, t_token **tokens);
-// t_type		get_token_type(const char **input);
-
-t_token		*token_input(char *input);
-t_token		*msh_parsing_input(char *input);
-void		test_delete_heredoc(t_token **tokens);
-void		delete_token_heredoc(t_token **tokens);
-void		delete_token_list(t_token **tokens);
-
-// void		display_ast(t_ast *ast, int idx);
-int			execute_ast(t_ast *ast, t_msh *msh);
-// void		display_execute_ast(t_ast *ast, int idx);
-
-void		display_ast_table(t_ast *ast, int level);
-
+/** Check Syntax Grammar Shell */
+int			has_unclosed_quotes(const char *input);
+int			has_invalid_redirections(const char *input);
+int			has_misplaced_operators(const char *input);
+int			has_logical_operators(const char *input);
 int			syntax_error_checker(const char *input);
 
-int			is_invalid_operator(const char **input);
-void		update_quote_counts(char c, int *s_q_count, int *d_q_count);
+/**************
+ * SRCS/TOKEN *
+ **************/
+t_token		*msh_parsing_input(char *input);
+t_token		*token_input(char *input);
 
-void		display_tokens(t_token *tokens);
+t_token		*new_token(t_type type, char *value);
+void		add_token_to_list(t_token **tokens, t_token *new_token);
+void		update_quote_status(char c, int *in_quote, char *quote_char);
+void		add_word_token_if_valid(char **start, char **input, t_token **tokens);
+void		parse_cmd(char **input, t_token **tokens);
+
+void		parse_type(char **input, t_token **tokens);
 int			count_pipes(t_token *tokens);
 
-/***********
- * SRCS/EXE/
- ***********/
+/** File: Test Function for show Display */
+const char	*msh_name_type(t_type type);
+void		test_delete_heredoc(t_token **tokens);
+void		display_ast_table(t_ast *ast, int level);
+void		display_tokens(t_token *tokens);
+void		display_ast(t_ast *ast, int idx);
+
+int			execute_ast(t_ast *ast, t_msh *msh);
+
+/************
+ * SRCS/EXE *
+ ************/
 int			find_slash(char *command);
 int			do_here_doc(t_ast *ast,t_ast *temp ,t_p *list);
 void		do_here_doc_task(t_ast *ast,t_p *list);

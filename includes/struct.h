@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/04 15:05:03 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/05 15:24:13 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_ast
 	char				**args;
 	struct s_ast		*left;
 	struct s_ast		*right;
-	int					(*builtin)(t_msh *msh);
+	// int					(*builtin)(t_msh *msh);
 }	t_ast;
 
 /******************

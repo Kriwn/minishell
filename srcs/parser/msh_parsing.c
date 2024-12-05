@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/04 15:19:01 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/05 14:43:19 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_ast	*file_ast_node(t_token *token)
 	return (node);
 }
 
-
 t_ast	*msh_get_cmd(t_token **tokens)
 {
 	t_ast	*command_node;
@@ -49,7 +48,6 @@ t_ast	*msh_get_cmd(t_token **tokens)
 	if (!command_node->args)
 		return (NULL);
 	add_cmd_arg(command_node, tokens, arg_count);
-	// command_node->builtin = init_builtin(command_node->args[0]);
 	return (command_node);
 }
 
@@ -127,41 +125,39 @@ t_ast	*msh_get_tokens(t_token **tokens)
  * @jikarunw
  */
 
-// int	execute_ast(t_ast *ast, t_msh *msh)
-// {
-// 	if (!ast || !msh)
-// 		return (1);
-// 	if (ast->type == CMD && ast->builtin)
-// 		return (ast->builtin(msh));
-// 	if (ast->type == PIPE)
-// 	{
-// 		execute_ast(ast->left, msh);
-// 		execute_ast(ast->right, msh);
-// 		return (0);
-// 	}
-// 	if (ast->type == CMD)
-// 	{
-// 		pid_t pid = fork();
-// 		if (pid == 0)
-// 		{
-// 			execvp(ast->args[0], ast->args);
-// 			perror("execvp");
-// 			exit(1);
-// 		}
-// 		else if (pid > 0)
-// 		{
-// 			int status;
-// 			waitpid(pid, &status, 0);
-// 			msh->code = WEXITSTATUS(status);
-// 			return (msh->code);
-// 		}
-// 		else
-// 		{
-// 			perror("fork");
-// 			return (1);
-// 		}
-// 	}
-// 	execute_ast(ast->left, msh);
-// 	execute_ast(ast->right, msh);
-// 	return (0);
-// }
+int	execute_ast(t_ast *ast, t_msh *msh)
+{
+	if (!ast || !msh)
+		return (1);
+	if (ast->type == PIPE)
+	{
+		execute_ast(ast->left, msh);
+		execute_ast(ast->right, msh);
+		return (0);
+	}
+	if (ast->type == CMD)
+	{
+		pid_t pid = fork();
+		if (pid == 0)
+		{
+			execvp(ast->args[0], ast->args);
+			perror("execvp");
+			exit(1);
+		}
+		else if (pid > 0)
+		{
+			int status;
+			waitpid(pid, &status, 0);
+			msh->code = WEXITSTATUS(status);
+			return (msh->code);
+		}
+		else
+		{
+			perror("fork");
+			return (1);
+		}
+	}
+	execute_ast(ast->left, msh);
+	execute_ast(ast->right, msh);
+	return (0);
+}
