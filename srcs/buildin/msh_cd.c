@@ -6,13 +6,13 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:07:15 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/19 14:31:07 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/05 13:28:20 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	update_env_variable(t_tuple *env, const char *key, const char *value)
+static void	update_env_variable(t_tuple *env, const char *key, const char *value)
 {
 	while (env)
 	{
@@ -26,7 +26,7 @@ void	update_env_variable(t_tuple *env, const char *key, const char *value)
 	}
 }
 
-char	*get_env_variable(t_tuple *env, const char *key)
+static char	*get_env_variable(t_tuple *env, const char *key)
 {
 	while (env)
 	{
