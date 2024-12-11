@@ -27,7 +27,7 @@ UTILS_FILE = utils.c tuple_list.c promt.c
 UTILS_SRC = $(addprefix $(UTILS_DIR), $(UTILS_FILE))
 
 ENV_DIR = srcs/env/
-ENV_FILE =		get_env.c
+ENV_FILE =		msh_env.c
 ENV_SRC = $(addprefix $(ENV_DIR), $(ENV_FILE))
 
 EXE_DIR = srcs/exe/
@@ -38,28 +38,30 @@ EXE_FILE =	check_buildin.c \
 			single.c
 EXE_SRC = $(addprefix $(EXE_DIR), $(EXE_FILE))
 
-# BUILDIN_DIR = srcs/buildin/
-# BUILDIN_FILE =	msh_buildin.c \
-# 				msh_pwd.c	\
-# 				msh_echo.c	\
-# 				msh_cd.c
-# BUILDIN_SRC = $(addprefix $(BUILDIN_DIR), $(BUILDIN_FILE))
+BUILDIN_DIR = srcs/buildin/
+BUILDIN_FILE =	msh_buildin.c	\
+				msh_pwd.c		\
+				msh_echo.c		\
+				msh_exit.c		\
+				msh_export.c	\
+				msh_unset.c		\
+				msh_cd.c
+BUILDIN_SRC = $(addprefix $(BUILDIN_DIR), $(BUILDIN_FILE))
 
 PARSER_DIR = srcs/parser/
-PARSER_FILE =	msh_parsing.c \
-				msh_syntax.c \
-				syntax_utils_01.c \
+PARSER_FILE =	msh_parsing.c		\
+				msh_syntax.c		\
+				syntax_utils_01.c	\
 				parsing_utils_01.c
 PARSER_SRC = $(addprefix $(PARSER_DIR), $(PARSER_FILE))
 
 TOKEN_DIR = srcs/token/
-TOKEN_FILE =	token_utils_01.c \
-				token_utils_02.c \
-				msh_print_token.c \
+TOKEN_FILE =	token_utils_01.c	\
+				msh_print_token.c	\
 				msh_token.c
 TOKEN_SRC = $(addprefix $(TOKEN_DIR), $(TOKEN_FILE))
 
-SRC = $(UTILS_SRC) $(INIT_SRC) $(ENV_SRC) $(TOKEN_SRC) $(PARSER_SRC) $(EXE_SRC) ./srcs/minishell.c
+SRC = $(UTILS_SRC) $(INIT_SRC) $(ENV_SRC) $(TOKEN_SRC) $(PARSER_SRC) $(BUILDIN_SRC) $(EXE_SRC) ./srcs/minishell.c
 
 OBJ = $(SRC:$(PATH_SRCS)/%.c=$(OBJ_DIR)/%.o)
 

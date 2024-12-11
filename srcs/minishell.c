@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/12/11 20:38:10 by krwongwa         ###   ########.fr       */
+=======
+/*   Updated: 2024/12/05 15:25:00 by jikarunw         ###   ########.fr       */
+>>>>>>> 55912f95cfc646a4097a3f8bc579c17ccd12d7e1
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +78,37 @@ char	*ft_readline(t_msh *var)
 	return (input);
 }
 
+void	msh_loop(t_msh *msh)
+{
+	char	*input;
+	t_ast	*ast;
+
+	while (1)
+	{
+		input = ft_readline(msh);
+		if (!input)
+		{
+			printf("%sEXIT!%s💥\n", RED, RESET);
+			exit(1);
+			break ;
+		}
+		msh->token = msh_parsing_input(input);
+		if (msh->token)
+		{
+			msh->ast = msh_get_tokens(&msh->token);
+			// if (msh->ast)
+			// {
+			// 	printf("\nAbstract Syntax Tree:\n");
+			// 	display_ast_table(msh->ast, 0);
+			// }
+			main_exe(msh);
+			setup_signal();
+			// execute_ast(msh->ast, msh);
+			// msh_execute_builtin(msh);
+		}
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_msh	*msh;
@@ -92,34 +127,7 @@ int	main(int ac, char **av, char **env)
 		ft_free(msh);
 		return (1);
 	}
-	while (1)
-	{
-		input = ft_readline(msh);
-		if (!input)
-		{
-			printf("%sEXIT!%s💥\n", RED, RESET);
-			exit(1);
-			break ;
-		}
-		msh->token = msh_parsing_input(input);
-		msh->count_pipe = msh->token ->count_pipe;
-		printf("%d\n",msh->count_pipe);
-		if (msh->token)
-		{
-			msh->ast = msh_get_tokens(&msh->token );
-			// printf("Before go main exe %d\n",msh->count_pipe);
-			// printf("Before go main Token count pipe %d\n",msh->token->count_pipe);
-			// if (msh->ast)
-			// {
-			// 	printf("\nAbstract Syntax Tree:\n");
-			// 	display_ast_table(msh->ast, 0);
-			// }
-			// printf("\n\n\n");
-			main_exe(msh);
-			setup_signal();
-		}
-
-	}
+	msh_loop(msh);
 	free(ast->args);
 	free(ast->args[0]);
 	ft_free(msh);

@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 21:49:36 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/11 20:36:44 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/11 20:46:30 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int run_single_cmd(t_p *list)
 		parent_process(list);
 }
 
-int exe_single_cmd(t_ast *ast, t_p *list)
+int exe_single_cmd(t_msh *msh, t_ast *ast, t_p *list)
 {
 	int a;
 

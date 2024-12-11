@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/11 20:37:37 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/11 21:14:41 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,6 @@ int	main_exe(t_msh *msh)
 	do_here_doc_task(msh->ast, list);
 	printf("%d\n",msh->count_pipe);
 	if (msh->count_pipe == 0)
-		return (exe_single_cmd(msh->ast, list));
+		return (exe_single_cmd(msh,msh->ast, list));
 	// return (pipe_task(msh->ast, list));
 }

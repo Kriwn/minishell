@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/09 17:07:50 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/11 20:42:25 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_ast
 	char				**args;
 	struct s_ast		*left;
 	struct s_ast		*right;
-	int					(*builtin)(t_msh *msh);
+	// int					(*builtin)(t_msh *msh);
 }	t_ast;
 
 /******************
