@@ -6,32 +6,11 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:47:55 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/09 17:14:11 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/11/28 19:20:46 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void prepare_cmd(t_ast *ast,t_p *list)
-{
-	if (!ast)
-		return ;
-	if (ast->type == REDIRECT)
-		list->fd_out = open(ast->right->args[0], O_RDWR | O_TRUNC | O_CREAT, 0644);
-	if (ast->type == APPEND)
-		list->fd_out = open(ast->right->args[0], O_RDWR | O_APPEND | O_CREAT, 0644);
-	if (ast->type == INDIRECT)
-		list->fd_in = open(ast->right->args[0], O_RDONLY);
-	if (ast->type == CMD)
-	{
-		if (list->cmd == NULL)
-			list->cmd = ast->args[0];
-		if (ast->args[1] != NULL)
-			list->args= ast->args;
-	}
-	prepare_cmd(ast->left,list);
-	prepare_cmd(ast->right,list);
-}
 
 int	find_slash(char *command)
 {
@@ -52,28 +31,18 @@ int	find_slash(char *command)
 void	open_in_file(char *argv, t_p *list)
 {
 	list->fd_in = open(argv, O_RDONLY);
-	if (list->fd_in == -1)
-		printf("Cannot open in file %s\n", argv);
+	// if (list->fd_in == -1)
+	// 	piintf("Cannot open file %s\n", argv);
 }
 
-void	open_out_file(char *argv, t_p *list,int flag)
+void	open_out_file(char *argv, t_p *list)
 {
-	int mode;
+	int	fd;
 
-	if (flag == 1)
-		mode= O_RDWR | O_TRUNC | O_CREAT;
-	else
-		mode = O_WRONLY | O_CREAT | O_APPEND;
-	list->fd_out = open(argv, mode , 0644);
-	if (list->fd_out == -1)
-		printf("Cannot open out file %s\n", argv);
-	dup2(list->fd_out, STDOUT_FILENO);
-	close(list->fd_out);
-}
-
-void	pipe_write(t_p *list)
-{
+	fd = open(argv, O_RDWR | O_TRUNC | O_CREAT, 0644);
+	// if (fd == -1)
+	// 	ft_puterror(argv, errno, list);
+	dup2(fd, STDOUT_FILENO);
 	close(list->pipe[0]);
-	dup2(list->pipe[1], 1);
 	close(list->pipe[1]);
 }
