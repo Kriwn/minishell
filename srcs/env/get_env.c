@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:42:26 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/25 01:02:06 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/04 18:57:14 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	get_env(t_msh *msh)
 {
 	t_tuple	*current;
 
-	current = msh->env;
+	current = msh->tuple;
 	while (current)
 	{
 		printf("%s=%s\n", current->key, current->value);

@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/04 15:19:26 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/11 20:38:10 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,18 +103,20 @@ int	main(int ac, char **av, char **env)
 		}
 		msh->token = msh_parsing_input(input);
 		msh->count_pipe = msh->token ->count_pipe;
+		printf("%d\n",msh->count_pipe);
 		if (msh->token)
 		{
 			msh->ast = msh_get_tokens(&msh->token );
 			// printf("Before go main exe %d\n",msh->count_pipe);
 			// printf("Before go main Token count pipe %d\n",msh->token->count_pipe);
-			if (msh->ast)
-			{
-				printf("\nAbstract Syntax Tree:\n");
-				display_ast_table(msh->ast, 0);
-			}
-			printf("\n\n\n");
+			// if (msh->ast)
+			// {
+			// 	printf("\nAbstract Syntax Tree:\n");
+			// 	display_ast_table(msh->ast, 0);
+			// }
+			// printf("\n\n\n");
 			main_exe(msh);
+			setup_signal();
 		}
 
 	}
