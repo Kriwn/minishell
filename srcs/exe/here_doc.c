@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:01 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/30 10:20:33 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:56:45 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	do_here_doc_task(t_ast *ast,t_p *list)
 	}
 }
 
+// need to do open infile and out file for all using pipe
 // try << test < a >> d it should not have someting in d
 // if SIG INT exit code 130
 int	do_here_doc(t_ast *ast,t_ast *temp ,t_p *list)
@@ -34,7 +35,6 @@ int	do_here_doc(t_ast *ast,t_ast *temp ,t_p *list)
 	char	*getline;
 	char	*str;
 	int		fd[2];
-
 	str = ast->args[0];
 	printf("%s\n",str); //str
 	printf("%s\n",temp->right->args[0]); //out

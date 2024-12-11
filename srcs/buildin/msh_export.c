@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:26:50 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/11 21:28:47 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/05 15:36:29 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int	msh_export(t_msh *msh, char *arg)
 		free(value);
 		return (EXIT_FAILURE);
 	}
-	// if (get_env_variable(msh->tuple, key))
-	// 	update_env_variable(msh->tuple, key, value);
-	// else
-	// {
-	// 	temp = ft_strjoin(key, "=");
-	// 	make_tuple(&msh->tuple, temp, value);
-	// 	free(temp);
-	// }
+	if (get_env_variable(msh->tuple, key))
+		update_env_variable(msh->tuple, key, value);
+	else
+	{
+		temp = ft_strjoin(key, "=");
+		make_tuple(&msh->tuple, temp, value);
+		free(temp);
+	}
 	free(key);
 	free(value);
 	return (EXIT_SUCCESS);
