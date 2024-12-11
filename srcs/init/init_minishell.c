@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:19:20 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/04 15:05:16 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/07 10:39:34 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static int	init_pipe(t_p **list)
 void	init_minishell(t_msh *data, char **env)
 {
 	data->tuple = NULL;
+	data->env = env;
 	data->token = NULL;
 	data->list = NULL;
 	data->ast = NULL;

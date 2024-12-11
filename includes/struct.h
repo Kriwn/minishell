@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/11 21:46:58 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/11 21:58:33 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct	s_msh
 	char	*home_path;
 	int		code; // -> status code
 	int		count_pipe;
-	char	*env;
+	char	**env;
 	char	*cwd;
 }	t_msh;
 
@@ -90,7 +90,11 @@ typedef struct p_pipe
 	int		*process_pid;
 	char	**path;
 	char	*cmd;
+	char	**env;
+	char	**args;
 	int		fd_in;
 	int		fd_out;
+	int		iter;
+	int		*code;
 }	t_p;
 #endif

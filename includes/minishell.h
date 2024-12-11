@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/11 21:48:09 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/11 21:49:16 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ int			execute_ast(t_ast *ast, t_msh *msh);
  ************/
 int			find_slash(char *command);
 int			do_here_doc(t_ast *ast,t_ast *temp ,t_p *list);
+void		is_build_in_command(t_ast *ast,int *a);
 void		do_here_doc_task(t_ast *ast,t_p *list);
 int			main_exe(t_msh *msh);
 int			exe_single_cmd(t_msh *msh,t_ast *ast,t_p *list);

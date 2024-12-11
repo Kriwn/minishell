@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:42:26 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/11 21:46:11 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/11 21:49:13 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	msh_unset(t_msh *msh, char *arg)
 {
 	t_tuple	*current;
 
-	current = msh->env;
+	current = msh->tuple;
 	while (current)
 	{
 		printf("%s=%s\n", current->key, current->value);
