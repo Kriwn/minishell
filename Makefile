@@ -31,8 +31,7 @@ ENV_FILE =		msh_env.c
 ENV_SRC = $(addprefix $(ENV_DIR), $(ENV_FILE))
 
 EXE_DIR = srcs/exe/
-EXE_FILE =	check_buildin.c \
-			exe_utils.c \
+EXE_FILE =	exe_utils.c \
 			main_exe.c \
 			here_doc.c \
 			single.c
