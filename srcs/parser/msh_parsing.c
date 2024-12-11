@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/05 14:43:19 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/09 09:12:02 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ t_ast	*msh_get_tokens(t_token **tokens)
 
 int	execute_ast(t_ast *ast, t_msh *msh)
 {
+	pid_t	pid;
+
 	if (!ast || !msh)
 		return (1);
 	if (ast->type == PIPE)
@@ -137,7 +139,7 @@ int	execute_ast(t_ast *ast, t_msh *msh)
 	}
 	if (ast->type == CMD)
 	{
-		pid_t pid = fork();
+		pid = fork();
 		if (pid == 0)
 		{
 			execvp(ast->args[0], ast->args);

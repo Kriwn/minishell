@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 20:56:54 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/03 20:12:41 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/09 09:14:01 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_token	*new_token(t_type type, char *value)
 		return (NULL);
 	token->type = type;
 	token->cmd = ft_strdup(value);
-	token->count_pipe = 0;
 	if (!token->cmd)
 	{
 		free(token);
@@ -116,23 +115,6 @@ void	parse_type(char **input, t_token **tokens)
 			add_token_to_list(tokens, new_token(INDIRECT, "<"));
 	}
 	else if (**input == '|')
-	{
 		add_token_to_list(tokens, new_token(PIPE, "|"));
-		count_pipes(*tokens);
-	}
 	(*input)++;
-}
-
-int	count_pipes(t_token *tokens)
-{
-	int	pipe_count;
-
-	pipe_count = 0;
-	while (tokens)
-	{
-		if (tokens->type == PIPE)
-			pipe_count++;
-		tokens = tokens->next;
-	}
-	return (pipe_count);
 }

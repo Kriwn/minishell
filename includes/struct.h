@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/05 15:24:13 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/09 09:01:36 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define STRCUT_H
 
 #include "./minishell.h"
+
+# define LETTERS_DIGITS "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
+# define WHITESPACE " \t\n\v\f\r"
 
 typedef enum s_type
 {
@@ -47,9 +50,9 @@ typedef struct	s_msh
 
 	char	*home_path;
 	int		code; // -> status code
-	int		count_pipe;
-	char	*env;
+	char	**env;
 	char	*cwd;
+	int		count_pipe;
 }	t_msh;
 
 /***************
@@ -59,9 +62,10 @@ typedef struct s_token
 {
 	// char			*str;
 	char			*cmd;
+	int				count_pipe;
 	t_type			type;
 	struct s_token	*next;
-	int				count_pipe;
+	struct s_token	*prev;
 }	t_token;
 
 typedef struct s_ast

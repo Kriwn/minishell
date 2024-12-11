@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:08:36 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/05 15:40:31 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:22:09 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ const char	*msh_name_type(t_type type)
 		return ("CMD");
 	case ARG:
 		return ("ARG");
+	case ENV_VAR:
+		return ("ENV_VAR");
 	case CMD_GROUP:
 		return ("CMD_GROUP");
 	default:

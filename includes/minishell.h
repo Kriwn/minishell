@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/05 15:29:38 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/11 12:37:47 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,22 @@ void		update_env_variable(t_tuple *env, const char *key, const char *value);
 char		*get_env_variable(t_tuple *env, const char *key);
 
 /***************
+ * SRCS/EXPAND *
+ ***************/
+char		*replace_env_variables(t_msh *msh, char *input_str);
+void		msh_update_exit_status(t_msh *msh, t_token *current);
+void		msh_strcpy_exit_status(const char *src_str, char *dest_str, const char *status_str);
+void		replace_exit_code(t_msh *msh, t_token *current);
+
+void		msh_free_str(char *str1, char *str2, char *str3);
+char		*msh_strdup_utill_env(char *str);
+char		*msh_locate_env_marker(char *str);
+char		*fetch_env_variable(t_msh *msh, char *env_name);
+char		*get_env_value(t_msh *msh, char *env_name);
+/** Main Exapnd Use */
+void		process_expand(t_msh *msh);
+
+/***************
  * SRCS/PARSER *
  ***************/
 t_ast		*msh_get_tokens(t_token **tokens);
@@ -119,7 +135,7 @@ void		add_word_token_if_valid(char **start, char **input, t_token **tokens);
 void		parse_cmd(char **input, t_token **tokens);
 
 void		parse_type(char **input, t_token **tokens);
-int			count_pipes(t_token *tokens);
+// void		parse_type(char **input, t_token **tokens, t_msh *msh);
 
 /** File: Test Function for show Display */
 const char	*msh_name_type(t_type type);

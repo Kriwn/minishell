@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:19:20 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/04 15:05:16 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/08 16:52:56 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@ void	init_minishell(t_msh *data, char **env)
 		ft_error(data, "malloc error\n");
 	data->home_path = get_value_from_key(data->tuple, "HOME=");
 	data->code = 0;
-	//passe init
+	data->count_pipe = 0;
 }
