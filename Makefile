@@ -19,11 +19,15 @@ LDFLAGS = -L$(PATH_LIBFT) -lft -lreadline
 RM = rm -rf
 
 INIT_DIR = srcs/init/
-INIT_FILE = init_tuple.c init_minishell.c
+INIT_FILE =	init_tuple.c	\
+			init_parsing.c	\
+			init_minishell.c
 INIT_SRC = $(addprefix $(INIT_DIR), $(INIT_FILE))
 
 UTILS_DIR = srcs/utils/
-UTILS_FILE = utils.c tuple_list.c promt.c
+UTILS_FILE =	utils.c			\
+				tuple_list.c	\
+				promt.c
 UTILS_SRC = $(addprefix $(UTILS_DIR), $(UTILS_FILE))
 
 ENV_DIR = srcs/env/

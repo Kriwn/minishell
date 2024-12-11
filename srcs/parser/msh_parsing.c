@@ -6,36 +6,11 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/09 09:12:02 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/11 19:00:04 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-t_ast	*file_ast_node(t_token *token)
-{
-	t_ast	*node;
-
-	if (!token || !token->cmd)
-		return (NULL);
-	node = malloc(sizeof(t_ast));
-	if (!node)
-		return (NULL);
-	node->type = token->type;
-	node->args = malloc(sizeof(char *) * 2);
-	if (!node->args)
-	{
-		free(node);
-		return (NULL);
-	}
-	node->args[0] = ft_strdup(token->cmd);
-	node->args[1] = NULL;
-	node->left = NULL;
-	node->right = NULL;
-	free(token->cmd);
-	free(token);
-	return (node);
-}
 
 t_ast	*msh_get_cmd(t_token **tokens)
 {
