@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:47 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/27 16:02:53 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:19:08 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,24 +107,22 @@ int	syntax_error_checker(const char *input)
 {
 	if (has_unclosed_quotes(input))
 	{
-		ft_putstr_fd("Syntax error: unclosed quote\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: syntax error unclosed quote\n", STDERR_FILENO);
 		return (1);
 	}
 	if (has_invalid_redirections(input))
 	{
-		ft_putstr_fd("Syntax error: invalid redirection\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", STDERR_FILENO);
 		return (1);
 	}
 	if (has_misplaced_operators(input))
 	{
-		ft_putstr_fd("Syntax error: misplaced operator\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: syntax error near unexpected token `&', `&&' and `|', `||' \n", STDERR_FILENO);
 		return (1);
 	}
 	if (has_logical_operators(input))
 	{
-		ft_putstr_fd("Error: Logical operators '&&' and '||' \
-			are not supported.\n",
-						STDERR_FILENO);
+		ft_putstr_fd("minishell: command not found' \n", STDERR_FILENO);
 		return (1);
 	}
 	return (0);

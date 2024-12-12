@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/11 12:37:47 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:08:26 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void		init_minishell(t_msh *data, char **env);
 /**************************
  * SRCS/INIT/INIT_TUPLE.C *
  **************************/
-int			init_tuple(t_tuple **data,char **env);
-void		*make_tuple(t_tuple *new_node,char *str,char c);
+int			init_tuple(t_tuple **data, char **env);
+void		*make_tuple(t_tuple *new_node, char *str, char c);
 
 /****************
  * SRCS/BUILTIN *
@@ -121,6 +121,9 @@ int			has_invalid_redirections(const char *input);
 int			has_misplaced_operators(const char *input);
 int			has_logical_operators(const char *input);
 int			syntax_error_checker(const char *input);
+
+void		update_quote_counts(char c, int *s_q_count, int *d_q_count);
+int			is_invalid_operator(const char **input);
 
 /**************
  * SRCS/TOKEN *

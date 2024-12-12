@@ -6,13 +6,13 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:47:52 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/11 15:27:27 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:05:59 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	msh_handle_builtin(t_msh *msh)
+static int	msh_handle_builtin(t_msh *msh)
 {
 	if (ft_strcmp(msh->ast->args[0], "export") == 0)
 	{
