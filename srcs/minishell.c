@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/11 12:42:19 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/12 13:35:03 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	msh_loop(t_msh *msh)
 		if (msh->token)
 		{
 			msh->ast = msh_get_tokens(&msh->token);
-			process_expand(msh);
+			// process_expand(msh);
 			if (msh->ast)
 				execute_ast(msh->ast, msh);
 			msh_execute_builtin(msh);
