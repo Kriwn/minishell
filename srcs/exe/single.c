@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 21:49:36 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/11 22:00:23 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/13 00:05:22 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,16 @@ char *find_path(char *cmd, char **path)
 		// printf("CMD_PATH is %s\n",cmd_path);
 		if (access(cmd_path, X_OK) == 0)
 			return (cmd_path);
-		// free(temp); WTF Why I cannot free temp
+		//free(temp);// WTF Why I cannot free temp
 		i++;
 	}
 	return NULL;
 }
 
-void parent_process(t_p *list)
+static void parent_process(t_p *list)
 {
-	if (list->fd_in > -1)
-		close(list->fd_in);
-	if (list->fd_out > -1)
-		close(list->fd_out);
+	safe_close(list, 0);
+	safe_close(list, 1);
 	if (list->pipe[0] > -1)
 		close(list->pipe[0]);
 	if (list->pipe[1] > -1)
@@ -59,19 +57,19 @@ int run_single_cmd(t_p *list)
 		if (list->fd_in > -1) // Set up input redirection
 		{
 			dup2(list->fd_in, 0);
-			close(list->fd_in);
+			safe_close(list, 0);
 		}
 		if (list->fd_out > -1) // Set up output redirection
 		{
 			dup2(list->fd_out, 1);
-			close(list->fd_out);
+			safe_close(list, 1);
 		}
 		if (execve(cmd_path, list->args, list->env) == -1)
 		{
 			printf("Error exe\n");
-			*list->code = errno;
-			if (cmd_path)
-				free(cmd_path);
+			*list->code = errno; // need to do handle error pipe
+			free(cmd_path);
+			//free(list);
 		}
 		if (cmd_path)
 			free(cmd_path);
@@ -80,9 +78,11 @@ int run_single_cmd(t_p *list)
 		parent_process(list);
 }
 
+// only cat not use input to take and print output
 int exe_single_cmd(t_msh *msh, t_ast *ast, t_p *list)
 {
 	int a;
+	int status;
 
 	a = -1;
 	printf("Do single cmd\n");
@@ -90,12 +90,9 @@ int exe_single_cmd(t_msh *msh, t_ast *ast, t_p *list)
 	if (a == 1)
 	{
 		prepare_cmd(ast, list);
-		// printf("CMD IS %s\n",list->cmd);
-		// printf("FLAG IS %s\n",list->flag);
-		// printf("FD_IN %d\n",list->fd_in);
-		// printf("FD_OUT %d\n",list->fd_out);
 		run_single_cmd(list);
-		return (waitpid(list->process_pid[0], list->code, WUNTRACED));
+		waitpid(list->process_pid[0], &status, WUNTRACED);
+		return (WEXITSTATUS(status));
 	}
 	else
 		printf("Build in command\n");

@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:01 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/09 16:56:45 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/13 13:37:56 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ int	do_here_doc(t_ast *ast,t_ast *temp ,t_p *list)
 	if (getline)
 		free(getline);
 	close(fd[1]);
+	list->fd_in = fd[0];
 	return (fd[0]);
 }

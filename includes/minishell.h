@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/11 21:49:16 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/12 23:22:53 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,14 @@ int			find_slash(char *command);
 int			do_here_doc(t_ast *ast,t_ast *temp ,t_p *list);
 void		is_build_in_command(t_ast *ast,int *a);
 void		do_here_doc_task(t_ast *ast,t_p *list);
-int			main_exe(t_msh *msh);
+void		main_exe(t_msh *msh);
 int			exe_single_cmd(t_msh *msh,t_ast *ast,t_p *list);
+void		safe_close(t_p *list, int flag);
 void		prepare_cmd(t_ast *ast,t_p *list);
-void	open_in_file(char *argv, t_p *list);
-void	open_out_file(char *argv, t_p *list,int flag);
+void		open_in_file(char *argv, t_p *list);
+void		open_out_file(char *argv, t_p *list,int flag);
+void		pipe_write(t_p *list);
+char 		*find_path(char *cmd, char **path);
+void		pipe_task(t_ast *ast, t_p *list);
+void clear_list(t_p *list);
 #endif
