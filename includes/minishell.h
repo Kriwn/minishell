@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/12 23:22:53 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/18 16:23:24 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,11 +140,17 @@ void		do_here_doc_task(t_ast *ast,t_p *list);
 void		main_exe(t_msh *msh);
 int			exe_single_cmd(t_msh *msh,t_ast *ast,t_p *list);
 void		safe_close(t_p *list, int flag);
-void		prepare_cmd(t_ast *ast,t_p *list);
-void		open_in_file(char *argv, t_p *list);
-void		open_out_file(char *argv, t_p *list,int flag);
+void		prepare_cmd(t_ast *ast,t_p *list, int *status);
+void		open_in_file(char *argv, t_p *list,int *status);
+void		open_out_file(char *argv, t_p *list,int flag, int *status);
 void		pipe_write(t_p *list);
 char 		*find_path(char *cmd, char **path);
 void		pipe_task(t_ast *ast, t_p *list);
-void clear_list(t_p *list);
+void		clear_list(t_p *list);
+void 		free_list(t_p *list);
+void	ft_puterrstr(char *s);
+int			ft_puterrorcmd(char *s, int errnum);
+void	check_signal(int signal);
+void	mode_signal_exe(int mode);
+
 #endif

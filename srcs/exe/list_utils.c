@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:20:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/13 13:38:49 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/18 22:12:57 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,16 @@ void free2d(char **str)
 {
 	int i;
 
+	if (!str)
+	{
+		dprintf(2,"No 2d array\n");
+		return ;
+	}
 	i = 0;
 	while (str[i])
 	{
-		free(str[i]);
+		if (str[i])
+			free(str[i]);
 		i++;
 	}
 	free(str);
@@ -49,18 +55,21 @@ void free_list(t_p *list)
 	safe_close(list, 1);
 }
 
-void prepare_cmd(t_ast *ast, t_p *list)
+void prepare_cmd(t_ast *ast, t_p *list, int *status)
 {
-	if (!ast)
+	if (!ast || *status == -1)
 		return;
 	if (ast->type == REDIRECT || ast->type == APPEND || ast->type == INDIRECT)
 	{
 		if (ast->type == REDIRECT)
-			list->fd_out = open(ast->right->args[0], O_RDWR | O_TRUNC | O_CREAT, 0644);
+			open_out_file(ast->right->args[0], list, 0, status);
+			// list->fd_out = open(ast->right->args[0], O_RDWR | O_TRUNC | O_CREAT, 0644);
 		else if (ast->type == APPEND)
-			list->fd_out = open(ast->right->args[0], O_RDWR | O_APPEND | O_CREAT, 0644);
+			open_out_file(ast->right->args[0], list, 1, status);
+			// list->fd_out = open(ast->right->args[0], O_RDWR | O_APPEND | O_CREAT, 0644);
 		else if (ast->type == INDIRECT)
-			list->fd_in = open(ast->right->args[0], O_RDONLY);
+			open_in_file(ast->right->args[0], list,	status);
+			// list->fd_in = open(ast->right->args[0], O_RDONLY);
 	}
 	if (ast->type == CMD)
 	{
@@ -68,10 +77,10 @@ void prepare_cmd(t_ast *ast, t_p *list)
 			list->cmd = ast->args[0];
 		if (ast->args[1] != NULL)
 			list->args = ast->args;
-		dprintf(2, "COMMAND IN PREPARE %s\n", list->cmd);
+
 	}
-	prepare_cmd(ast->left, list);
-	prepare_cmd(ast->right, list);
+	prepare_cmd(ast->left, list,status);
+	prepare_cmd(ast->right, list,status);
 }
 
 void safe_close(t_p *list, int flag)

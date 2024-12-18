@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 21:51:06 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/12 15:32:52 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/18 21:35:04 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void	msh_loop(t_msh *msh)
 			// 	display_ast_table(msh->ast, 0);
 			// }
 			main_exe(msh);
-			setup_signal();
 			// execute_ast(msh->ast, msh);
 			// msh_execute_builtin(msh);
 		}
@@ -123,32 +122,7 @@ int	main(int ac, char **av, char **env)
 		ft_free(msh);
 		return (1);
 	}
-	while (1)
-	{
-		input = ft_readline(msh);
-		if (!input)
-		{
-			printf("%sEXIT!%s💥\n", RED, RESET);
-			exit(1);
-			break ;
-		}
-		msh->token = msh_parsing_input(input);
-		msh->count_pipe = msh->token ->count_pipe;
-		if (msh->token)
-		{
-			msh->ast = msh_get_tokens(&msh->token );
-			// printf("Before go main exe %d\n",msh->count_pipe);
-			// printf("Before go main Token count pipe %d\n",msh->token->count_pipe);
-			if (msh->ast)
-			{
-				printf("\nAbstract Syntax Tree:\n");
-				display_ast_table(msh->ast, 0);
-			}
-			printf("\n\n\n");
-			main_exe(msh);
-		}
-
-	}
+	msh_loop(msh);
 	free(ast->args);
 	free(ast->args[0]);
 	ft_free(msh);

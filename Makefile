@@ -32,6 +32,7 @@ ENV_SRC = $(addprefix $(ENV_DIR), $(ENV_FILE))
 
 EXE_DIR = srcs/exe/
 EXE_FILE =	check_buildin.c \
+			error.c \
 			exe_utils.c \
 			here_doc.c \
 			list_utils.c \

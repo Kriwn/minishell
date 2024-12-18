@@ -6,11 +6,31 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/13 13:20:15 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/18 21:52:48 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	mode_signal_exe(int mode)
+{
+	if (mode == 0) // normal minishell mode
+	{
+		signal(SIGINT, &check_signal);
+		signal(SIGQUIT, &check_signal);
+	}
+	else if (mode == 1) // parent
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	else if (mode == 2) // child
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+	}
+}
+
 
 int	wait_all_process(t_p *list)
 {
@@ -21,60 +41,66 @@ int	wait_all_process(t_p *list)
 	while (i < list->max)
 	{
 		if (list->process_pid[i] > -1)
-			waitpid(list->process_pid[i], &status, WUNTRACED); // need to change status to list->code
+			waitpid(list->process_pid[i], &status, WUNTRACED);
 		i++;
 	}
-	// freelist(list); need to do this
-	printf("Eed All Process\n");
+	dprintf(2,"Eed All Process\n");
 	return (WEXITSTATUS(status));
 }
-
 
 void	init_pipe(t_p **temp, t_msh *msh)
 {
 	t_p		*list;
-	size_t	size;
 	int		i;
 
 	i = 0;
 	list = *temp;
-	size = msh->count_pipe + 1;
-	list->process_pid = malloc(sizeof(int) * (size));
+	list->process_pid = malloc(sizeof(int) * (msh->count_pipe + 1));
 	list->iter = 0;
 	list->path = ft_split(get_value_from_key(msh->tuple, "PATH"), ':');
 	list->env = msh->env;
 	list->code = &msh->code;
-	list->max = 1; // need to chang to count pipe
+	list->max = msh->count_pipe + 1;
 	list->pipe[0] = -1;
 	list->pipe[1] = -1;
 	list->fd_in = -1;
 	list->fd_out = -1;
 	list->args = NULL;
 	list->cmd = NULL;
-	while (i < size)
+	while (i < msh->count_pipe + 1)
 	{
 		list->process_pid[i] = 0;
 		i++;
 	}
 }
 
-// INDIRECT BROKEN
+// do exit code
+// sleep command not work
 void	main_exe(t_msh *msh)
 {
 	t_p		*list;
 
-	msh->count_pipe = 1;
+	dprintf(2,"Main Exe\n");
+	msh->count_pipe = 0;
 	list = msh->list;
-	// printf("token count pipe %d\n",msh->token->count_pipe);
 	init_pipe(&list,msh);
 	do_here_doc_task(msh->ast, list);
 	if (msh->count_pipe == 0)
+	{
+		dprintf(2,"Single Command\n");
+		mode_signal_exe(1);
 		exe_single_cmd(msh,msh->ast, list);
+	}
 	else
 	{
+		mode_signal_exe(1);
 		pipe_task(msh->ast, list);
-		msh->code = wait_all_process(list);
-		// freelist()
+		// wait_all_process(list);
+		// msh->code = wait_all_process(list);
 	}
-
+	dprintf(2,"AFTER EXE\n");
+	// wait_all_process(list);
+	mode_signal_exe(0);
+	free_list(list);
+	// dprintf(2,"EXITCODE %d\n",msh->code);
 }
