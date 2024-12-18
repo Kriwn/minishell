@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 21:49:36 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/18 22:16:38 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/18 22:32:03 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ static void child_process(t_p *list)
 
 	mode_signal_exe(2);
 	cmd_path = find_path(list->cmd, list->path);
-	setup_chile(list);	
+	setup_chile(list);
 	if (execve(cmd_path, list->args, list->env) == -1)
 	{
 		dprintf(2,"Errno is %d\n", errno);
 		*list->code = ft_puterrorcmd(list->cmd, errno);
 		if (cmd_path != NULL)
 			free(cmd_path);
-		exit(*list->code); // need to use this to exit child when error occur
+		exit(*list->code);// need to use this to exit child when error occur
 	}
 	if (cmd_path)
 		free(cmd_path);

@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/18 21:52:48 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/18 22:36:55 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	mode_signal_exe(int mode)
 }
 
 
-int	wait_all_process(t_p *list)
+void	wait_all_process(t_p *list)
 {
 	size_t	i;
 	int	status;
@@ -45,7 +45,7 @@ int	wait_all_process(t_p *list)
 		i++;
 	}
 	dprintf(2,"Eed All Process\n");
-	return (WEXITSTATUS(status));
+	*list->code = WEXITSTATUS(status);
 }
 
 void	init_pipe(t_p **temp, t_msh *msh)
@@ -74,7 +74,6 @@ void	init_pipe(t_p **temp, t_msh *msh)
 	}
 }
 
-// do exit code
 // sleep command not work
 void	main_exe(t_msh *msh)
 {
@@ -95,12 +94,9 @@ void	main_exe(t_msh *msh)
 	{
 		mode_signal_exe(1);
 		pipe_task(msh->ast, list);
-		// wait_all_process(list);
-		// msh->code = wait_all_process(list);
 	}
-	dprintf(2,"AFTER EXE\n");
-	// wait_all_process(list);
+	wait_all_process(list);
 	mode_signal_exe(0);
 	free_list(list);
-	// dprintf(2,"EXITCODE %d\n",msh->code);
+	dprintf(2,"EXITCODE %d\n",msh->code);
 }
