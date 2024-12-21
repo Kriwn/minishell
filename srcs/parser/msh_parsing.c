@@ -6,11 +6,16 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/11 19:00:04 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:47:18 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+t_ast	*msh_get_heredoc_word(t_token **token)
+{
+	
+}
 
 t_ast	*msh_get_cmd(t_token **tokens)
 {
@@ -35,13 +40,13 @@ t_ast	*msh_get_redirect(t_token **tokens)
 	if (!*tokens)
 		return (NULL);
 	tmp = *tokens;
-	if ((*tokens)->type >= REDIRECT && (*tokens)->type <= HEREDOC)
+	if ((*tokens)->type >= INDIRECT && (*tokens)->type <= HEREDOC)
 		return (create_file_list_redir(tokens, tmp));
 	while (*tokens && (*tokens)->next)
 	{
 		next_token = (*tokens)->next;
 		if ((*tokens)->next->type >= INDIRECT
-			&& (*tokens)->next->type <= APPEND)
+			&& (*tokens)->next->type <= HEREDOC)
 		{
 			redirect_node = msh_init_ast((*tokens)->next->type);
 			(*tokens)->next = next_token->next->next;
@@ -90,51 +95,5 @@ t_ast	*msh_get_tokens(t_token **tokens)
 
 	if (!tokens || !*tokens)
 		return (NULL);
-	// display_tokens(*tokens);
-	// test_delete_heredoc(tokens);
 	return (msh_get_pipe(tokens));
-}
-
-/**
- * @brief Execute the abstract syntax tree : Test function
- * @jikarunw
- */
-
-int	execute_ast(t_ast *ast, t_msh *msh)
-{
-	pid_t	pid;
-
-	if (!ast || !msh)
-		return (1);
-	if (ast->type == PIPE)
-	{
-		execute_ast(ast->left, msh);
-		execute_ast(ast->right, msh);
-		return (0);
-	}
-	if (ast->type == CMD)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			execvp(ast->args[0], ast->args);
-			perror("execvp");
-			exit(1);
-		}
-		else if (pid > 0)
-		{
-			int status;
-			waitpid(pid, &status, 0);
-			msh->code = WEXITSTATUS(status);
-			return (msh->code);
-		}
-		else
-		{
-			perror("fork");
-			return (1);
-		}
-	}
-	execute_ast(ast->left, msh);
-	execute_ast(ast->right, msh);
-	return (0);
 }

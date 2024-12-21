@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/12 13:08:26 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/18 00:57:19 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,7 @@ char		*get_env_variable(t_tuple *env, const char *key);
 /***************
  * SRCS/EXPAND *
  ***************/
-char		*replace_env_variables(t_msh *msh, char *input_str);
-void		msh_update_exit_status(t_msh *msh, t_token *current);
-void		msh_strcpy_exit_status(const char *src_str, char *dest_str, const char *status_str);
-void		replace_exit_code(t_msh *msh, t_token *current);
 
-void		msh_free_str(char *str1, char *str2, char *str3);
-char		*msh_strdup_utill_env(char *str);
-char		*msh_locate_env_marker(char *str);
-char		*fetch_env_variable(t_msh *msh, char *env_name);
-char		*get_env_value(t_msh *msh, char *env_name);
 /** Main Exapnd Use */
 void		process_expand(t_msh *msh);
 
@@ -128,16 +119,22 @@ int			is_invalid_operator(const char **input);
 /**************
  * SRCS/TOKEN *
  **************/
-t_token		*msh_parsing_input(char *input);
+// t_token		*msh_parsing_input(char *input);
+t_token		*msh_parsing_input(t_msh *msh);
 t_token		*token_input(char *input);
+void		msh_count_pipe(t_msh *msh);
+char		*handle_line(char *input, t_token *current);
 
 t_token		*new_token(t_type type, char *value);
 void		add_token_to_list(t_token **tokens, t_token *new_token);
-void		update_quote_status(char c, int *in_quote, char *quote_char);
 void		add_word_token_if_valid(char **start, char **input, t_token **tokens);
 void		parse_cmd(char **input, t_token **tokens);
-
 void		parse_type(char **input, t_token **tokens);
+
+void		update_quote_status(char c, int *in_quote, char *quote_char);
+char		*handle_single_quote(char *start, t_token *token);
+char		*handle_double_quote(char *start, t_token *token);
+char		*token_word(char *start, t_token *token, char *delimiter);
 // void		parse_type(char **input, t_token **tokens, t_msh *msh);
 
 /** File: Test Function for show Display */

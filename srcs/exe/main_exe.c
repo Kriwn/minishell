@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/08 16:53:06 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/16 23:11:46 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main_exe(t_msh *msh)
 	t_p		*list;
 
 	list = msh->list;
-	printf("token count pipe %d\n",msh->token->count_pipe);
+	printf("token count pipe %d\n",msh->count_pipe);
 	init_pipe(&list,msh);
 	do_here_doc_task(msh->ast, list);
 	// if (msh->count_pipe == 0)

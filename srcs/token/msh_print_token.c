@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:08:36 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/11 14:22:09 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/17 20:27:27 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,7 @@ void	test_delete_heredoc(t_token **tokens)
 void	display_ast_table(t_ast *ast, int level)
 {
 	if (!ast)
-		return;
-
+		return ;
 	if (level == 0)
 	{
 		printf("%s%-20s | %-15s | %-15s | %-20s | %-20s%s\n",
@@ -127,7 +126,8 @@ void	display_ast_table(t_ast *ast, int level)
 				"Right Node",
 				RESET);
 		printf("%s---------------------------------------------------------------------------------------------%s\n",
-				GREEN, RESET);
+				GREEN,
+				RESET);
 	}
 	printf("%-20s | %-15s | %-15d | %-20s | %-20s\n",
 			msh_name_type(ast->type),
@@ -168,7 +168,6 @@ void	display_tokens(t_token *tokens)
 	printf("%s-----------------------------------------------------%s\n", GREEN,
 			RESET);
 }
-
 
 void	display_ast(t_ast *ast, int idx)
 {

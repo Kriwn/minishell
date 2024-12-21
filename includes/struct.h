@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/09 09:01:36 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:39:31 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 # define STRCUT_H
 
 #include "./minishell.h"
-
-# define LETTERS_DIGITS "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
-# define WHITESPACE " \t\n\v\f\r"
 
 typedef enum s_type
 {
@@ -29,6 +26,7 @@ typedef enum s_type
 	PIPE, // |
 	APPEND, // >>
 	HEREDOC, // <<
+	HEREDOC_WORD, // <<-
 	END, // ; -> maybe this's not use for now.
 	/** Maybe this two type to use the lexer
 	 * &&
@@ -53,6 +51,8 @@ typedef struct	s_msh
 	char	**env;
 	char	*cwd;
 	int		count_pipe;
+	
+	char	*input;
 }	t_msh;
 
 /***************
@@ -62,7 +62,7 @@ typedef struct s_token
 {
 	// char			*str;
 	char			*cmd;
-	int				count_pipe;
+	// int				count_pipe;
 	t_type			type;
 	struct s_token	*next;
 	struct s_token	*prev;
@@ -76,6 +76,12 @@ typedef struct s_ast
 	struct s_ast		*right;
 	// int					(*builtin)(t_msh *msh);
 }	t_ast;
+
+typedef struct s_env
+{
+	char				**original_env;
+	char				***parsed_env;
+}	t_env;
 
 /******************
  * EXECUTION TYPE *
