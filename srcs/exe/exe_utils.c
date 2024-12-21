@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:47:55 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/18 22:11:02 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:37:34 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,44 +77,4 @@ int find_slash(char *command)
 		i++;
 	}
 	return (0);
-}
-
-void open_in_file(char *argv, t_p *list,int *status)
-{
-	list->fd_in = open(argv, O_RDONLY | O_CLOEXEC);
-	if (list->fd_in == -1)
-	{
-		ft_puterrstr("minishell: ");
-		ft_puterrstr(argv);
-		ft_puterrstr(": ");
-		perror("");
-	}
-	*status = list->fd_in;
-}
-
-void open_out_file(char *argv, t_p *list, int flag, int *status)
-{
-	int mode;
-
-	if (flag == 1)
-		mode = O_RDWR | O_TRUNC | O_CREAT;
-	else
-		mode = O_WRONLY | O_CREAT | O_APPEND;
-	list->fd_out = open(argv, mode, 0644);
-	if (list->fd_out == -1)
-	{
-		ft_puterrstr("minishell: ");
-		ft_puterrstr(argv);
-		ft_puterrstr(": ");
-		perror("");
-
-	}
-	*status = list->fd_out;
-}
-
-void pipe_write(t_p *list)
-{
-	close(list->pipe[0]);
-	dup2(list->pipe[1], 1);
-	close(list->pipe[1]);
 }

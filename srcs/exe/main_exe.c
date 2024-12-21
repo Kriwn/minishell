@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/18 22:36:55 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:46:48 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	mode_signal_exe(int mode)
 		signal(SIGQUIT, SIG_DFL);
 	}
 }
-
 
 void	wait_all_process(t_p *list)
 {
@@ -74,28 +73,34 @@ void	init_pipe(t_p **temp, t_msh *msh)
 	}
 }
 
-// sleep command not work
+//cannot ues ./a.out
 void	main_exe(t_msh *msh)
 {
 	t_p		*list;
+	int		a;
 
-	dprintf(2,"Main Exe\n");
-	msh->count_pipe = 0;
+
+	a = -1;
+	msh->count_pipe = 1;
 	list = msh->list;
 	init_pipe(&list,msh);
 	do_here_doc_task(msh->ast, list);
-	if (msh->count_pipe == 0)
+	// dprintf(2,"After here_doc code %d\n",msh->code);
+	is_build_in_command(msh->ast, &a);
+	// dprintf(2,"Out %d\n",msh->code);
+	if (msh->count_pipe == 0 && a == 0)
 	{
-		dprintf(2,"Single Command\n");
-		mode_signal_exe(1);
-		exe_single_cmd(msh,msh->ast, list);
+		dprintf(2,"Single CMD\n");
+		// run_buid in command;
+		// mode_signal_exe(1);
+		// exe_single_cmd(msh,msh->ast, list);
 	}
 	else
 	{
 		mode_signal_exe(1);
 		pipe_task(msh->ast, list);
+		wait_all_process(list);
 	}
-	wait_all_process(list);
 	mode_signal_exe(0);
 	free_list(list);
 	dprintf(2,"EXITCODE %d\n",msh->code);

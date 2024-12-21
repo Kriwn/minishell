@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/12 14:39:03 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/19 22:06:43 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,6 @@ typedef struct p_pipe
 	int		fd_out;
 	int		iter;
 	int		*code;
+	char	*here_doc_cut;
 }	t_p;
 #endif

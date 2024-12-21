@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:28:33 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/18 22:15:17 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:32:18 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 // need to add run build in here;
-void run_cmd(t_p *list)
+void run_cmd(t_p *list,int status)
 {
 	char *cmd_path;
 
@@ -22,19 +22,27 @@ void run_cmd(t_p *list)
 	dprintf(2,"CMD PATH is %s\n",cmd_path);
 	dup2(list->fd_in, 0);
 	safe_close(list, 0);
-	if (execve(cmd_path, list->args, list->env) == -1)
+	if (status == -1)
+	{
+		*list->code = 1;
+		exit(*list->code);
+	}
+	if (execve(cmd_path, list->args , list->env) == -1)
 	{
 		dprintf(2,"Errno is %d\n", errno);
 		*list->code = ft_puterrorcmd(list->cmd, errno);
 		if (cmd_path != NULL)
 			free(cmd_path);
-		exit(*list->code); // need to use this to exit child when error occur
+		exit(*list->code);
 	}
 	free(cmd_path);
 }
 
-void child_process(t_p *list)
+void child_process(t_p *list, int status)
 {
+	int a;
+
+	a = -1;
 	mode_signal_exe(2);
 	if (list->fd_out != -1)
 	{
@@ -45,7 +53,11 @@ void child_process(t_p *list)
 	}
 	else
 		pipe_write(list);
-	run_cmd(list);
+	check_build_in_command(list->cmd, &a);
+	if (a == 0)
+		dprintf(2,"RUN BUILD IN (PIPE)\n");
+	else
+		run_cmd(list,status);
 }
 
 void parent_process(t_p *list)
@@ -63,11 +75,6 @@ void mutiple_exe(t_ast *ast, t_p *list)
 
 	status = 1;
 	prepare_cmd(ast, list, &status); // check fd in this before run
-	if (status == -1)
-	{
-		*list->code = 1;
-		return ;
-	}
 	list->process_pid[list->iter] = fork();
 	if (list->process_pid[list->iter] == -1)
 	{
@@ -75,7 +82,7 @@ void mutiple_exe(t_ast *ast, t_p *list)
 		*list->code = errno;
 	}
 	if (list->process_pid[list->iter] == 0)
-		child_process(list);
+		child_process(list, status);
 	else
 		parent_process(list);
 	clear_list(list);
@@ -85,7 +92,7 @@ void mutiple_exe(t_ast *ast, t_p *list)
 void pipe_task(t_ast *ast, t_p *list)
 {
 	if (!ast)
-		return;
+		wait_all_process(list);
 
 	if (ast->type == CMD_GROUP)
 		mutiple_exe(ast, list);

@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:39:56 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/18 21:47:32 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:48:43 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	ft_puterrstr(char *s)
 
 int	ft_puterrorcmd(char *s, int errnum)
 {
-	if (errnum == 14)
+	dprintf(2,"Errnum is %d\n",errnum);
+	if (errnum == 14 || errnum == 2) // in orb maybe is 2
 	{
 		// ft_puterrstr("pipex: ");
 		ft_puterrstr(s);

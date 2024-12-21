@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:20:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/18 22:12:57 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/21 20:59:04 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,7 @@ void prepare_cmd(t_ast *ast, t_p *list, int *status)
 	{
 		if (list->cmd == NULL)
 			list->cmd = ast->args[0];
-		if (ast->args[1] != NULL)
-			list->args = ast->args;
+		list->args = ast->args;
 
 	}
 	prepare_cmd(ast->left, list,status);

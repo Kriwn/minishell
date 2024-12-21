@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/18 16:23:24 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:42:19 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,11 @@ int			execute_ast(t_ast *ast, t_msh *msh);
 int			find_slash(char *command);
 int			do_here_doc(t_ast *ast,t_ast *temp ,t_p *list);
 void		is_build_in_command(t_ast *ast,int *a);
+int check_build_in_command(char *word,int *a);
+// int 		check_build_in_command(char *word);
 void		do_here_doc_task(t_ast *ast,t_p *list);
 void		main_exe(t_msh *msh);
-int			exe_single_cmd(t_msh *msh,t_ast *ast,t_p *list);
+void exe_single_cmd(t_msh *msh, t_ast *ast, t_p *list);
 void		safe_close(t_p *list, int flag);
 void		prepare_cmd(t_ast *ast,t_p *list, int *status);
 void		open_in_file(char *argv, t_p *list,int *status);
@@ -152,5 +154,8 @@ void	ft_puterrstr(char *s);
 int			ft_puterrorcmd(char *s, int errnum);
 void	check_signal(int signal);
 void	mode_signal_exe(int mode);
-
+void	wait_all_process(t_p *list);
+void	here_doc_check_signal(int sig);
+int		clear_read_line(void);
+void	end_here_doc(t_p *list);
 #endif
