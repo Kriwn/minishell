@@ -54,7 +54,7 @@ BUILDIN_FILE =	msh_buildin.c	\
 				msh_export.c	\
 				msh_unset.c		\
 				msh_cd.c
-# BUILDIN_SRC = $(addprefix $(BUILDIN_DIR), $(BUILDIN_FILE))
+BUILDIN_SRC = $(addprefix $(BUILDIN_DIR), $(BUILDIN_FILE))
 
 # EXPAND_DIR = srcs/expand/
 # EXPAND_FILE =	msh_expand.c		\

@@ -1,0 +1,10 @@
+Makefile
+chart.tldr
+eof
+includes
+libft
+ls
+minishell
+minishell_tester
+objs
+srcs

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/21 21:47:18 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/23 01:22:51 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,41 @@
 
 t_ast	*msh_get_heredoc_word(t_token **token)
 {
-	
+	t_ast	*heredoc_node;
+	t_ast	*heredoc_word_node;
+
+	if (!token || !*token || (*token)->type != HEREDOC)
+		return (NULL);
+	heredoc_node = msh_init_ast(HEREDOC);
+	if (!heredoc_node)
+		return (NULL);
+	*token = (*token)->next;
+	if (!*token || (*token)->type != CMD)
+	{
+		free(heredoc_node);
+		return (NULL);
+	}
+	heredoc_word_node = msh_init_ast(HEREDOC_WORD);
+	if (!heredoc_word_node)
+	{
+		free(heredoc_node);
+		return (NULL);
+	}
+	heredoc_word_node->args = malloc(sizeof(char *) * 2);
+	if (!heredoc_word_node->args)
+	{
+		free(heredoc_node);
+		free(heredoc_word_node);
+		return (NULL);
+	}
+	heredoc_word_node->args[0] = ft_strdup((*token)->cmd);
+	heredoc_word_node->args[1] = NULL;
+	heredoc_node->right = heredoc_word_node;
+	free((*token)->cmd);
+	t_token *next_token = (*token)->next;
+	free(*token);
+	*token = next_token;
+	return (heredoc_node);
 }
 
 t_ast	*msh_get_cmd(t_token **tokens)
@@ -41,13 +75,24 @@ t_ast	*msh_get_redirect(t_token **tokens)
 		return (NULL);
 	tmp = *tokens;
 	if ((*tokens)->type >= INDIRECT && (*tokens)->type <= HEREDOC)
+	{
+		if ((*tokens)->type == HEREDOC)
+			return (msh_get_heredoc_word(tokens));
 		return (create_file_list_redir(tokens, tmp));
+	}
 	while (*tokens && (*tokens)->next)
 	{
 		next_token = (*tokens)->next;
-		if ((*tokens)->next->type >= INDIRECT
-			&& (*tokens)->next->type <= HEREDOC)
+		if ((*tokens)->next->type >= INDIRECT && (*tokens)->next->type <= HEREDOC)
 		{
+			if (next_token->type == HEREDOC)
+			{
+				redirect_node = msh_init_ast(HEREDOC);
+				(*tokens)->next = next_token->next->next;
+				redirect_node->left = msh_get_redirect(&tmp);
+				redirect_node->right = msh_get_heredoc_word(&next_token->next);
+				return (redirect_node);
+			}
 			redirect_node = msh_init_ast((*tokens)->next->type);
 			(*tokens)->next = next_token->next->next;
 			redirect_node->left = msh_get_redirect(&tmp);
