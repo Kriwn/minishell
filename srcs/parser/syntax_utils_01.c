@@ -31,7 +31,8 @@ int	is_invalid_operator(const char **input)
 		(*input)++;
 		if (ft_isspace(**input) || !**input)
 		{
-			ft_putstr_fd("Minishell: syntax error near unexpected token `newline'\n", STDERR_FILENO);
+			ft_putstr_fd("Minishell: syntax error near unexpected token `newline'\n",
+							STDERR_FILENO);
 			return (1);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:47 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/22 22:26:04 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/23 03:05:52 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,22 +108,22 @@ int	syntax_error_checker(const char *input)
 	if (has_unclosed_quotes(input))
 	{
 		ft_putstr_fd("minishell: syntax error unclosed quote\n", STDERR_FILENO);
-		return (1);
+		// return (1);
 	}
 	if (has_invalid_redirections(input))
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", STDERR_FILENO);
-		return (1);
+		// return (1);
 	}
 	if (has_misplaced_operators(input))
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `&', `&&' and `|', `||' \n", STDERR_FILENO);
-		return (1);
+		// return (1);
 	}
 	if (has_logical_operators(input))
 	{
 		ft_putstr_fd("minishell: command not found' \n", STDERR_FILENO);
-		return (1);
+		// return (1);
 	}
 	return (0);
 }

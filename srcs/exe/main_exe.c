@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/22 23:36:00 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/23 02:03:55 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	wait_all_process(t_p *list)
 			waitpid(list->process_pid[i], &status, WUNTRACED);
 		i++;
 	}
-	dprintf(2,"Eed All Process\n");
+	// dprintf(2,"Eed All Process\n");
 	*list->code = WEXITSTATUS(status);
 }
 
@@ -79,7 +79,6 @@ void	main_exe(t_msh *msh)
 	t_p		*list;
 	int		a;
 
-
 	a = -1;
 	msh->count_pipe = 1;
 	list = msh->list;
@@ -90,7 +89,7 @@ void	main_exe(t_msh *msh)
 	// dprintf(2,"Out %d\n",msh->code);
 	if (msh->count_pipe == 0 && a == 0)
 	{
-		dprintf(2,"Single CMD\n");
+		// dprintf(2,"Single CMD\n");
 		// run_buid in command;
 		// mode_signal_exe(1);
 		// exe_single_cmd(msh,msh->ast, list);
@@ -103,5 +102,5 @@ void	main_exe(t_msh *msh)
 	}
 	mode_signal_exe(0);
 	free_list(list);
-	dprintf(2,"EXITCODE %d\n",msh->code);
+	// dprintf(2,"EXITCODE %d\n",msh->code);
 }
