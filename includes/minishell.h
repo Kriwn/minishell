@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/18 00:57:19 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:17:33 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # include "../libft/includes/libft.h"
 # include "./struct.h"
 # include <termios.h>
+
+# define WHITESPACE " \t\n\v\f\r"
 
 /***************************
  * SRCS/UTILS/TUPLE_LIST.C *
