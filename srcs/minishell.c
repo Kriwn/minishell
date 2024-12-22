@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/22 22:22:20 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/22 23:51:37 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ void	msh_loop(t_msh *msh)
 		if (msh->token)
 		{
 			msh->ast = msh_get_tokens(&msh->token);
-			// if (msh->ast)
-			// {
-			// 	printf("\nAbstract Syntax Tree:\n");
-			// 	display_ast_table(msh->ast, 0);
-			// }
+			if (msh->ast)
+			{
+				printf("\nAbstract Syntax Tree:\n");
+				display_ast_table(msh->ast, 0);
+			}
 			main_exe(msh);
 			// execute_ast(msh->ast, msh);
 			// msh_execute_builtin(msh);
