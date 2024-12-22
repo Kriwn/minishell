@@ -1,26 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   msh_unset.c                                        :+:      :+:    :+:   */
+/*   expand_utils_01.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 17:42:26 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/11 21:49:13 by krwongwa         ###   ########.fr       */
+/*   Created: 2024/12/06 12:03:55 by jikarunw          #+#    #+#             */
+/*   Updated: 2024/12/18 01:00:58 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	msh_unset(t_msh *msh, char *arg)
-{
-	t_tuple	*current;
-
-	current = msh->tuple;
-	while (current)
-	{
-		printf("%s=%s\n", current->key, current->value);
-		current = current->next;
-	}
-	return (0);
-}

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/05 15:25:00 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:22:20 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,15 @@ char	*ft_readline(t_msh *var)
 
 void	msh_loop(t_msh *msh)
 {
-	char	*input;
-	t_ast	*ast;
-
 	while (1)
 	{
-		input = ft_readline(msh);
-		if (!input)
+		msh->input = ft_readline(msh);
+		if (!msh->input)
 		{
 			printf("%sEXIT!%s💥\n", RED, RESET);
 			exit(1);
-			break ;
 		}
-		msh->token = msh_parsing_input(input);
+		msh->token = msh_parsing_input(msh);
 		if (msh->token)
 		{
 			msh->ast = msh_get_tokens(&msh->token);
@@ -97,9 +93,11 @@ void	msh_loop(t_msh *msh)
 			// 	printf("\nAbstract Syntax Tree:\n");
 			// 	display_ast_table(msh->ast, 0);
 			// }
-			execute_ast(msh->ast, msh);
-			msh_execute_builtin(msh);
+			main_exe(msh);
+			// execute_ast(msh->ast, msh);
+			// msh_execute_builtin(msh);
 		}
+		printf("%sToken count pipe %d\n%s", GREEN, msh->count_pipe, RESET);
 	}
 }
 

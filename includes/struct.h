@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/05 15:24:13 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:24:11 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef enum s_type
 	PIPE, // |
 	APPEND, // >>
 	HEREDOC, // <<
+	HEREDOC_WORD, // <<-
 	END, // ; -> maybe this's not use for now.
 	/** Maybe this two type to use the lexer
 	 * &&
@@ -47,9 +48,11 @@ typedef struct	s_msh
 
 	char	*home_path;
 	int		code; // -> status code
-	int		count_pipe;
-	char	*env;
+	char	**env;
 	char	*cwd;
+	int		count_pipe;
+	
+	char	*input;
 }	t_msh;
 
 /***************
@@ -59,9 +62,10 @@ typedef struct s_token
 {
 	// char			*str;
 	char			*cmd;
+	// int				count_pipe;
 	t_type			type;
 	struct s_token	*next;
-	int				count_pipe;
+	struct s_token	*prev;
 }	t_token;
 
 typedef struct s_ast
@@ -72,6 +76,12 @@ typedef struct s_ast
 	struct s_ast		*right;
 	// int					(*builtin)(t_msh *msh);
 }	t_ast;
+
+typedef struct s_env
+{
+	char				**original_env;
+	char				***parsed_env;
+}	t_env;
 
 /******************
  * EXECUTION TYPE *
@@ -90,7 +100,13 @@ typedef struct p_pipe
 	int		*process_pid;
 	char	**path;
 	char	*cmd;
+	char	**env;
+	char	**args;
+	int		max;
 	int		fd_in;
 	int		fd_out;
+	int		iter;
+	int		*code;
+	char	*here_doc_cut;
 }	t_p;
 #endif

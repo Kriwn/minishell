@@ -6,25 +6,11 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:00 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/19 14:06:24 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/11 19:00:36 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-t_ast	*msh_init_ast(t_type type)
-{
-	t_ast	*node;
-
-	node = malloc(sizeof(t_ast));
-	if (!node)
-		return (NULL);
-	node->type = type;
-	node->args = NULL;
-	node->left = NULL;
-	node->right = NULL;
-	return (node);
-}
 
 void	msh_free_ast(t_ast *node)
 {

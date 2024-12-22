@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:26:50 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/05 15:36:29 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:23:08 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	msh_export(t_msh *msh, char *arg)
 	else
 	{
 		temp = ft_strjoin(key, "=");
-		make_tuple(&msh->tuple, temp, value);
+		make_tuple(msh->tuple, temp, value);
 		free(temp);
 	}
 	free(key);
