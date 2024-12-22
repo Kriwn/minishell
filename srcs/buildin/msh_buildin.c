@@ -18,7 +18,8 @@ static int	msh_handle_builtin(t_msh *msh)
 	{
 		if (!msh->ast->args[1])
 		{
-			ft_putstr_fd("minishell: export: not enough arguments\n", STDERR_FILENO);
+			ft_putstr_fd("minishell: export: not enough arguments\n",
+					STDERR_FILENO);
 			msh->code = 1;
 			return (EXIT_FAILURE);
 		}
@@ -28,7 +29,8 @@ static int	msh_handle_builtin(t_msh *msh)
 	{
 		if (!msh->ast->args[1])
 		{
-			ft_putstr_fd("minishell: unset: not enough arguments\n", STDERR_FILENO);
+			ft_putstr_fd("minishell: unset: not enough arguments\n",
+					STDERR_FILENO);
 			msh->code = 1;
 			return (EXIT_FAILURE);
 		}

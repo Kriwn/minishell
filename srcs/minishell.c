@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/22 23:51:37 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/23 01:42:56 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	msh_loop(t_msh *msh)
 			// execute_ast(msh->ast, msh);
 			// msh_execute_builtin(msh);
 		}
-		printf("%sToken count pipe %d\n%s", GREEN, msh->count_pipe, RESET);
+		// printf("%sToken count pipe %d\n%s", GREEN, msh->count_pipe, RESET);
 	}
 }
 

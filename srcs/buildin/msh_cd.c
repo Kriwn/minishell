@@ -20,7 +20,7 @@ void	update_env_variable(t_tuple *env, const char *key, const char *value)
 		{
 			free(env->value);
 			env->value = ft_strdup(value);
-			return;
+			return ;
 		}
 		env = env->next;
 	}

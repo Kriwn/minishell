@@ -70,12 +70,13 @@ void	update_quote_status(char c, int *in_quote, char *quote_char)
 void	msh_count_pipe(t_msh *msh)
 {
 	t_token	*current;
-	int		count = 0;
+	int		count;
 
+	count = 0;
 	if (!msh || !msh->token)
 	{
 		msh->count_pipe = 0;
-		return;
+		return ;
 	}
 	current = msh->token;
 	while (current)

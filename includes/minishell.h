@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/22 22:25:52 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/23 05:12:36 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,31 @@
 # define STDERR_FILENO 2
 # define WHITESPACE " \t\n\v\f\r"
 
-/***************************
- * SRCS/UTILS/TUPLE_LIST.C *
- ***************************/
+/**************
+ * SRCS/UTILS *
+ **************/
 void		print_tuple(t_tuple *data);
 char		*get_value_from_key(t_tuple *data,char *key);
 void		updata_value_from_key(t_tuple *data, char *key, char *new_value);
 void		remove_tuple(t_tuple **data, char *key);
 void		clear_tuple(t_tuple **data);
 
-/**********************
- * SRCS/UTILS/UTILS.C *
- **********************/
 void		ft_free(t_msh *data);
 void		ft_error(t_msh *data,char *word);
 
-/**********************
- * SRCS/UTILS/PROMT.C *
- **********************/
 char		*get_promt(t_msh *data);
 
-/******************************
- * SRCS/INIT/INIT_MINISHELL.C *
- ******************************/
-void		init_minishell(t_msh *data, char **env);
-
-/**************************
- * SRCS/INIT/INIT_TUPLE.C *
- **************************/
+/*************
+ * SRCS/INIT *
+ *************/
 int			init_tuple(t_tuple **data, char **env);
 void		*make_tuple(t_tuple *new_node, char *str, char c);
+
+void		init_minishell(t_msh *data, char **env);
+
+/** init_parsing */
+t_ast		*file_ast_node(t_token *token);
+t_ast		*msh_init_ast(t_type type);
 
 /****************
  * SRCS/BUILTIN *
@@ -97,25 +92,33 @@ void		process_expand(t_msh *msh);
 /***************
  * SRCS/PARSER *
  ***************/
+/** msh_parsing */
 t_ast		*msh_get_tokens(t_token **tokens);
 t_ast		*msh_get_pipe(t_token **tokens);
 t_ast		*msh_get_redirect(t_token **tokens);
+t_ast		*msh_get_heredoc_word(t_token **token);
 t_ast		*msh_get_cmd(t_token **tokens);
-t_ast		*file_ast_node(t_token *token);
 
-t_ast		*msh_init_ast(t_type type);
+/** parsing_utils_01 */
 void		msh_free_ast(t_ast *node);
 t_ast		*create_file_list_redir(t_token **tokens, t_token *tmp);
 int			count_cmd_arg(t_token *current);
 void		add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count);
 
-/** Check Syntax Grammar Shell */
+/** parsing_utils_02 */
+t_ast		*msh_init_heredoc_word_node(t_ast *heredoc_node, t_token *token);
+int			msh_validate_heredoc_token(t_token **token, t_ast *heredoc_node);
+t_ast		*msh_handle_heredoc(t_token **tokens);
+t_ast		*msh_handle_redirect(t_token **tokens, t_token **tmp);
+
+/** msh_syntax */
 int			has_unclosed_quotes(const char *input);
 int			has_invalid_redirections(const char *input);
 int			has_misplaced_operators(const char *input);
 int			has_logical_operators(const char *input);
 int			syntax_error_checker(const char *input);
 
+/** syntax_utils_01 */
 void		update_quote_counts(char c, int *s_q_count, int *d_q_count);
 int			is_invalid_operator(const char **input);
 
@@ -177,4 +180,5 @@ void	wait_all_process(t_p *list);
 void	here_doc_check_signal(int sig);
 int		clear_read_line(void);
 void	end_here_doc(t_p *list);
+
 #endif
