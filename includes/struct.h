@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/21 21:39:31 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/22 22:24:11 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,13 @@ typedef struct p_pipe
 	int		*process_pid;
 	char	**path;
 	char	*cmd;
+	char	**env;
+	char	**args;
+	int		max;
 	int		fd_in;
 	int		fd_out;
+	int		iter;
+	int		*code;
+	char	*here_doc_cut;
 }	t_p;
 #endif

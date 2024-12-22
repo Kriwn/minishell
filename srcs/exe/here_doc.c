@@ -6,20 +6,22 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:01 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/30 10:20:33 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/21 21:40:08 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// extern volatile sig_atomic_t	g_signal;
+static volatile sig_atomic_t	g_signal;
 
 void	do_here_doc_task(t_ast *ast,t_p *list)
 {
 	if (!ast)
 		return ;
 	if (ast->type == HEREDOC)
-		do_here_doc(ast->right,ast->left ,list);
+		list->fd_in = do_here_doc(ast->right,ast->left ,list);
+	// if (ast->type == HEREDOC_CUT)
+	// 	list->here_doc_cut = ast->left->args[0];
 	else
 	{
 		do_here_doc_task(ast->left, list);
@@ -27,8 +29,27 @@ void	do_here_doc_task(t_ast *ast,t_p *list)
 	}
 }
 
-// try << test < a >> d it should not have someting in d
-// if SIG INT exit code 130
+int init_here_doc(t_ast *ast,t_ast *temp, t_p *list)
+{
+	if (pipe(list->pipe)== -1)
+	{
+		ft_puterrstr("PIPE ERROR");
+		return (-1);
+	}
+	if (temp != NULL)
+	{
+		if (temp->type == REDIRECT)
+			list->fd_out = open(temp->right->args[0],O_RDWR | O_TRUNC | O_CREAT, 0644);
+		else if (temp->type == APPEND)
+			list->fd_out = open(temp->right->args[0],O_RDWR | O_APPEND | O_TRUNC | O_CREAT, 0644);
+	}
+	g_signal = 0;
+	signal(SIGINT, &here_doc_check_signal);
+	rl_event_hook = &clear_read_line;
+	return (0);
+}
+
+// cannot do "" here_doc
 int	do_here_doc(t_ast *ast,t_ast *temp ,t_p *list)
 {
 	char	*getline;
@@ -36,25 +57,27 @@ int	do_here_doc(t_ast *ast,t_ast *temp ,t_p *list)
 	int		fd[2];
 
 	str = ast->args[0];
-	printf("%s\n",str); //str
-	printf("%s\n",temp->right->args[0]); //out
-	if (pipe(fd) == -1)
-		printf("Error pipe\n");
-	if (temp->type == REDIRECT)
-		fd[1] = open(temp->right->args[0],O_RDWR | O_TRUNC | O_CREAT, 0644);
-	else if (temp->type == APPEND)
-		fd[1] = open(temp->right->args[0],O_RDWR | O_APPEND | O_TRUNC | O_CREAT, 0644);
+	dprintf(2,"Temp\n");
+	if (init_here_doc(ast,temp,list) == -1)
+		return (-1);
+	if (list->fd_out != -1)
+	{
+		dup2(list->fd_out, list->pipe[1]);
+		safe_close(list,1);
+	}
+	dprintf(2,"Before start here\n");
 	while (1)
 	{
 		getline = readline("> ");
-		if (getline == NULL || ft_strncmp(getline, str, ft_strlen(str)) == 0)//need to add signal here
+		if (getline == NULL  || g_signal == 1 || ft_strncmp(getline, str, ft_strlen(str)) == 0 )//need to add signal here
 			break ;
-		write(fd[1], getline, ft_strlen(getline));
-		write(fd[1], "\n", 1);
+		write(list->pipe[1], getline, ft_strlen(getline));
+		write(list->pipe[1], "\n", 1);
 		free(getline);
 	}
+	end_here_doc(list);
 	if (getline)
 		free(getline);
-	close(fd[1]);
-	return (fd[0]);
+	close(list->pipe[1]);
+	return (list->pipe[0]);
 }

@@ -35,10 +35,15 @@ ENV_FILE =		msh_env.c
 ENV_SRC = $(addprefix $(ENV_DIR), $(ENV_FILE))
 
 EXE_DIR = srcs/exe/
-EXE_FILE =	exe_utils.c		\
-			main_exe.c		\
-			here_doc.c		\
-			single.c
+EXE_FILE =	check_buildin.c \
+			error.c \
+			exe_utils.c \
+			exe_utils2.c \
+			here_doc_sig.c \
+			here_doc.c \
+			list_utils.c \
+			main_exe.c \
+			pipe.c
 EXE_SRC = $(addprefix $(EXE_DIR), $(EXE_FILE))
 
 BUILDIN_DIR = srcs/buildin/
@@ -49,7 +54,7 @@ BUILDIN_FILE =	msh_buildin.c	\
 				msh_export.c	\
 				msh_unset.c		\
 				msh_cd.c
-BUILDIN_SRC = $(addprefix $(BUILDIN_DIR), $(BUILDIN_FILE))
+# BUILDIN_SRC = $(addprefix $(BUILDIN_DIR), $(BUILDIN_FILE))
 
 # EXPAND_DIR = srcs/expand/
 # EXPAND_FILE =	msh_expand.c		\
