@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/23 01:48:27 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/23 20:37:38 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,12 @@ typedef struct	s_msh
 	struct s_token	*token;
 	struct s_ast	*ast;
 	struct p_pipe	*list;
-
-	char	*home_path;
-	int		code; // -> status code
-	char	**env;
-	char	*cwd;
-	int		count_pipe;
-	
-	char	*input;
+	char			*home_path;
+	int				code;
+	char			**env;
+	char			*cwd;
+	int				count_pipe;
+	char			*input;
 }	t_msh;
 
 /***************
@@ -60,9 +58,7 @@ typedef struct	s_msh
  ***************/
 typedef struct s_token
 {
-	// char			*str;
 	char			*cmd;
-	// int				count_pipe;
 	t_type			type;
 	struct s_token	*next;
 	struct s_token	*prev;
@@ -70,17 +66,16 @@ typedef struct s_token
 
 typedef struct s_ast
 {
-	t_type				type;
-	char				**args;
-	struct s_ast		*left;
-	struct s_ast		*right;
-	// int					(*builtin)(t_msh *msh);
+	t_type			type;
+	char			**args;
+	struct s_ast	*left;
+	struct s_ast	*right;
 }	t_ast;
 
 typedef struct s_env
 {
-	char				**original_env;
-	char				***parsed_env;
+	char	**original_env;
+	char	***parsed_env;
 }	t_env;
 
 /******************
