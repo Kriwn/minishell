@@ -6,4 +6,3 @@ minishell
 libft.a
 minishell_tester
 *.tldr
-srcs/expand
