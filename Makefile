@@ -54,13 +54,12 @@ BUILDIN_FILE =	msh_buildin.c	\
 				msh_export.c	\
 				msh_unset.c		\
 				msh_cd.c
-# BUILDIN_SRC = $(addprefix $(BUILDIN_DIR), $(BUILDIN_FILE))
+BUILDIN_SRC = $(addprefix $(BUILDIN_DIR), $(BUILDIN_FILE))
 
 EXPAND_DIR = srcs/expand/
 EXPAND_FILE =	msh_expand.c		\
-				expand_utils_01.c	\
-				expand_utils_02.c
-# EXPAND_SRC = $(addprefix $(EXPAND_DIR), $(EXPAND_FILE))
+				expand_utils_01.c
+EXPAND_SRC = $(addprefix $(EXPAND_DIR), $(EXPAND_FILE))
 
 PARSER_DIR = srcs/parser/
 PARSER_FILE =	msh_parsing.c		\

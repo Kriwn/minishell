@@ -56,7 +56,9 @@ STRS_SRC =		strs/ft_atoi.c					\
 				strs/ft_isdigit.c				\
 				strs/ft_isprint.c				\
 				strs/ft_tolower.c				\
-				strs/ft_toupper.c
+				strs/ft_toupper.c				\
+				strs/ft_strncpy.c				\
+				strs/ft_strdup_while_str.c
 
 ADD_ON_SRC = 	add_on/ft_strcmp.c 				\
 				add_on/ft_abs.c					\

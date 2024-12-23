@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:09:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/23 04:11:17 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/23 23:32:58 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,33 @@ t_ast	*msh_init_heredoc_word_node(t_ast *heredoc_node, t_token *token)
 
 int	msh_validate_heredoc_token(t_token **token, t_ast *heredoc_node)
 {
+	t_msh	*msh;
+
 	if (!*token || (*token)->type != CMD)
 	{
 		free(heredoc_node);
 		return (0);
 	}
+	if ((*token)->cmd && (*token)->cmd[0] == '\'')
+	{
+		heredoc_node->args = malloc(sizeof(char *) * 2);
+		if (!heredoc_node->args)
+		{
+			free(heredoc_node);
+			return (0);
+		}
+		heredoc_node->args[0] = ft_strdup((*token)->cmd);
+		heredoc_node->args[1] = NULL;
+		return (1);
+	}
+	heredoc_node->args = malloc(sizeof(char *) * 2);
+	if (!heredoc_node->args)
+	{
+		free(heredoc_node);
+		return (0);
+	}
+	heredoc_node->args[0] = msh_expand_variable(msh, (*token)->cmd);
+	heredoc_node->args[1] = NULL;
 	return (1);
 }
 

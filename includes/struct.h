@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/23 20:37:38 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/24 01:31:07 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,18 @@ typedef struct s_ast
 	struct s_ast	*right;
 }	t_ast;
 
+typedef struct s_expan
+{
+	char			*new_arg;
+	int				i;
+	int				j;
+}				t_expan;
+
 typedef struct s_env
 {
-	char	**original_env;
-	char	***parsed_env;
+	char			*key;
+	char			*value;
+	struct s_env	*next;
 }	t_env;
 
 /******************

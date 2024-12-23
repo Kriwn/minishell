@@ -6,11 +6,31 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/23 04:11:07 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/24 01:12:38 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+t_ast	*msh_get_expand(t_token **token)
+{
+	t_ast	*expand_node;
+
+	if (!token || !*token || (*token)->type != ENV_VAR)
+		return (NULL);
+	expand_node = msh_init_ast(ENV_VAR);
+	if (!expand_node)
+		return (NULL);
+	expand_node->args = malloc(sizeof(char *) * 2);
+	if (!expand_node->args)
+	{
+		free(expand_node);
+		return (NULL);
+	}
+	expand_node->args[0] = ft_strdup((*token)->cmd);
+	expand_node->args[1] = NULL;
+	return (expand_node);
+}
 
 t_ast	*msh_get_heredoc_word(t_token **token)
 {
@@ -110,9 +130,22 @@ t_ast	*msh_get_pipe(t_token **tokens)
 
 t_ast	*msh_get_tokens(t_token **tokens)
 {
+	t_token	*current;
+	t_ast	*ast_root;
 	t_msh	*msh;
 
 	if (!tokens || !*tokens)
 		return (NULL);
-	return (msh_get_pipe(tokens));
+	current = *tokens;
+	while (current)
+	{
+		if (current->type == ENV_VAR || current->type == HEREDOC)
+		{
+			if (current->cmd)
+				current->cmd = msh_expand_variable(msh, current->cmd);
+		}
+		current = current->next;
+	}
+	ast_root = msh_get_pipe(tokens);
+	return (ast_root);
 }

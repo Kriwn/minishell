@@ -6,11 +6,12 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:28:33 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/23 20:35:29 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/24 01:30:42 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 // need to add run build in here;
 void run_cmd(t_p *list,int status)
