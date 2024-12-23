@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/23 01:48:27 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/23 17:57:08 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct	s_msh
 	char	**env;
 	char	*cwd;
 	int		count_pipe;
-	
+
 	char	*input;
 }	t_msh;
 
@@ -102,7 +102,7 @@ typedef struct p_pipe
 	char	*cmd;
 	char	**env;
 	char	**args;
-	int		max;
+	t_msh	*msh;
 	int		fd_in;
 	int		fd_out;
 	int		iter;

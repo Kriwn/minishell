@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_exe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/23 02:03:55 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/23 17:59:15 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	wait_all_process(t_p *list)
 	int	status;
 
 	i = 0;
-	while (i < list->max)
+	while (i < list->msh->count_pipe + 1)
 	{
 		if (list->process_pid[i] > -1)
 			waitpid(list->process_pid[i], &status, WUNTRACED);
@@ -59,7 +59,7 @@ void	init_pipe(t_p **temp, t_msh *msh)
 	list->path = ft_split(get_value_from_key(msh->tuple, "PATH"), ':');
 	list->env = msh->env;
 	list->code = &msh->code;
-	list->max = msh->count_pipe + 1;
+	list->msh = msh;
 	list->pipe[0] = -1;
 	list->pipe[1] = -1;
 	list->fd_in = -1;
@@ -80,7 +80,7 @@ void	main_exe(t_msh *msh)
 	int		a;
 
 	a = -1;
-	msh->count_pipe = 1;
+	// msh->count_pipe = 1;
 	list = msh->list;
 	init_pipe(&list,msh);
 	do_here_doc_task(msh->ast, list);
@@ -88,12 +88,7 @@ void	main_exe(t_msh *msh)
 	is_build_in_command(msh->ast, &a);
 	// dprintf(2,"Out %d\n",msh->code);
 	if (msh->count_pipe == 0 && a == 0)
-	{
-		// dprintf(2,"Single CMD\n");
-		// run_buid in command;
-		// mode_signal_exe(1);
-		// exe_single_cmd(msh,msh->ast, list);
-	}
+		*list->code = msh_execute_builtin(msh);
 	else
 	{
 		mode_signal_exe(1);

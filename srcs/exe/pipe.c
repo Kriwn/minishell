@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:28:33 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/23 01:48:23 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/23 18:04:28 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-// need to add run build in here;
+// cmd_path = ./minishell and list->cmd = ./minishell
 void run_cmd(t_p *list,int status)
 {
 	char *cmd_path;
@@ -55,7 +55,7 @@ void child_process(t_p *list, int status)
 		pipe_write(list);
 	check_build_in_command(list->cmd, &a);
 	if (a == 0)
-		dprintf(2,"RUN BUILD IN (PIPE)\n");
+		*list->code = msh_execute_builtin(list->msh);
 	else
 		run_cmd(list,status);
 }
