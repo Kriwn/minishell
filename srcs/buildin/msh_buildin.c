@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_buildin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:47:52 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/12 13:05:59 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/23 18:13:58 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,14 @@ int	msh_execute_builtin(t_msh *msh)
 	if (!msh || !msh->ast || !msh->ast->args || !msh->ast->args[0])
 		return (EXIT_FAILURE);
 	if (ft_strcmp(msh->ast->args[0], "echo") == 0)
-		return (msh_echo(msh));
+		dprintf(2,"DO echo\n");
+		// return (msh_echo(msh));
 	else if (ft_strcmp(msh->ast->args[0], "cd") == 0)
-		return (msh_cd(msh, msh->ast->args[1]));
+		dprintf(2,"DO CD\n");
+		// return (msh_cd(msh, msh->ast->args[1]));
 	else if (ft_strcmp(msh->ast->args[0], "pwd") == 0)
-		return (msh_pwd(msh));
+		dprintf(2,"DO pwd\n");
+		// return (msh_pwd(msh));
 	if (!msh || !msh->ast || !msh->ast->args || !msh->ast->args[0])
 		return (EXIT_FAILURE);
 	else if (ft_strcmp(msh->ast->args[0], "env") == 0)

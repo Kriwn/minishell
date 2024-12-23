@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:01 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/23 00:34:52 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/23 17:48:44 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	do_here_doc_task(t_ast *ast,t_p *list)
 		return ;
 	if (ast->type == HEREDOC)
 		list->fd_in = do_here_doc(ast->right,ast->left ,list);
-	// if (ast->type == HEREDOC_CUT)
-	// 	list->here_doc_cut = ast->left->args[0];
 	else
 	{
 		do_here_doc_task(ast->left, list);
@@ -57,7 +55,7 @@ int	do_here_doc(t_ast *ast,t_ast *temp ,t_p *list)
 	int		fd[2];
 
 	str = ast->args[0];
-	dprintf(2,"Temp\n");
+	dprintf(2,"str is %s\n",str);
 	if (init_here_doc(ast,temp,list) == -1)
 		return (-1);
 	if (list->fd_out != -1)
@@ -65,7 +63,6 @@ int	do_here_doc(t_ast *ast,t_ast *temp ,t_p *list)
 		dup2(list->fd_out, list->pipe[1]);
 		safe_close(list,1);
 	}
-	dprintf(2,"Before start here\n");
 	while (1)
 	{
 		getline = readline("> ");

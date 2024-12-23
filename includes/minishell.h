@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/23 23:31:45 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/24 01:54:45 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ t_ast		*msh_init_ast(t_type type);
  * SRCS/BUILTIN *
  ****************/
 int			msh_execute_builtin(t_msh *msh);
-
 int			msh_exit(t_msh *msh);
 int			msh_pwd(t_msh *msh);
 int			msh_echo(t_msh **msh);

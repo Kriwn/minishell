@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:20:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/21 20:59:04 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/23 17:59:06 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void free_list(t_p *list)
 	free(list->process_pid);
 	free2d(list->path);
 	list->path = NULL;
+	list->msh = NULL;
 	list->env = NULL;
-	list->max = -1;
 	close(list->pipe[0]);
 	close(list->pipe[1]);
 	list->pipe[0] = -1;
