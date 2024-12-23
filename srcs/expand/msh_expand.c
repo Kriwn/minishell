@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:16:53 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/24 01:18:51 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/24 03:17:20 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,64 +39,6 @@ char	*expand_variables(t_msh *shell, char *original_str)
 		free_multiple_strings(prefix, variable, env_value);
 	}
 	return (result);
-}
-
-void	replace_status_with_value(t_msh *shell, t_token *current)
-{
-	free(current->cmd);
-	current->cmd = ft_itoa(shell->code);
-}
-
-void	replace_exit_status(char *original, char *replacement, char *exit_code)
-{
-	int	i;
-	int	j;
-
-	i = 0, j = 0;
-	while (original[i] != '$')
-	{
-		replacement[i] = original[i];
-		i++;
-	}
-	while (exit_code[j])
-	{
-		replacement[i + j] = exit_code[j];
-		j++;
-	}
-	while (original[i + 2])
-	{
-		replacement[i + j] = original[i + 2];
-		i++;
-	}
-	replacement[i + j] = '\0';
-}
-
-void	expand_exit_code(t_msh *shell, t_token *current)
-{
-	char	*original;
-	char	*exit_code;
-	char	*replacement;
-
-	original = current->cmd;
-	if (!original)
-		return ;
-	if (!ft_strnstr(original, "$?", ft_strlen(original)))
-		return ;
-	exit_code = ft_itoa(shell->code);
-	replacement = malloc(ft_strlen(original) - 1 + ft_strlen(exit_code));
-	if (!replacement)
-		return ;
-	replace_exit_status(original, replacement, exit_code);
-	free(current->cmd);
-	free(exit_code);
-	current->cmd = replacement;
-}
-
-char *msh_expand_variable(t_msh *shell, char *token_value)
-{
-	if (ft_strncmp(token_value, "$?", 2) == 0)
-		return (ft_itoa(shell->code));
-	return (ft_strdup(token_value));
 }
 
 void	process_expansion(t_msh *shell)
@@ -134,6 +76,14 @@ void	process_expansion(t_msh *shell)
 				free(temp);
 			}
 		}
+		printf("Test Expand!");
 		current = current->next;
 	}
+}
+
+char *msh_expand_variable(t_msh *shell, char *token_value)
+{
+	if (ft_strncmp(token_value, "$?", 2) == 0)
+		return (ft_itoa(shell->code));
+	return (ft_strdup(token_value));
 }

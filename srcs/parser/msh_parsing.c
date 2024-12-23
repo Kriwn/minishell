@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/24 01:12:38 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/24 02:23:42 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 t_ast	*msh_get_expand(t_token **token)
 {
 	t_ast	*expand_node;
+	char	*expanded_value;
 
 	if (!token || !*token || (*token)->type != ENV_VAR)
 		return (NULL);
+	expanded_value = expand_variables((*token)->msh, (*token)->cmd);
 	expand_node = msh_init_ast(ENV_VAR);
 	if (!expand_node)
 		return (NULL);
@@ -27,7 +29,7 @@ t_ast	*msh_get_expand(t_token **token)
 		free(expand_node);
 		return (NULL);
 	}
-	expand_node->args[0] = ft_strdup((*token)->cmd);
+	expand_node->args[0] = expanded_value;
 	expand_node->args[1] = NULL;
 	return (expand_node);
 }
@@ -133,6 +135,7 @@ t_ast	*msh_get_tokens(t_token **tokens)
 	t_token	*current;
 	t_ast	*ast_root;
 	t_msh	*msh;
+	t_ast	*expand_node;
 
 	if (!tokens || !*tokens)
 		return (NULL);
@@ -142,7 +145,16 @@ t_ast	*msh_get_tokens(t_token **tokens)
 		if (current->type == ENV_VAR || current->type == HEREDOC)
 		{
 			if (current->cmd)
-				current->cmd = msh_expand_variable(msh, current->cmd);
+			{
+				expand_node = msh_get_expand(&current);
+				if (expand_node)
+				{
+					free(current->cmd);
+					current->cmd = expand_node->args[0];
+					free(expand_node->args);
+					free(expand_node);
+				}
+			}
 		}
 		current = current->next;
 	}

@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/29 16:19:05 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/24 02:22:37 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_ast(t_ast *ast)
+{
+	if (!ast)
+		return ;
+	if (ast->args)
+	{
+		free(ast->args[0]);
+		free(ast->args);
+	}
+	free(ast);
+}
 
 void	ft_free(t_msh *data)
 {
