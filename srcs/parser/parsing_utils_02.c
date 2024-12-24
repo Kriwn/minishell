@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:09:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/23 23:32:58 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/24 21:15:31 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	msh_validate_heredoc_token(t_token **token, t_ast *heredoc_node)
 		free(heredoc_node);
 		return (0);
 	}
-	heredoc_node->args[0] = msh_expand_variable(msh, (*token)->cmd);
+	// heredoc_node->args[0] = msh_expand_variable(msh, (*token)->cmd);
 	heredoc_node->args[1] = NULL;
 	return (1);
 }

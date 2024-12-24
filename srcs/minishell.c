@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/24 01:54:29 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/24 04:01:54 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_readline(t_msh *var)
 	return (input);
 }
 
-void	msh_loop(t_msh *msh)
+void msh_loop(t_msh *msh)
 {
 	while (1)
 	{
@@ -92,15 +92,11 @@ void	msh_loop(t_msh *msh)
 			{
 				printf("\nAbstract Syntax Tree:\n");
 				display_ast_table(msh->ast, 0);
-				printf("%s---------------------------------------------------------------------------------------------%s\n\n",
-					GREEN, RESET);
+				printf("%s---------------------------------------------------------------------------------------------%s\n", GREEN, RESET);
 			}
 			main_exe(msh);
-			// execute_ast(msh->ast, msh);
-			// msh_execute_builtin(msh);
-			free(msh->ast);
+			free_ast(msh->ast);
 		}
-		// printf("%sToken count pipe %d\n%s", GREEN, msh->count_pipe, RESET);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/24 01:54:45 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/24 02:22:59 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void		updata_value_from_key(t_tuple *data, char *key, char *new_value);
 void		remove_tuple(t_tuple **data, char *key);
 void		clear_tuple(t_tuple **data);
 
+void		free_ast(t_ast *ast);
 void		ft_free(t_msh *data);
 void		ft_error(t_msh *data,char *word);
 

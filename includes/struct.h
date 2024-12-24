@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/24 01:55:02 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/24 02:23:39 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_token
 {
 	char			*cmd;
 	t_type			type;
+	t_msh			*msh;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
