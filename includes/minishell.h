@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/24 02:22:59 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/24 23:29:49 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,30 +87,13 @@ char		*get_env_variable(t_tuple *env, const char *key);
  * SRCS/EXPAND *
  ***************/
 
-char	*ft_strdup_while_string(char *str, char *charset);
-char	*ft_strncpy(char *dst, const char *src, size_t len);
-
-char	*fetch_environment_value(t_msh *shell, char *key);
-char	*get_variable_value(t_msh *shell, char *key);
-char	*locate_variable_reference(char *str);
-char	*duplicate_until_variable(char *str);
-void	free_multiple_strings(char *s1, char *s2, char *s3);
-
-char	*msh_expand_variable(t_msh *shell, char *token_value);
-
-char	*expand_variables(t_msh *shell, char *original_str);
-void	replace_status_with_value(t_msh *shell, t_token *current);
-void	replace_exit_status(char *original, char *replacement, char *exit_code);
-void	expand_exit_code(t_msh *shell, t_token *current);
-
-/** Main Exapnd Use */
-void	process_expansion(t_msh *shell);
 
 /***************
  * SRCS/PARSER *
  ***************/
 /** msh_parsing */
 t_ast		*msh_get_tokens(t_token **tokens);
+
 t_ast		*msh_get_pipe(t_token **tokens);
 t_ast		*msh_get_redirect(t_token **tokens);
 t_ast		*msh_get_heredoc_word(t_token **token);
@@ -121,12 +104,6 @@ void		msh_free_ast(t_ast *node);
 t_ast		*create_file_list_redir(t_token **tokens, t_token *tmp);
 int			count_cmd_arg(t_token *current);
 void		add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count);
-
-/** parsing_utils_02 */
-t_ast		*msh_init_heredoc_word_node(t_ast *heredoc_node, t_token *token);
-int			msh_validate_heredoc_token(t_token **token, t_ast *heredoc_node);
-t_ast		*msh_handle_heredoc(t_token **tokens);
-t_ast		*msh_handle_redirect(t_token **tokens, t_token **tmp);
 
 /** msh_syntax */
 int			has_unclosed_quotes(const char *input);
