@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:09:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/24 23:27:50 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/25 01:12:45 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_ast	*msh_get_heredoc_word(t_token **token)
 {
 	t_ast	*heredoc_node;
 	t_ast	*heredoc_word_node;
+	t_ast	*next_heredoc_node;
 
 	if (!token || !*token || (*token)->type != HEREDOC)
 		return (NULL);
@@ -44,10 +45,16 @@ t_ast	*msh_get_heredoc_word(t_token **token)
 	heredoc_word_node->args[0] = ft_strdup((*token)->cmd);
 	heredoc_word_node->args[1] = NULL;
 	heredoc_node->right = heredoc_word_node;
-	free((*token)->cmd);
 	t_token *next_token = (*token)->next;
+	free((*token)->cmd);
 	free(*token);
 	*token = next_token;
+	if (*token && (*token)->type == HEREDOC)
+	{
+		next_heredoc_node = msh_get_heredoc_word(token);
+		heredoc_node->left = next_heredoc_node;
+	}
+
 	return (heredoc_node);
 }
 
