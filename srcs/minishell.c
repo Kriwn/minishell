@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/24 03:21:17 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/24 04:01:54 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ void msh_loop(t_msh *msh)
 		}
 	}
 }
-
 
 int	main(int ac, char **av, char **env)
 {

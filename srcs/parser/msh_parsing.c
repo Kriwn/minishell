@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/24 02:23:42 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/24 21:16:26 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_ast	*msh_get_expand(t_token **token)
 
 	if (!token || !*token || (*token)->type != ENV_VAR)
 		return (NULL);
-	expanded_value = expand_variables((*token)->msh, (*token)->cmd);
+	// expanded_value = expand_variables((*token)->msh, (*token)->cmd);
 	expand_node = msh_init_ast(ENV_VAR);
 	if (!expand_node)
 		return (NULL);
@@ -29,7 +29,7 @@ t_ast	*msh_get_expand(t_token **token)
 		free(expand_node);
 		return (NULL);
 	}
-	expand_node->args[0] = expanded_value;
+	// expand_node->args[0] = expanded_value;
 	expand_node->args[1] = NULL;
 	return (expand_node);
 }
@@ -146,7 +146,7 @@ t_ast	*msh_get_tokens(t_token **tokens)
 		{
 			if (current->cmd)
 			{
-				expand_node = msh_get_expand(&current);
+				// expand_node = msh_get_expand(&current);
 				if (expand_node)
 				{
 					free(current->cmd);
