@@ -6,14 +6,13 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:28:33 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/23 18:04:28 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/24 21:22:05 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-// cmd_path = ./minishell and list->cmd = ./minishell
 void run_cmd(t_p *list,int status)
 {
 	char *cmd_path;
@@ -92,8 +91,7 @@ void mutiple_exe(t_ast *ast, t_p *list)
 void pipe_task(t_ast *ast, t_p *list)
 {
 	if (!ast)
-		wait_all_process(list);
-
+		;
 	if (ast->type == CMD_GROUP)
 		mutiple_exe(ast, list);
 	else if (ast->type == PIPE)

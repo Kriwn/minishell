@@ -39,7 +39,7 @@ EXE_FILE =	check_buildin.c \
 			error.c \
 			exe_utils.c \
 			exe_utils2.c \
-			here_doc_sig.c \
+			here_doc_utils.c  \
 			here_doc.c \
 			list_utils.c \
 			main_exe.c \
