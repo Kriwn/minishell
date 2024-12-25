@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/24 22:55:26 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/25 17:04:13 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void wait_all_process(t_p *list)
 		list->code = &msh->code;
 		list->msh = msh;
 		list->pipe[0] = -1;
-		list->pipe[1] = -1;
+		list->pipe[1] = -1;	
 		list->fd_in = -1;
 		list->fd_out = -1;
 		list->args = NULL;
@@ -101,8 +101,9 @@ void wait_all_process(t_p *list)
 		dprintf(2,"B is %d\n",b);
 		if (msh->count_pipe == 0 && a == 0)
 		{
-			dprintf(2,"Single buildin command\n");
-			*list->code = msh_execute_builtin(msh);
+			exe_single_cmd(msh->ast, list);
+			// prepare_cmd(ast, list, &status);
+			// *list->code = msh_execute_builtin(msh);
 		}
 		else if (b == 1)
 		{

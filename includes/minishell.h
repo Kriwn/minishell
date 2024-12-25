@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/25 11:15:54 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/25 16:00:24 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ t_ast		*msh_init_ast(t_type type);
 /****************
  * SRCS/BUILTIN *
  ****************/
-int			msh_execute_builtin(t_msh *msh);
+int			msh_execute_builtin(t_p *list);
 int			msh_exit(t_msh *msh);
-int			msh_pwd(t_msh *msh);
+int			msh_pwd(t_p *list);
 int			msh_echo(t_msh **msh);
 int			msh_cd(t_msh *msh, t_token *token);
-int			msh_env(t_msh *msh);
-int			msh_export(t_msh *msh, char *arg);
-int			msh_unset(t_msh *msh, char *arg);
+int			msh_env(t_p *list);
+int			msh_export(t_p *list);
+int			msh_unset(t_p *list);
 
 void		update_env_variable(t_tuple *env, const char *key, const char *value);
 char		*get_env_variable(t_tuple *env, const char *key);
@@ -156,7 +156,6 @@ int check_build_in_command(char *word,int *a);
 // int 		check_build_in_command(char *word);
 void		do_here_doc_task(t_ast *ast,t_p *list,int *b);
 void		main_exe(t_msh *msh);
-void exe_single_cmd(t_msh *msh, t_ast *ast, t_p *list);
 void		safe_close(t_p *list, int flag);
 void		prepare_cmd(t_ast *ast,t_p *list, int *status);
 void		open_in_file(char *argv, t_p *list,int *status);
@@ -171,5 +170,6 @@ int			ft_puterrorcmd(char *s, int errnum);
 void	check_signal(int signal);
 void	mode_signal_exe(int mode);
 void	wait_all_process(t_p *list);
+void		exe_single_cmd(t_ast *ast, t_p *list);
 
 #endif

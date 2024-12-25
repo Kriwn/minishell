@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:28:33 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/25 11:15:41 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/25 13:51:27 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void child_process(t_p *list, int status)
 		pipe_write(list);
 	check_build_in_command(list->cmd, &a);
 	if (a == 0)
-		*list->code = msh_execute_builtin(list->msh);
+		*list->code = msh_execute_builtin(list);
 	else
 		run_cmd(list,status);
 }
