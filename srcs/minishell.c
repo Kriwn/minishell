@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/24 22:50:47 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/25 11:16:12 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_readline(t_msh *var)
 	return (input);
 }
 
-void	msh_loop(t_msh *msh)
+void msh_loop(t_msh *msh)
 {
 	while (1)
 	{
@@ -94,10 +94,8 @@ void	msh_loop(t_msh *msh)
 				display_ast_table(msh->ast, 0);
 			}
 			main_exe(msh);
-			// execute_ast(msh->ast, msh);
-			// msh_execute_builtin(msh);
+			free_ast(msh->ast);
 		}
-		// printf("%sToken count pipe %d\n%s", GREEN, msh->count_pipe, RESET);
 	}
 }
 

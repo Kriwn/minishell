@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/24 22:52:43 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/25 11:15:54 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 
 # define STDERR_FILENO 2
 # define WHITESPACE " \t\n\v\f\r"
+# define LETTERS_DIGITS "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
 
 /**************
  * SRCS/UTILS *
@@ -49,6 +50,7 @@ void		updata_value_from_key(t_tuple *data, char *key, char *new_value);
 void		remove_tuple(t_tuple **data, char *key);
 void		clear_tuple(t_tuple **data);
 
+void		free_ast(t_ast *ast);
 void		ft_free(t_msh *data);
 void		ft_error(t_msh *data,char *word);
 
@@ -85,14 +87,13 @@ char		*get_env_variable(t_tuple *env, const char *key);
  * SRCS/EXPAND *
  ***************/
 
-/** Main Exapnd Use */
-void		process_expand(t_msh *msh);
 
 /***************
  * SRCS/PARSER *
  ***************/
 /** msh_parsing */
 t_ast		*msh_get_tokens(t_token **tokens);
+
 t_ast		*msh_get_pipe(t_token **tokens);
 t_ast		*msh_get_redirect(t_token **tokens);
 t_ast		*msh_get_heredoc_word(t_token **token);
@@ -103,12 +104,6 @@ void		msh_free_ast(t_ast *node);
 t_ast		*create_file_list_redir(t_token **tokens, t_token *tmp);
 int			count_cmd_arg(t_token *current);
 void		add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count);
-
-/** parsing_utils_02 */
-t_ast		*msh_init_heredoc_word_node(t_ast *heredoc_node, t_token *token);
-int			msh_validate_heredoc_token(t_token **token, t_ast *heredoc_node);
-t_ast		*msh_handle_heredoc(t_token **tokens);
-t_ast		*msh_handle_redirect(t_token **tokens, t_token **tmp);
 
 /** msh_syntax */
 int			has_unclosed_quotes(const char *input);

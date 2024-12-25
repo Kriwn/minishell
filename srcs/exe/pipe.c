@@ -6,19 +6,18 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:28:33 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/24 21:22:05 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/25 11:15:41 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void run_cmd(t_p *list,int status)
 {
 	char *cmd_path;
 
 	cmd_path = find_path(list->cmd, list->path);
-	dprintf(2,"CMD PATH is %s\n",cmd_path);
+	dprintf(2,"CMD PATH: %s\n\n",cmd_path);
 	dup2(list->fd_in, 0);
 	safe_close(list, 0);
 	if (status == -1)
