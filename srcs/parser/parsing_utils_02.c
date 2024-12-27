@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:09:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/25 01:12:45 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/25 03:38:40 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,56 @@ t_ast	*msh_get_heredoc_word(t_token **token)
 		next_heredoc_node = msh_get_heredoc_word(token);
 		heredoc_node->left = next_heredoc_node;
 	}
-
 	return (heredoc_node);
 }
+
+// t_ast	*msh_get_cmd(t_token **tokens)
+// {
+// 	t_ast	*command_node;
+// 	int		arg_count;
+
+// 	command_node = msh_init_ast(CMD);
+// 	arg_count = count_cmd_arg(*tokens);
+// 	command_node->args = malloc(sizeof(char *) * (arg_count + 1));
+// 	if (!command_node->args)
+// 		return (NULL);
+// 	add_cmd_arg(command_node, tokens, arg_count);
+// 	return (command_node);
+// }
 
 t_ast	*msh_get_cmd(t_token **tokens)
 {
 	t_ast	*command_node;
 	int		arg_count;
+	t_token	*current;
 
 	command_node = msh_init_ast(CMD);
 	arg_count = count_cmd_arg(*tokens);
 	command_node->args = malloc(sizeof(char *) * (arg_count + 1));
 	if (!command_node->args)
 		return (NULL);
-	add_cmd_arg(command_node, tokens, arg_count);
+	current = *tokens;
+	int i = 0;
+	while (current && current->type != PIPE)
+	{
+		if (current->type == ENV_VAR)
+		{
+			t_ast *env_var_node = msh_init_ast(ENV_VAR);
+			env_var_node->args = malloc(sizeof(char *) * 2);
+			if (!env_var_node->args)
+				return (NULL);
+			env_var_node->args[0] = ft_strdup(current->cmd);
+			env_var_node->args[1] = NULL;
+			command_node->left = env_var_node;
+		}
+		else
+			command_node->args[i++] = ft_strdup(current->cmd);
+		current = current->next;
+	}
+	command_node->args[i] = NULL;
 	return (command_node);
 }
+
 
 t_ast	*msh_get_redirect(t_token **tokens)
 {
