@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/25 16:00:24 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/28 00:07:38 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_ast		*msh_init_ast(t_type type);
 int			msh_execute_builtin(t_p *list);
 int			msh_exit(t_msh *msh);
 int			msh_pwd(t_p *list);
-int			msh_echo(t_msh **msh);
+int			msh_echo(t_p *list);
 int			msh_cd(t_msh *msh, t_token *token);
 int			msh_env(t_p *list);
 int			msh_export(t_p *list);

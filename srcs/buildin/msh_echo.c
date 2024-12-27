@@ -3,36 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   msh_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:11:22 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/11/28 12:39:05 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/28 00:18:04 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	msh_echo(t_msh **msh)
+int	msh_echo(t_p *list)
 {
 	int	i;
-	int	n_flag;
+	int n_flag;
 
-	i = 1;
 	n_flag = 0;
-	if (!(*msh)->ast->args[i])
+	i = 1;
+	if (list->fd_out != 1)
 	{
-		ft_putstr_fd("\n", STDOUT_FILENO);
-		return (0);
+		dup2(list->fd_out, 1);
+		close(list->pipe[0]);
+		close(list->pipe[1]);
+		safe_close(list, 1);
 	}
-	if (!ft_strncmp((*msh)->ast->args[i], "-n", 3))
+	dprintf(2,"\nIN RUN \n\n");
+	for (int i = 0;list->args[i];i++)
+	{
+		dprintf(2,"Args: %s\n",list->args[i]);
+	}
+	if (!ft_strncmp(list->args[i], "-n", 3))
 	{
 		n_flag = 1;
 		i++;
 	}
-	while ((*msh)->ast->args[i])
+	while (list->args[i])
 	{
-		ft_putstr_fd((*msh)->ast->args[i], STDOUT_FILENO);
-		if ((*msh)->ast->args[i + 1])
+		ft_putstr_fd(list->args[i], STDOUT_FILENO);
+		if (list->args[i + 1] != NULL)
 			ft_putstr_fd(" ", STDOUT_FILENO);
 		i++;
 	}

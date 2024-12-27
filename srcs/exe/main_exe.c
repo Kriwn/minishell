@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/25 17:04:13 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/28 01:15:07 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void wait_all_process(t_p *list)
 		list->code = &msh->code;
 		list->msh = msh;
 		list->pipe[0] = -1;
-		list->pipe[1] = -1;	
+		list->pipe[1] = -1;
 		list->fd_in = -1;
 		list->fd_out = -1;
 		list->args = NULL;
@@ -92,6 +92,7 @@ void wait_all_process(t_p *list)
 		int a;
 		int b;
 
+		dprintf(2,"Main exe\n");
 		a = -1;
 		b = -1;
 		list = msh->list;

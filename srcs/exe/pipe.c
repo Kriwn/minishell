@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:28:33 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/25 13:51:27 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/27 18:05:48 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void run_cmd(t_p *list,int status)
 		*list->code = 1;
 		exit(*list->code);
 	}
+	dprintf(2,"Before execve\n");
 	if (execve(cmd_path, list->args , list->env) == -1)
 	{
 		dprintf(2,"Errno is %d\n", errno);
@@ -53,7 +54,10 @@ void child_process(t_p *list, int status)
 		pipe_write(list);
 	check_build_in_command(list->cmd, &a);
 	if (a == 0)
+	{
 		*list->code = msh_execute_builtin(list);
+		exit(*list->code);
+	}
 	else
 		run_cmd(list,status);
 }

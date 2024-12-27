@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:51:08 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/25 15:18:12 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/27 22:57:50 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,6 @@ void	remove_tuple(t_tuple **data, char *key)
 
 	cur = *data;
 	temp = NULL;
-
-	printf("\n\n\n\n\n\n");
-	printf("Key is %s\n",key);
-	print_tuple(*data);
-
 	while (cur)
 	{
 		if (!ft_strncmp(cur->key, key, ft_strlen(key)))
@@ -73,7 +68,7 @@ void	remove_tuple(t_tuple **data, char *key)
 				cur->next->tail = (*data)->tail;
 				*data = cur->next;
 			}
-			else if (cur->next == NULL) // tail
+			else if (cur->next == NULL)
 				(*data)->tail = temp;
 			else
 				temp->next = cur->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:07:15 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/11 15:58:55 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:43:12 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*get_env_variable(t_tuple *env, const char *key)
 	return (NULL);
 }
 
+// cd and cd ~ return to HOME //
 int	msh_cd(t_msh *msh, t_token *token)
 {
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:26:50 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/25 16:02:02 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/27 23:22:48 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,21 @@ void	sort_env(t_tuple **env)
 	}
 }
 
+void export_no_args(t_p *list)
+{
+	t_tuple	*current;
+
+	current = list->msh->tuple;
+	sort_env(&current);
+	if (list->fd_out != 1)
+	{
+		dup2(list->fd_out, 1);
+		close(list->pipe[0]);
+		close(list->pipe[1]);
+		safe_close(list, 1);
+	}
+	print_tuple(current);
+}
 // make_tuple not work here
 int	msh_export(t_p *list)
 {
@@ -72,7 +87,10 @@ int	msh_export(t_p *list)
 	t_tuple **data;
 
 	if (list->args[1] == NULL)
-		return (EXIT_FAILURE);
+	{
+		export_no_args(list);
+		return (EXIT_SUCCESS);
+	}
 	data = &list->msh->tuple;
 	new_node = malloc(sizeof(t_tuple));
 	if (new_node == NULL || mymake_tuple(new_node, list->args[1], '=') == NULL)
