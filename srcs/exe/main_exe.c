@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/28 01:15:07 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/06 14:38:01 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void wait_all_process(t_p *list)
 				if (signal == SIGSEGV)
 				{
 					*list->code = 128 + signal;
-					dprintf(2, "Segmentation fault (core dumped)\n");
+					ft_puterrstr("Segmentation fault (core dumped)\n");
 				}
 			}
 			else
@@ -68,7 +68,7 @@ void wait_all_process(t_p *list)
 		list = *temp;
 		list->process_pid = malloc(sizeof(int) * (msh->count_pipe + 1));
 		list->iter = 0;
-		list->path = ft_split(get_value_from_key(msh->tuple, "PATH"), ':');
+		list->path = myft_split(get_value_from_key(msh->tuple, "PATH"), ':');
 		list->env = msh->env;
 		list->code = &msh->code;
 		list->msh = msh;
@@ -96,7 +96,9 @@ void wait_all_process(t_p *list)
 		a = -1;
 		b = -1;
 		list = msh->list;
+		dprintf(2,"Init pipe\n");
 		init_pipe(&list, msh);
+		dprintf(2,"do heredoc\n");
 		do_here_doc_task(msh->ast, list,&b);
 		is_build_in_command(msh->ast, &a);
 		dprintf(2,"B is %d\n",b);

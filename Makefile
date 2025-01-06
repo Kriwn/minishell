@@ -36,6 +36,7 @@ EXE_FILE =	check_buildin.c \
 			exe_utils.c \
 			exe_utils2.c \
 			here_doc_utils.c  \
+			ft_split.c \
 			here_doc.c \
 			list_utils.c \
 			main_exe.c \

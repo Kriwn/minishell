@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/28 00:07:38 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:40:34 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,5 +171,6 @@ void	check_signal(int signal);
 void	mode_signal_exe(int mode);
 void	wait_all_process(t_p *list);
 void		exe_single_cmd(t_ast *ast, t_p *list);
+char	**myft_split(char const *s, char c);
 
 #endif

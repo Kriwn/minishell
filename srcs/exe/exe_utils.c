@@ -6,11 +6,27 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:47:55 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/21 21:37:34 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:49:42 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int find_slash(char *command)
+{
+	size_t i;
+
+	if (!command)
+		return (0);
+	i = 0;
+	while (command[i])
+	{
+		if (command[i] == '/')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 static char	*myft_strjoin(char const *s1, char const *s2)
 {
@@ -50,6 +66,8 @@ char *find_path(char *cmd, char **path)
 	temp_path = path;
 	if (find_slash(cmd))
 			return (cmd);
+	if (temp_path == NULL)
+		return (NULL);
 	while (temp_path[i])
 	{
 		temp = myft_strjoin(temp_path[i], "/");
@@ -61,20 +79,4 @@ char *find_path(char *cmd, char **path)
 		i++;
 	}
 	return NULL;
-}
-
-int find_slash(char *command)
-{
-	size_t i;
-
-	if (!command)
-		return (0);
-	i = 0;
-	while (command[i])
-	{
-		if (command[i] == '/')
-			return (1);
-		i++;
-	}
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:20:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/28 01:28:20 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:50:23 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ void free2d(char **str)
 	int i;
 
 	if (!str)
-	{
-		dprintf(2,"No 2d array\n");
 		return ;
-	}
 	i = 0;
 	while (str[i])
 	{

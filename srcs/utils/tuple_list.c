@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:51:08 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/27 22:57:50 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/03 17:16:21 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ void	remove_tuple(t_tuple **data, char *key)
 	temp = NULL;
 	while (cur)
 	{
-		if (!ft_strncmp(cur->key, key, ft_strlen(key)))
+		if (ft_strlen(key) == ft_strlen(cur->key) && !ft_strncmp(cur->key, key, ft_strlen(key)))
 		{
+			dprintf(2,"Key is %s\n",cur->key);
 			if (temp == NULL)
 			{
 				cur->next->tail = (*data)->tail;
