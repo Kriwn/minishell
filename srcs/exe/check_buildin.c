@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 18:53:16 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/25 15:58:37 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/15 22:08:09 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,5 @@ void	exe_single_cmd(t_ast *ast, t_p *list)
 		*list->code = 1;
 		return ;
 	}
-	msh_execute_builtin(list);
+	*list->code = msh_execute_builtin(list);
 }

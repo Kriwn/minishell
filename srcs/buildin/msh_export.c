@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:26:50 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/27 23:22:48 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/07 11:38:36 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void export_no_args(t_p *list)
 	}
 	print_tuple(current);
 }
+
 // make_tuple not work here
 int	msh_export(t_p *list)
 {

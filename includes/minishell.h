@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/03 16:40:34 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/15 22:06:20 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,10 @@ t_ast		*msh_init_ast(t_type type);
  ****************/
 int			msh_execute_builtin(t_p *list);
 int			msh_exit(t_msh *msh);
+char		*ft_getcwd(void);
 int			msh_pwd(t_p *list);
 int			msh_echo(t_p *list);
-int			msh_cd(t_msh *msh, t_token *token);
+int			msh_cd(t_p *list);
 int			msh_env(t_p *list);
 int			msh_export(t_p *list);
 int			msh_unset(t_p *list);
@@ -172,5 +173,6 @@ void	mode_signal_exe(int mode);
 void	wait_all_process(t_p *list);
 void		exe_single_cmd(t_ast *ast, t_p *list);
 char	**myft_split(char const *s, char c);
+char	*myft_strjoin(char const *s1, char const *s2);
 
 #endif

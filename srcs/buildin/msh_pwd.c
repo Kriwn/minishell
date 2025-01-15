@@ -6,13 +6,13 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:08:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/28 00:00:53 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/08 10:14:30 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*ft_getcwd(void)
+char	*ft_getcwd(void)
 {
 	char	*path;
 
@@ -22,7 +22,18 @@ static char	*ft_getcwd(void)
 	return (path);
 }
 
-// need flag to do return or print 
+void handle_fd(t_p *list)
+{
+	if (list->fd_out != 1)
+	{
+		dup2(list->fd_out, 1);
+		close(list->pipe[0]);
+		close(list->pipe[1]);
+		safe_close(list, 1);
+	}
+}
+
+// need flag to do return or print
 int	msh_pwd(t_p *list)
 {
 	char	*current_path;
@@ -34,6 +45,7 @@ int	msh_pwd(t_p *list)
 		free (current_path);
 		return (EXIT_SUCCESS);
 	}
+	handle_fd(list);
 	ft_putendl_fd(current_path, STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }

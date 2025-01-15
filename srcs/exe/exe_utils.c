@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:47:55 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/03 16:49:42 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/08 10:36:10 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int find_slash(char *command)
 	return (0);
 }
 
-static char	*myft_strjoin(char const *s1, char const *s2)
+char	*myft_strjoin(char const *s1, char const *s2)
 {
 	size_t	i;
 	size_t	n;

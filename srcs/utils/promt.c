@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:17:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/07/28 01:41:10 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/08 10:16:02 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ char	*get_promt(t_msh *data)
 {
 	char	*ans;
 	char	*temp;
+	char	*getpath;
 
-	// ans = ft_pwd(data->tuple);
+	getpath = get_value_from_key(data->tuple, "PWD");
+	if (getpath == NULL)
+		getpath = ft_getcwd();
 	ans = ft_strdup("minishell:");
 	temp = ft_strjoin(ans, " ");
 	ans = temp;

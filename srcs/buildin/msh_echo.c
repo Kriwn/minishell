@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:11:22 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/28 00:18:04 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/08 10:47:16 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@ int	msh_echo(t_p *list)
 		close(list->pipe[0]);
 		close(list->pipe[1]);
 		safe_close(list, 1);
-	}
-	dprintf(2,"\nIN RUN \n\n");
-	for (int i = 0;list->args[i];i++)
-	{
-		dprintf(2,"Args: %s\n",list->args[i]);
 	}
 	if (!ft_strncmp(list->args[i], "-n", 3))
 	{
