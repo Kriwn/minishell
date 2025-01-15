@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/15 22:06:20 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/15 22:41:54 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_ast		*msh_init_ast(t_type type);
 /****************
  * SRCS/BUILTIN *
  ****************/
+void handle_fd(t_p *list);
 int			msh_execute_builtin(t_p *list);
 int			msh_exit(t_msh *msh);
 char		*ft_getcwd(void);

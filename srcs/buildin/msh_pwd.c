@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:08:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/08 10:14:30 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/15 22:41:17 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,12 @@ char	*ft_getcwd(void)
 	return (path);
 }
 
-void handle_fd(t_p *list)
-{
-	if (list->fd_out != 1)
-	{
-		dup2(list->fd_out, 1);
-		close(list->pipe[0]);
-		close(list->pipe[1]);
-		safe_close(list, 1);
-	}
-}
-
-// need flag to do return or print
 int	msh_pwd(t_p *list)
 {
 	char	*current_path;
+	int saved_stdout;
 
+	saved_stdout = dup(STDOUT_FILENO);
 	current_path = get_value_from_key(list->msh->tuple,"PWD");
 	if (!current_path)
 	{
@@ -47,5 +37,10 @@ int	msh_pwd(t_p *list)
 	}
 	handle_fd(list);
 	ft_putendl_fd(current_path, STDOUT_FILENO);
+	if (list->fd_out != 1)
+	{
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
+	}
 	return (EXIT_SUCCESS);
 }

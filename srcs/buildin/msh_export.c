@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:26:50 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/07 11:38:36 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/15 22:42:22 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,18 @@ void	sort_env(t_tuple **env)
 void export_no_args(t_p *list)
 {
 	t_tuple	*current;
+	int saved_stdout;
 
+	saved_stdout = dup(STDOUT_FILENO);
 	current = list->msh->tuple;
 	sort_env(&current);
+	handle_fd(list);
+	print_tuple(current);
 	if (list->fd_out != 1)
 	{
-		dup2(list->fd_out, 1);
-		close(list->pipe[0]);
-		close(list->pipe[1]);
-		safe_close(list, 1);
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
 	}
-	print_tuple(current);
 }
 
 // make_tuple not work here
