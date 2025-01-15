@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/15 22:41:54 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/15 23:15:06 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@
 
 # include "../libft/includes/libft.h"
 # include "./struct.h"
-# include <termios.h>
 
 # define STDERR_FILENO 2
 # define WHITESPACE " \t\n\v\f\r"
@@ -71,8 +70,9 @@ t_ast		*msh_init_ast(t_type type);
 /****************
  * SRCS/BUILTIN *
  ****************/
-void handle_fd(t_p *list);
+void 		handle_fd(t_p *list);
 int			msh_execute_builtin(t_p *list);
+char		*copy(const char *s);
 int			msh_exit(t_msh *msh);
 char		*ft_getcwd(void);
 int			msh_pwd(t_p *list);

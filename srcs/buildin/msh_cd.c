@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:07:15 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/15 22:09:13 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/15 22:51:41 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@ int change_dir(char *old_pwd, char *new_path,t_p *list)
 		ft_putstr_fd("\n", STDERR_FILENO);
 		return (-1);
 	}
+	// updata_value_from_key(list->msh->tuple, "PWD", new_path);
 	updata_value_from_key(list->msh->tuple, "OLDPWD", old_pwd);
 	return (0);
 }
 
-// cd and cd ~ return to HOME //
+// cd and cd ~ . .. fix PWD and OLDPWD to correct one
 int	msh_cd(t_p *list)
 {
 	char *old_pwd;
@@ -53,7 +54,8 @@ int	msh_cd(t_p *list)
 	if (old_pwd == NULL)
 		old_pwd = ft_getcwd();
 	new_path = get_path(list);
-	if (change_dir(old_pwd, new_path,list) == -1)
-		return (EXIT_FAILURE);
+	change_dir(old_pwd, new_path,list);
+	// if (change_dir(old_pwd, new_path,list) == -1)
+	// 	return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
