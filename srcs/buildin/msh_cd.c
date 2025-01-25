@@ -6,25 +6,36 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:07:15 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/15 22:51:41 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/25 15:59:06 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char   *get_path(t_p *list)
+void	clear_mem(char *pwd, char *new_path)
+{
+	if (pwd)
+		free(pwd);
+	if (new_path)
+		free(new_path);
+}
+
+char	*get_path(t_p *list,char *pwd)
 {
 	char *path;
 
 	if (list->args[1] == NULL)
-		return (get_value_from_key(list->msh->tuple, "HOME"));
+		return (copy(get_value_from_key(list->msh->tuple, "HOME")));
+	else if (ft_strncmp(list->args[1],"-",1) == 0 && ft_strlen(list->args[1]) == 1)
+		return (copy(get_value_from_key(list->msh->tuple, "OLDPWD")));
 	else
-		path= list->args[1];
-	return (path);
+		return (list->args[1]);
 }
 
 int change_dir(char *old_pwd, char *new_path,t_p *list)
 {
+	char *temp;
+
 	if (chdir(new_path) == -1)
 	{
 		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
@@ -34,15 +45,19 @@ int change_dir(char *old_pwd, char *new_path,t_p *list)
 		ft_putstr_fd("\n", STDERR_FILENO);
 		return (-1);
 	}
-	// updata_value_from_key(list->msh->tuple, "PWD", new_path);
-	updata_value_from_key(list->msh->tuple, "OLDPWD", old_pwd);
+	temp = ft_getcwd();
+	if (temp == NULL)
+		return (-2);
+	updata_value_from_key(list->msh->tuple, "PWD",copy(temp));
+	updata_value_from_key(list->msh->tuple, "OLDPWD", copy(old_pwd));
+	free(temp);
 	return (0);
 }
 
 // cd and cd ~ . .. fix PWD and OLDPWD to correct one
 int	msh_cd(t_p *list)
 {
-	char *old_pwd;
+	char *pwd;
 	char *new_path;
 
 	if (list->args[2] != NULL)
@@ -50,12 +65,15 @@ int	msh_cd(t_p *list)
 		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	old_pwd = get_value_from_key(list->msh->tuple, "PWD");
-	if (old_pwd == NULL)
-		old_pwd = ft_getcwd();
-	new_path = get_path(list);
-	change_dir(old_pwd, new_path,list);
-	// if (change_dir(old_pwd, new_path,list) == -1)
-	// 	return (EXIT_FAILURE);
+	pwd = copy(get_value_from_key(list->msh->tuple,"PWD"));
+	if(!pwd)
+		pwd  = ft_getcwd();
+	new_path = get_path(list,pwd);
+	if (change_dir(pwd, new_path,list) == -1)
+	{
+		clear_mem(pwd, new_path);
+		return (EXIT_FAILURE);
+	}
+	clear_mem(pwd, new_path);
 	return (EXIT_SUCCESS);
 }

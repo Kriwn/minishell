@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/06 14:38:01 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/15 23:28:56 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void wait_all_process(t_p *list)
 		}
 		i++;
 	}
-	dprintf(2,"End of wait all process\n");
 }
 
 	void init_pipe(t_p * *temp, t_msh * msh)
@@ -92,30 +91,20 @@ void wait_all_process(t_p *list)
 		int a;
 		int b;
 
-		dprintf(2,"Main exe\n");
 		a = -1;
 		b = -1;
 		list = msh->list;
-		dprintf(2,"Init pipe\n");
 		init_pipe(&list, msh);
-		dprintf(2,"do heredoc\n");
 		do_here_doc_task(msh->ast, list,&b);
 		is_build_in_command(msh->ast, &a);
-		dprintf(2,"B is %d\n",b);
 		if (msh->count_pipe == 0 && a == 0)
-		{
 			exe_single_cmd(msh->ast, list);
-			// prepare_cmd(ast, list, &status);
-			// *list->code = msh_execute_builtin(msh);
-		}
 		else if (b == 1)
 		{
-			dprintf(2,"Pipe command\n");
 			mode_signal_exe(1);
 			pipe_task(msh->ast, list);
 			wait_all_process(list);
 		}
 		mode_signal_exe(0);
 		free_list(list);
-		// dprintf(2,"EXITCODE %d\n",msh->code);
 	}
