@@ -6,13 +6,13 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:47:52 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/15 22:44:40 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/25 16:12:25 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void handle_fd(t_p *list)
+void	handle_fd(t_p *list)
 {
 	if (list->fd_out != 1)
 	{
@@ -42,4 +42,3 @@ int	msh_execute_builtin(t_p *list)
 		return (msh_exit(list->msh));
 	return (EXIT_FAILURE);
 }
-

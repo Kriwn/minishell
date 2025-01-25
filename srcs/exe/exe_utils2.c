@@ -6,13 +6,13 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:37:20 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/27 18:04:19 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/25 16:27:08 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void open_in_file(char *argv, t_p *list,int *status)
+void	open_in_file(char *argv, t_p *list, int *status)
 {
 	list->fd_in = open(argv, O_RDONLY);
 	if (list->fd_in == -1)
@@ -25,9 +25,9 @@ void open_in_file(char *argv, t_p *list,int *status)
 	*status = list->fd_in;
 }
 
-void open_out_file(char *argv, t_p *list, int flag, int *status)
+void	open_out_file(char *argv, t_p *list, int flag, int *status)
 {
-	int mode;
+	int	mode;
 
 	if (flag == 1)
 		mode = O_RDWR | O_TRUNC | O_CREAT;
@@ -40,12 +40,11 @@ void open_out_file(char *argv, t_p *list, int flag, int *status)
 		ft_puterrstr(argv);
 		ft_puterrstr(": ");
 		perror("");
-
 	}
 	*status = list->fd_out;
 }
 
-void pipe_write(t_p *list)
+void	pipe_write(t_p *list)
 {
 	close(list->pipe[0]);
 	dup2(list->pipe[1], 1);

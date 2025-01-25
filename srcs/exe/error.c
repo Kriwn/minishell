@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:39:56 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/03 17:17:23 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/25 16:25:32 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ void	ft_puterrstr(char *s)
 	write(2, s, ft_strlen(s));
 }
 
+/*
+ in orb maybe is 2
+*/
+
 int	ft_puterrorcmd(char *s, int errnum)
 {
-	dprintf(2,"Errnum is %d\n",errnum);
-	if (errnum == 14 || errnum == 2) // in orb maybe is 2
+	if (errnum == 14 || errnum == 2)
 	{
 		ft_puterrstr(s);
 		write(2, ": ", 2);

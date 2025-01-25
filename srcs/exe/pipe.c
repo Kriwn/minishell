@@ -6,15 +6,15 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:28:33 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/15 23:29:04 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/25 16:58:54 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void run_cmd(t_p *list,int status)
+void	run_cmd(t_p *list, int status)
 {
-	char *cmd_path;
+	char	*cmd_path;
 
 	cmd_path = find_path(list->cmd, list->path);
 	dup2(list->fd_in, 0);
@@ -24,7 +24,7 @@ void run_cmd(t_p *list,int status)
 		*list->code = 1;
 		exit(*list->code);
 	}
-	if (execve(cmd_path, list->args , list->env) == -1)
+	if (execve(cmd_path, list->args, list->env) == -1)
 	{
 		*list->code = ft_puterrorcmd(list->cmd, errno);
 		if (cmd_path != NULL)
@@ -34,9 +34,9 @@ void run_cmd(t_p *list,int status)
 	free(cmd_path);
 }
 
-void child_process(t_p *list, int status)
+void	child_process(t_p *list, int status)
 {
-	int a;
+	int	a;
 
 	a = -1;
 	mode_signal_exe(2);
@@ -56,10 +56,10 @@ void child_process(t_p *list, int status)
 		exit(*list->code);
 	}
 	else
-		run_cmd(list,status);
+		run_cmd(list, status);
 }
 
-void parent_process(t_p *list)
+void	parent_process(t_p *list)
 {
 	if (list->fd_in > -1)
 		safe_close(list, 0);
@@ -68,12 +68,12 @@ void parent_process(t_p *list)
 	close(list->pipe[1]);
 }
 
-void mutiple_exe(t_ast *ast, t_p *list)
+void	mutiple_exe(t_ast *ast, t_p *list)
 {
-	int status;
+	int	status;
 
 	status = 1;
-	prepare_cmd(ast, list, &status); // check fd in this before run
+	prepare_cmd(ast, list, &status);
 	list->process_pid[list->iter] = fork();
 	if (list->process_pid[list->iter] == -1)
 	{
@@ -88,7 +88,7 @@ void mutiple_exe(t_ast *ast, t_p *list)
 	list->iter++;
 }
 
-void pipe_task(t_ast *ast, t_p *list)
+void	pipe_task(t_ast *ast, t_p *list)
 {
 	if (!ast)
 		;

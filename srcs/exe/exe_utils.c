@@ -6,15 +6,15 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:47:55 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/08 10:36:10 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/25 16:26:30 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int find_slash(char *command)
+int	find_slash(char *command)
 {
-	size_t i;
+	size_t	i;
 
 	if (!command)
 		return (0);
@@ -55,17 +55,17 @@ char	*myft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-char *find_path(char *cmd, char **path)
+char	*find_path(char *cmd, char **path)
 {
-	int i;
-	char *temp;
-	char *cmd_path;
-	char **temp_path;
+	int		i;
+	char	*temp;
+	char	*cmd_path;
+	char	**temp_path;
 
 	i = 0;
 	temp_path = path;
 	if (find_slash(cmd))
-			return (cmd);
+		return (cmd);
 	if (temp_path == NULL)
 		return (NULL);
 	while (temp_path[i])
@@ -78,5 +78,5 @@ char *find_path(char *cmd, char **path)
 		free(cmd_path);
 		i++;
 	}
-	return NULL;
+	return (NULL);
 }

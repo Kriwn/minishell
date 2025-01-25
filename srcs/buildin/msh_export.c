@@ -6,37 +6,11 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:26:50 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/15 22:42:22 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/25 16:16:50 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	*mymake_tuple(t_tuple *new_node, char *str, char c)
-{
-	size_t	i;
-	size_t	n;
-	char	*temp;
-
-	dprintf(2,"str: %s\n", str);
-	i = 0;
-	while (str[i] != c)
-		i++;
-	temp = malloc(sizeof(char) * (i + 1));
-	temp[0] = '\0';
-	if (temp == NULL)
-		return (NULL);
-	new_node->key = temp;
-	ft_strlcat(temp, str, i + 1);
-	n = ft_strlen(str) - i;
-	temp = malloc(sizeof(char) * (n + 1));
-	if (temp == NULL)
-		return (NULL);
-	temp[0] = '\0';
-	ft_strlcat(temp, (str + i + 1), n);
-	new_node->value = temp;
-	return ((void *)(1));
-}
 
 void	sort_env(t_tuple **env)
 {
@@ -65,10 +39,10 @@ void	sort_env(t_tuple **env)
 	}
 }
 
-void export_no_args(t_p *list)
+void	export_no_args(t_p *list)
 {
 	t_tuple	*current;
-	int saved_stdout;
+	int		saved_stdout;
 
 	saved_stdout = dup(STDOUT_FILENO);
 	current = list->msh->tuple;
@@ -85,8 +59,8 @@ void export_no_args(t_p *list)
 // make_tuple not work here
 int	msh_export(t_p *list)
 {
-	t_tuple *new_node;
-	t_tuple **data;
+	t_tuple	*new_node;
+	t_tuple	**data;
 
 	if (list->args[1] == NULL)
 	{
@@ -95,7 +69,7 @@ int	msh_export(t_p *list)
 	}
 	data = &list->msh->tuple;
 	new_node = malloc(sizeof(t_tuple));
-	if (new_node == NULL || mymake_tuple(new_node, list->args[1], '=') == NULL)
+	if (new_node == NULL || make_tuple(new_node, list->args[1], '=') == NULL)
 		return (EXIT_FAILURE);
 	new_node->next = NULL;
 	if (!*data)

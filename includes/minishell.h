@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/15 23:15:06 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/25 17:01:33 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +154,7 @@ int			execute_ast(t_ast *ast, t_msh *msh);
 int			find_slash(char *command);
 int			do_here_doc(t_ast *ast,t_ast *temp ,t_p *list);
 void		is_build_in_command(t_ast *ast,int *a);
-int check_build_in_command(char *word,int *a);
-// int 		check_build_in_command(char *word);
+int 		check_build_in_command(char *word,int *a);
 void		do_here_doc_task(t_ast *ast,t_p *list,int *b);
 void		main_exe(t_msh *msh);
 void		safe_close(t_p *list, int flag);
@@ -167,13 +166,13 @@ char 		*find_path(char *cmd, char **path);
 void		pipe_task(t_ast *ast, t_p *list);
 void		clear_list(t_p *list);
 void 		free_list(t_p *list);
-void	ft_puterrstr(char *s);
+void		ft_puterrstr(char *s);
 int			ft_puterrorcmd(char *s, int errnum);
-void	check_signal(int signal);
-void	mode_signal_exe(int mode);
-void	wait_all_process(t_p *list);
+void		check_signal(int signal);
+void		mode_signal_exe(int mode);
+void		wait_all_process(t_p *list);
 void		exe_single_cmd(t_ast *ast, t_p *list);
-char	**myft_split(char const *s, char c);
-char	*myft_strjoin(char const *s1, char const *s2);
+char		**myft_split(char const *s, char c);
+char		*myft_strjoin(char const *s1, char const *s2);
 
 #endif
