@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   msh_env.c                                          :+:      :+:    :+:   */
+/*   list_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/25 13:04:26 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/27 01:22:04 by krwongwa         ###   ########.fr       */
+/*   Created: 2025/01/27 01:35:20 by krwongwa          #+#    #+#             */
+/*   Updated: 2025/01/27 01:36:10 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-int	msh_env(t_p *list)
+
+void	safe_close(int *fd)
 {
-	t_msh	*msh;
-	int		saved_stdout;
+	if (*fd != -1)
+		close(*fd);
+	*fd = -1;
+}
 
-	saved_stdout = dup(STDOUT_FILENO);
-	handle_fd(list);
-	msh = list->msh;
-	print_tuple(msh->tuple);
-	if (list->fd_out != 1)
+void	safe_fd(t_p *list, int flag)
+{
+	if (flag == 0)
 	{
-		dup2(saved_stdout, STDOUT_FILENO);
-		close(saved_stdout);
+		if (list->fd_in != -1)
+		{
+			close(list->fd_in);
+			list->fd_in = -1;
+		}
 	}
-	return (EXIT_SUCCESS);
+	else
+	{
+		if (list->fd_out != -1)
+		{
+			close(list->fd_out);
+			list->fd_out = -1;
+		}
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:35:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/23 22:04:14 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/01/27 02:33:26 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,29 @@ int	msh_is_digit_str(char *str)
 	return (1);
 }
 
-int	msh_exit(t_msh *msh)
+int	msh_exit(t_p *list)
 {
-	int		i;
+	int	exit_status;
 	char	*str;
 
-	i = 0;
-	if (msh->token->next)
+	exit_status = 0;
+	if (list->args[1])
 	{
-		str = msh->token->next->cmd;
-		if (msh_is_digit_str(str))
-			i = ft_atoi(str);
+		if (msh_is_digit_str(list->args[1]) == 1)
+			exit_status = ft_atoi(list->args[1]);
 		else
 		{
-			ft_puterrorcmd("exit", 255);
+			ft_puterrstr("minishell: exit: numeric argument required\n");
+			exit(2);
+		}
+		if (list->args[2] != NULL)
+		{
+			ft_puterrstr("minishell: exit: too many arguments\n");
 			return (1);
 		}
 	}
 	ft_putstr_fd("exit\n", 1);
-	ft_free(msh);
-	exit(i);
+	ft_free(list->msh);
+	exit(exit_status);
 	return (0);
 }

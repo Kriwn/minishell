@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:47:55 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/25 16:26:30 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/28 02:28:21 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ char	*find_path(char *cmd, char **path)
 
 	i = 0;
 	temp_path = path;
-	if (find_slash(cmd))
-		return (cmd);
 	if (temp_path == NULL)
 		return (NULL);
+	if (find_slash(cmd))
+		return (cmd);
 	while (temp_path[i])
 	{
 		temp = myft_strjoin(temp_path[i], "/");
@@ -78,5 +78,5 @@ char	*find_path(char *cmd, char **path)
 		free(cmd_path);
 		i++;
 	}
-	return (NULL);
+	return (cmd);
 }

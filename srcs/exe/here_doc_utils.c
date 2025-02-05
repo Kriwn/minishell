@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 22:08:42 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/25 16:53:48 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/25 17:21:09 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ void	do_here_doc_task(t_ast *ast, t_p *list, int *b)
 	if (!ast)
 		return ;
 	if (ast->type == HEREDOC)
-	{
-		prepare_cmd(ast, list, &status);
 		list->fd_in = do_here_doc(ast->right, ast->left, list);
-	}
 	if (ast->type == CMD)
 		*b = 1;
 	else

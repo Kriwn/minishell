@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:37:20 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/25 16:27:08 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/02/05 22:08:50 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	open_out_file(char *argv, t_p *list, int flag, int *status)
 
 void	pipe_write(t_p *list)
 {
-	close(list->pipe[0]);
+	safe_close(&list->pipe[0]);
 	dup2(list->pipe[1], 1);
-	close(list->pipe[1]);
+	safe_close(&list->pipe[1]);
 }

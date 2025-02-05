@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/25 17:01:33 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/02/05 22:11:43 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 #include <fcntl.h>
 
 # include "../libft/includes/libft.h"
+# include "../libft/includes/get_next_line.h"
 # include "./struct.h"
 
 # define STDERR_FILENO 2
@@ -58,7 +59,7 @@ char		*get_promt(t_msh *data);
 /*************
  * SRCS/INIT *
  *************/
-int			init_tuple(t_tuple **data, char **env);
+int			init_tuple(t_msh *data, char **env);
 void		*make_tuple(t_tuple *new_node, char *str, char c);
 
 void		init_minishell(t_msh *data, char **env);
@@ -73,7 +74,7 @@ t_ast		*msh_init_ast(t_type type);
 void 		handle_fd(t_p *list);
 int			msh_execute_builtin(t_p *list);
 char		*copy(const char *s);
-int			msh_exit(t_msh *msh);
+int			msh_exit(t_p *list);
 char		*ft_getcwd(void);
 int			msh_pwd(t_p *list);
 int			msh_echo(t_p *list);
@@ -154,10 +155,11 @@ int			execute_ast(t_ast *ast, t_msh *msh);
 int			find_slash(char *command);
 int			do_here_doc(t_ast *ast,t_ast *temp ,t_p *list);
 void		is_build_in_command(t_ast *ast,int *a);
-int 		check_build_in_command(char *word,int *a);
+void 		check_build_in_command(char *word,int *a);
 void		do_here_doc_task(t_ast *ast,t_p *list,int *b);
 void		main_exe(t_msh *msh);
-void		safe_close(t_p *list, int flag);
+void		safe_close(int *fd);
+void		safe_fd(t_p *list, int flag);
 void		prepare_cmd(t_ast *ast,t_p *list, int *status);
 void		open_in_file(char *argv, t_p *list,int *status);
 void		open_out_file(char *argv, t_p *list,int flag, int *status);

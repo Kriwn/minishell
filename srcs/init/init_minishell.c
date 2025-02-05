@@ -6,31 +6,42 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:19:20 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/15 23:20:52 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/02/05 22:05:02 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	init_pipe(t_p **list)
+static t_p *init_pipe(void)
 {
-	*list = malloc(sizeof(t_p));
-	if (!*list)
-		return -1;
-	(*list)->process_pid = NULL;
-	(*list)->path = NULL;
+	t_p	*list;
+
+	list = malloc(sizeof(t_p));
+	if (!list)
+		return (NULL);
+	list->process_pid = NULL;
+	list->path = NULL;
+	return (list);
 }
 
 void	init_minishell(t_msh *data, char **env)
 {
+	int	temp;
+
+	temp = 1;
 	data->tuple = NULL;
 	data->env = env;
 	data->token = NULL;
 	data->list = NULL;
 	data->ast = NULL;
-	if (init_tuple(&data->tuple, env) == -1)
+	temp = init_tuple(data,env);
+	if (!temp)
+	{
+		clear_tuple(&data->tuple);
 		ft_error(data, "malloc error\n");
-	if (init_pipe(&data->list) == -1)
+	}
+	data->list = init_pipe();
+	if (!data->list)
 		ft_error(data, "malloc error\n");
 	data->home_path = get_value_from_key(data->tuple, "HOME=");
 	data->code = 0;

@@ -39,6 +39,7 @@ EXE_FILE =	check_buildin.c \
 			ft_split.c \
 			here_doc.c \
 			list_utils.c \
+			list_utils2.c \
 			main_exe.c \
 			pipe.c
 EXE_SRC = $(addprefix $(EXE_DIR), $(EXE_FILE))

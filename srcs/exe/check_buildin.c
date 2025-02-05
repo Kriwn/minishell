@@ -6,27 +6,27 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 18:53:16 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/25 16:24:13 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/02/05 22:11:31 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_build_in_command(char *word, int *a)
+void	check_build_in_command(char *word, int *a)
 {
-	if (ft_strcmp(word, "echo") == 0)
+	if (ft_strncmp(word, "echo", 5) == 0)
 		*a = 0;
-	else if (ft_strcmp(word, "cd") == 0)
+	else if (ft_strncmp(word, "cd", 3) == 0)
 		*a = 0;
-	else if (ft_strcmp(word, "pwd") == 0)
+	else if (ft_strncmp(word, "pwd", 4) == 0)
 		*a = 0;
-	else if (ft_strcmp(word, "export") == 0)
+	else if (ft_strncmp(word, "export", 7) == 0)
 		*a = 0;
-	else if (ft_strcmp(word, "unset") == 0)
+	else if (ft_strncmp(word, "unset", 6) == 0)
 		*a = 0;
-	else if (ft_strcmp(word, "env") == 0)
+	else if (ft_strncmp(word, "env", 4) == 0)
 		*a = 0;
-	else if (ft_strcmp(word, "exit") == 0)
+	else if (ft_strncmp(word, "exit", 5) == 0)
 		*a = 0;
 	else
 		*a = 1;

@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:28:33 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/25 16:58:54 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/02/05 22:10:00 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	run_cmd(t_p *list, int status)
 
 	cmd_path = find_path(list->cmd, list->path);
 	dup2(list->fd_in, 0);
-	safe_close(list, 0);
+	safe_fd(list, 0);
 	if (status == -1)
 	{
 		*list->code = 1;
@@ -43,9 +43,9 @@ void	child_process(t_p *list, int status)
 	if (list->fd_out != -1)
 	{
 		dup2(list->fd_out, 1);
-		close(list->pipe[0]);
-		close(list->pipe[1]);
-		safe_close(list, 1);
+		safe_close(&list->pipe[0]);
+		safe_close(&list->pipe[1]);
+		safe_fd(list, 1);
 	}
 	else
 		pipe_write(list);
@@ -62,10 +62,10 @@ void	child_process(t_p *list, int status)
 void	parent_process(t_p *list)
 {
 	if (list->fd_in > -1)
-		safe_close(list, 0);
+		safe_fd(list, 0);
 	list->fd_in = dup(list->pipe[0]);
-	close(list->pipe[0]);
-	close(list->pipe[1]);
+	safe_close(&list->pipe[0]);
+	safe_close(&list->pipe[1]);
 }
 
 void	mutiple_exe(t_ast *ast, t_p *list)

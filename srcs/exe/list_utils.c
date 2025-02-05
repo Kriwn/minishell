@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:20:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/25 16:57:35 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/02/05 22:07:09 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ void	free_list(t_p *list)
 	list->path = NULL;
 	list->msh = NULL;
 	list->env = NULL;
-	close(list->pipe[0]);
-	close(list->pipe[1]);
+	safe_close(&list->pipe[0]);
+	safe_close(&list->pipe[1]);
 	list->pipe[0] = -1;
 	list->pipe[1] = -1;
-	safe_close(list, 0);
-	safe_close(list, 1);
+	safe_fd(list, 0);
+	safe_fd(list, 1);
 }
 
 void	prepare_cmd(t_ast *ast, t_p *list, int *status)
@@ -74,24 +74,4 @@ void	prepare_cmd(t_ast *ast, t_p *list, int *status)
 	}
 	prepare_cmd(ast->left, list, status);
 	prepare_cmd(ast->right, list, status);
-}
-
-void	safe_close(t_p *list, int flag)
-{
-	if (flag == 0)
-	{
-		if (list->fd_in != -1)
-		{
-			close(list->fd_in);
-			list->fd_in = -1;
-		}
-	}
-	else
-	{
-		if (list->fd_out != -1)
-		{
-			close(list->fd_out);
-			list->fd_out = -1;
-		}
-	}
 }

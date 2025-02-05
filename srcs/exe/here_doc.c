@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:01 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/25 16:53:21 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/27 01:24:37 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	end_here_doc(t_p *list)
 
 int	init_here_doc(t_ast *ast, t_ast *temp, t_p *list)
 {
+	if (ast->type == HEREDOC_WORD)
+		list->here_doc_cut = ast->args[0];
 	if (pipe(list->pipe) == -1)
 	{
 		ft_puterrstr("PIPE ERROR");
@@ -62,29 +64,26 @@ int	init_here_doc(t_ast *ast, t_ast *temp, t_p *list)
 	g_signal = 0;
 	signal(SIGINT, &here_doc_check_signal);
 	rl_event_hook = &clear_read_line;
-	return (0);
-}
-
-int	do_here_doc(t_ast *ast, t_ast *temp, t_p *list)
-{
-	char	*getline;
-	char	*str;
-	int		status;
-
-	str = ast->args[0];
-	dprintf(2,"fd_out: %d\n", list->fd_out);
-	if (init_here_doc(ast, temp, list) == -1)
-		return (-1);
 	if (list->fd_out != -1)
 	{
 		dup2(list->fd_out, list->pipe[1]);
-		safe_close(list, 1);
+		safe_fd(list, 1);
 	}
+	return (0);
+}
+
+// LOST NODE REDIRECT
+int	do_here_doc(t_ast *ast, t_ast *temp, t_p *list)
+{
+	char	*getline;
+
+	if (init_here_doc(ast, temp, list) == -1)
+		return (-1);
 	while (1)
 	{
 		getline = readline("> ");
 		if (getline == NULL || g_signal == 1 || \
-			ft_strncmp(getline, str, ft_strlen(str)) == 0 )
+			ft_strncmp(getline, list->here_doc_cut, ft_strlen(list->here_doc_cut)) == 0 )
 			break ;
 		write(list->pipe[1], getline, ft_strlen(getline));
 		write(list->pipe[1], "\n", 1);
@@ -93,6 +92,6 @@ int	do_here_doc(t_ast *ast, t_ast *temp, t_p *list)
 	end_here_doc(list);
 	if (getline)
 		free(getline);
-	close(list->pipe[1]);
+	safe_close(&list->pipe[1]);
 	return (list->pipe[0]);
 }

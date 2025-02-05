@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:51:08 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/24 22:42:42 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/28 02:51:16 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,12 @@ void	clear_tuple(t_tuple **data)
 	{
 		temp = cur;
 		cur = cur->next;
-		free(temp->key);
-		free(temp->value);
-		free(temp);
+		if (temp->key)
+			free(temp->key);
+		if (temp->value)
+			free(temp->value);
+		if (temp)
+			free(temp);
 	}
 	*data = NULL;
 }

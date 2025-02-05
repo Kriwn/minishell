@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:47:52 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/25 16:12:25 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/27 02:31:59 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	handle_fd(t_p *list)
 	if (list->fd_out != 1)
 	{
 		dup2(list->fd_out, 1);
-		close(list->pipe[0]);
-		close(list->pipe[1]);
-		safe_close(list, 1);
+		safe_close(&list->pipe[0]);
+		safe_close(&list->pipe[1]);
+		safe_fd(list, 1);
 	}
 }
 
@@ -39,6 +39,6 @@ int	msh_execute_builtin(t_p *list)
 	else if (ft_strcmp(list->cmd, "unset") == 0)
 		return (msh_unset(list));
 	else if (ft_strcmp(list->cmd, "exit") == 0)
-		return (msh_exit(list->msh));
+		return (msh_exit(list));
 	return (EXIT_FAILURE);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/24 02:22:37 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/01/28 02:59:53 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	ft_free(t_msh *data)
 {
 	data->home_path = NULL;
 	clear_tuple(&data->tuple);
+	free(data->list);
+	free(data);
 }
 
 void	ft_error(t_msh *data, char *word)
