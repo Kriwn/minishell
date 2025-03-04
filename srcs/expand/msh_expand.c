@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:16:53 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/05 01:28:17 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/05 03:05:13 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,17 @@ void	process_expansion(t_msh *shell)
 	}
 }
 
-char	*msh_expand_variable(t_msh *shell, char *token_value)
+char *msh_expand_variable(t_msh *shell, char *token_value)
 {
 	if (ft_strncmp(token_value, "$?", 2) == 0)
 		return (ft_itoa(shell->code));
+	if (ft_strncmp(token_value, "$$", 2) == 0)
+		return (ft_itoa(getpid()));
+	if (token_value[0] == '$')
+	{
+		char *env_value = getenv(token_value + 1);
+		if (env_value)
+			return (ft_strdup(env_value));
+	}
 	return (ft_strdup(token_value));
 }

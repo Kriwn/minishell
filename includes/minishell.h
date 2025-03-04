@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/05 01:31:29 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/05 02:26:32 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int			msh_exit(t_msh *msh);
 char		*ft_getcwd(void);
 int			msh_pwd(t_p *list);
 int			msh_echo(t_p *list);
+void		expand_arguments(t_msh *shell, t_p *list);
 int			msh_cd(t_p *list);
 int			msh_env(t_p *list);
 int			msh_export(t_p *list);

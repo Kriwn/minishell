@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   msh_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:11:22 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/15 22:42:14 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/05 02:52:21 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void expand_arguments(t_msh *shell, t_p *list)
+{
+	int i = 0;
+	char *expanded;
+
+	while (list->args[i])
+	{
+		if (ft_strcmp(list->args[i], "$?") == 0)
+			expanded = ft_itoa(shell->code);
+		else
+			expanded = expand_variables(shell, list->args[i]);
+		free(list->args[i]);  
+		list->args[i] = expanded;  
+		i++;
+	}
+}
+
 
 int	msh_echo(t_p *list)
 {
