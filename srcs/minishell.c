@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/12/25 04:08:15 by jikarunw         ###   ########.fr       */
+=======
+/*   Updated: 2025/01/03 01:00:35 by krwongwa         ###   ########.fr       */
+>>>>>>> 2d9ce42b4251ae9e45b186161713b0db47a940a3
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +33,6 @@ void	check_signal(int signal)
 		rl_redisplay();
 		return ;
 	}
-}
-
-int	setup_termios(void)
-{
-	struct termios	config;
-
-	if (!isatty(STDIN_FILENO))
-	{
-		ft_putstr_fd("Not a terminal.\n", 2);
-		return (-1);
-	}
-	tcgetattr(STDIN_FILENO, &config);
-	config.c_lflag &= ~(ECHOCTL | ICANON);
-	config.c_cc[VMIN] = 0;
-	config.c_cc[VTIME] = 0;
-	tcsetattr(STDIN_FILENO, TCSANOW, &config);
-	return (1);
 }
 
 void	setup_signal(void)
@@ -89,12 +76,11 @@ void msh_loop(t_msh *msh)
 		if (msh->token)
 		{
 			msh->ast = msh_get_tokens(&msh->token);
-			if (msh->ast)
-			{
-				printf("\nAbstract Syntax Tree:\n");
-				display_ast_table(msh->ast, 0);
-				printf("%s---------------------------------------------------------------------------------------------%s\n", GREEN, RESET);
-			}
+			// if (msh->ast)
+			// {
+			// 	printf("\nAbstract Syntax Tree:\n");
+			// 	display_ast_table(msh->ast, 0);
+			// }
 			main_exe(msh);
 			free_ast(msh->ast);
 		}
@@ -113,12 +99,6 @@ int	main(int ac, char **av, char **env)
 		return (1);
 	init_minishell(msh, env);
 	setup_signal();
-	if (setup_termios() == -1)
-	{
-		ft_error(msh, "Termios setup error\n");
-		ft_free(msh);
-		return (1);
-	}
 	msh_loop(msh);
 	free(ast->args);
 	free(ast->args[0]);

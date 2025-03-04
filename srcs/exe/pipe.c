@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:28:33 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/24 02:31:30 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:46:03 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// cmd_path = ./minishell and list->cmd = ./minishell
 void run_cmd(t_p *list,int status)
 {
 	char *cmd_path;
@@ -26,6 +25,7 @@ void run_cmd(t_p *list,int status)
 		*list->code = 1;
 		exit(*list->code);
 	}
+	dprintf(2,"Before execve\n");
 	if (execve(cmd_path, list->args , list->env) == -1)
 	{
 		dprintf(2,"Errno is %d\n", errno);
@@ -54,7 +54,10 @@ void child_process(t_p *list, int status)
 		pipe_write(list);
 	check_build_in_command(list->cmd, &a);
 	if (a == 0)
-		*list->code = msh_execute_builtin(list->msh);
+	{
+		*list->code = msh_execute_builtin(list);
+		exit(*list->code);
+	}
 	else
 		run_cmd(list,status);
 }
@@ -91,8 +94,7 @@ void mutiple_exe(t_ast *ast, t_p *list)
 void pipe_task(t_ast *ast, t_p *list)
 {
 	if (!ast)
-		wait_all_process(list);
-
+		;
 	if (ast->type == CMD_GROUP)
 		mutiple_exe(ast, list);
 	else if (ast->type == PIPE)

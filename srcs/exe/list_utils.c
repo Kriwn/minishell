@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:20:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/23 17:59:06 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:50:23 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ void free2d(char **str)
 	int i;
 
 	if (!str)
-	{
-		dprintf(2,"No 2d array\n");
 		return ;
-	}
 	i = 0;
 	while (str[i])
 	{
@@ -75,8 +72,8 @@ void prepare_cmd(t_ast *ast, t_p *list, int *status)
 	{
 		if (list->cmd == NULL)
 			list->cmd = ast->args[0];
-		list->args = ast->args;
-
+		if (list->args == NULL)
+			list->args = ast->args;
 	}
 	prepare_cmd(ast->left, list,status);
 	prepare_cmd(ast->right, list,status);

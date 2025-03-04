@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:04:43 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/23 20:42:14 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/01/15 23:39:29 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ t_token	*msh_parsing_input(t_msh *msh)
 	char	*input_trim;
 
 	input_trim = ft_strtrim(msh->input, WHITESPACE);
-	// if (syntax_error_checker(input_trim))
-	// {
-	// 	free(input_trim);
-	// 	return (NULL);
-	// }
+	if (syntax_error_checker(input_trim))
+	{
+		free(input_trim);
+		return (NULL);
+	}
 	if (!input_trim)
 		return (NULL);
 	msh->token = token_input(input_trim);

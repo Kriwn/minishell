@@ -1,39 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   msh_pwd.c                                          :+:      :+:    :+:   */
+/*   msh_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/14 21:08:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/28 00:00:53 by krwongwa         ###   ########.fr       */
+/*   Created: 2024/12/25 13:04:26 by krwongwa          #+#    #+#             */
+/*   Updated: 2024/12/28 00:57:43 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
-static char	*ft_getcwd(void)
+// env > a not working
+int msh_env(t_p *list)
 {
-	char	*path;
+	t_msh *msh;
 
-	path = getcwd(NULL, 0);
-	if (path == NULL)
-		return (NULL);
-	return (path);
-}
-
-// need flag to do return or print 
-int	msh_pwd(t_p *list)
-{
-	char	*current_path;
-
-	current_path = get_value_from_key(list->msh->tuple,"PWD");
-	if (!current_path)
+	if (list->fd_out != 1)
 	{
-		current_path = ft_getcwd();
-		free (current_path);
-		return (EXIT_SUCCESS);
+		dup2(list->fd_out, 1);
+		close(list->pipe[0]);
+		close(list->pipe[1]);
+		safe_close(list, 1);
 	}
-	ft_putendl_fd(current_path, STDOUT_FILENO);
+	msh = list->msh;
+	print_tuple(msh->tuple);
 	return (EXIT_SUCCESS);
 }

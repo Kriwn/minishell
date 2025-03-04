@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 18:53:16 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/19 21:18:47 by krwongwa         ###   ########.fr       */
+/*   Updated: 2024/12/25 15:58:37 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,18 @@ void	is_build_in_command(t_ast *ast,int *a)
 		is_build_in_command(ast->left,a);
 		is_build_in_command(ast->right,a);
 	}
+}
+
+void	exe_single_cmd(t_ast *ast, t_p *list)
+{
+	int status;
+
+	status = 1;
+	prepare_cmd(ast, list, &status);
+	if (status == -1)
+	{
+		*list->code = 1;
+		return ;
+	}
+	msh_execute_builtin(list);
 }

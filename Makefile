@@ -30,16 +30,13 @@ UTILS_FILE =	utils.c			\
 				promt.c
 UTILS_SRC = $(addprefix $(UTILS_DIR), $(UTILS_FILE))
 
-ENV_DIR = srcs/env/
-ENV_FILE =		msh_env.c
-ENV_SRC = $(addprefix $(ENV_DIR), $(ENV_FILE))
-
 EXE_DIR = srcs/exe/
 EXE_FILE =	check_buildin.c \
 			error.c \
 			exe_utils.c \
 			exe_utils2.c \
-			here_doc_sig.c \
+			here_doc_utils.c  \
+			ft_split.c \
 			here_doc.c \
 			list_utils.c \
 			main_exe.c \
@@ -50,6 +47,7 @@ BUILDIN_DIR = srcs/buildin/
 BUILDIN_FILE =	msh_buildin.c	\
 				msh_pwd.c		\
 				msh_echo.c		\
+				msh_env.c		\
 				msh_exit.c		\
 				msh_export.c	\
 				msh_unset.c		\
@@ -76,7 +74,7 @@ TOKEN_FILE =	token_utils_01.c	\
 				msh_token.c
 TOKEN_SRC = $(addprefix $(TOKEN_DIR), $(TOKEN_FILE))
 
-SRC = $(UTILS_SRC) $(INIT_SRC) $(ENV_SRC) $(EXPAND_SRC) $(TOKEN_SRC) $(PARSER_SRC) $(BUILDIN_SRC) $(EXE_SRC) ./srcs/minishell.c
+SRC = $(UTILS_SRC) $(INIT_SRC) $(EXPAND_SRC) $(TOKEN_SRC) $(PARSER_SRC) $(BUILDIN_SRC) $(EXE_SRC) ./srcs/minishell.c
 
 OBJ = $(SRC:$(PATH_SRCS)/%.c=$(OBJ_DIR)/%.o)
 
