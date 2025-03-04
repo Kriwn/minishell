@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:19:20 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/22 22:20:09 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/01/15 23:20:52 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

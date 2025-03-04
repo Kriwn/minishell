@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:11:22 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/28 00:18:04 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/15 22:42:14 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,12 @@ int	msh_echo(t_p *list)
 {
 	int	i;
 	int n_flag;
+	int saved_stdout;
 
+	saved_stdout = dup(STDOUT_FILENO);
 	n_flag = 0;
 	i = 1;
-	if (list->fd_out != 1)
-	{
-		dup2(list->fd_out, 1);
-		close(list->pipe[0]);
-		close(list->pipe[1]);
-		safe_close(list, 1);
-	}
-	dprintf(2,"\nIN RUN \n\n");
-	for (int i = 0;list->args[i];i++)
-	{
-		dprintf(2,"Args: %s\n",list->args[i]);
-	}
+	handle_fd(list);
 	if (!ft_strncmp(list->args[i], "-n", 3))
 	{
 		n_flag = 1;
@@ -45,5 +36,10 @@ int	msh_echo(t_p *list)
 	}
 	if (!n_flag)
 		ft_putstr_fd("\n", STDOUT_FILENO);
+	if (list->fd_out != 1)
+	{
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
+	}
 	return (0);
 }

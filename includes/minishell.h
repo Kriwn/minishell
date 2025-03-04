@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/05 01:06:47 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/05 01:31:29 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@
 
 # include "../libft/includes/libft.h"
 # include "./struct.h"
-# include <termios.h>
 
 # define STDERR_FILENO 2
 # define WHITESPACE " \t\n\v\f\r"
@@ -71,11 +70,14 @@ t_ast		*msh_init_ast(t_type type);
 /****************
  * SRCS/BUILTIN *
  ****************/
+void 		handle_fd(t_p *list);
 int			msh_execute_builtin(t_p *list);
+char		*copy(const char *s);
 int			msh_exit(t_msh *msh);
+char		*ft_getcwd(void);
 int			msh_pwd(t_p *list);
 int			msh_echo(t_p *list);
-int			msh_cd(t_msh *msh, t_token *token);
+int			msh_cd(t_p *list);
 int			msh_env(t_p *list);
 int			msh_export(t_p *list);
 int			msh_unset(t_p *list);
@@ -178,5 +180,6 @@ void	mode_signal_exe(int mode);
 void	wait_all_process(t_p *list);
 void		exe_single_cmd(t_ast *ast, t_p *list);
 char	**myft_split(char const *s, char c);
+char	*myft_strjoin(char const *s1, char const *s2);
 
 #endif
