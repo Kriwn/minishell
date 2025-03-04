@@ -6,11 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:47:52 by jikarunw          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/12/25 03:41:23 by jikarunw         ###   ########.fr       */
-=======
-/*   Updated: 2024/12/28 00:18:48 by krwongwa         ###   ########.fr       */
->>>>>>> 2d9ce42b4251ae9e45b186161713b0db47a940a3
+/*   Updated: 2025/03/05 00:55:08 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +40,6 @@
 
 int	msh_execute_builtin(t_p *list)
 {
-<<<<<<< HEAD
-	if (!msh || !msh->ast || !msh->ast->args || !msh->ast->args[0])
-		return (EXIT_FAILURE);
-	if (ft_strcmp(msh->ast->args[0], "echo") == 0)
-		return (msh_echo(msh));
-	else if (ft_strcmp(msh->ast->args[0], "cd") == 0)
-=======
 	if (ft_strcmp(list->cmd, "echo") == 0)
 	{
 		dprintf(2,"DO echo\n");
@@ -61,7 +50,6 @@ int	msh_execute_builtin(t_p *list)
 		return (msh_echo(list));
 	}
 	else if (ft_strcmp(list->cmd, "cd") == 0)
->>>>>>> 2d9ce42b4251ae9e45b186161713b0db47a940a3
 		dprintf(2,"DO CD\n");
 		// return (msh_cd(msh, msh->ast->args[1]));
 	else if (ft_strcmp(list->cmd, "pwd") == 0)

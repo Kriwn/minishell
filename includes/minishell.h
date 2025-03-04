@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/12/25 03:09:19 by jikarunw         ###   ########.fr       */
-=======
-/*   Updated: 2025/01/03 16:40:34 by krwongwa         ###   ########.fr       */
->>>>>>> 2d9ce42b4251ae9e45b186161713b0db47a940a3
+/*   Updated: 2025/03/05 00:56:33 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,10 +162,6 @@ int			check_build_in_command(char *word,int *a);
 // int 		check_build_in_command(char *word);
 void		do_here_doc_task(t_ast *ast,t_p *list,int *b);
 void		main_exe(t_msh *msh);
-<<<<<<< HEAD
-void		exe_single_cmd(t_msh *msh, t_ast *ast, t_p *list);
-=======
->>>>>>> 2d9ce42b4251ae9e45b186161713b0db47a940a3
 void		safe_close(t_p *list, int flag);
 void		prepare_cmd(t_ast *ast,t_p *list, int *status);
 void		open_in_file(char *argv, t_p *list,int *status);
@@ -181,19 +173,10 @@ void		clear_list(t_p *list);
 void 		free_list(t_p *list);
 void		ft_puterrstr(char *s);
 int			ft_puterrorcmd(char *s, int errnum);
-<<<<<<< HEAD
-void		check_signal(int signal);
-void		mode_signal_exe(int mode);
-void		wait_all_process(t_p *list);
-void		here_doc_check_signal(int sig);
-int			clear_read_line(void);
-void		end_here_doc(t_p *list);
-=======
 void	check_signal(int signal);
 void	mode_signal_exe(int mode);
 void	wait_all_process(t_p *list);
 void		exe_single_cmd(t_ast *ast, t_p *list);
 char	**myft_split(char const *s, char c);
->>>>>>> 2d9ce42b4251ae9e45b186161713b0db47a940a3
 
 #endif
