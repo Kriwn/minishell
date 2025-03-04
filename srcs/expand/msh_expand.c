@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:16:53 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/25 03:14:11 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/05 01:28:17 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,6 @@ void	process_expansion(t_msh *shell)
 		{
 			if (current->prev && current->prev->type == HEREDOC)
 			{
-				temp = current->cmd;
-				current->cmd = expand_variables(shell, temp);
-				free(temp);
 			}
 			else if (current->cmd[0] == '$' && current->cmd[1] == '?')
 				replace_status_with_value(shell, current);
