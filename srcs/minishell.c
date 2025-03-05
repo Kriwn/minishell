@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/05 01:32:02 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/06 03:39:11 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,10 @@ void msh_loop(t_msh *msh)
 			exit(1);
 		}
 		msh->token = msh_parsing_input(msh);
-		process_expansion(msh);
 		if (msh->token)
 		{
+			process_expansion(msh);
 			msh->ast = msh_get_tokens(&msh->token);
-			// if (msh->ast)
-			// {
-			// 	printf("\nAbstract Syntax Tree:\n");
-			// 	display_ast_table(msh->ast, 0);
-			// }
 			main_exe(msh);
 			free_ast(msh->ast);
 		}

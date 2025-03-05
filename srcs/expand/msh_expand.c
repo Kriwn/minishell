@@ -6,37 +6,64 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:16:53 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/05 03:05:13 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/06 03:35:52 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*expand_variables(t_msh *shell, char *original_str)
+char	*get_env_value(t_msh *shell, char *key)
 {
-	char	*prefix;
-	char	*variable;
-	char	*result;
+	int		i;
+	int		key_len;
 	char	*env_value;
 
-	if (!original_str)
-		return (NULL);
-	result = ft_strdup("");
-	while (*original_str)
+	if (!key || !shell->env)
+		return (ft_strdup(""));
+	if (ft_strcmp(key, "$$") == 0)
+		return (ft_itoa(getpid()));
+	if (ft_strcmp(key, "$?") == 0)
+		return (ft_itoa(shell->code));
+	key_len = ft_strlen(key);
+	i = 0;
+	while (shell->env[i])
 	{
-		prefix = duplicate_until_variable(original_str);
-		original_str = locate_variable_reference(original_str);
-		if (!original_str)
+		if (ft_strncmp(shell->env[i], key, key_len) == 0
+			&& shell->env[i][key_len] == '=')
+		{
+			env_value = ft_strdup(ft_strchr(shell->env[i], '=') + 1);
+			return (env_value);
+		}
+		i++;
+	}
+	return (ft_strdup(""));
+}
+
+char	*expand_variable(t_msh *shell, char *str)
+{
+	char	*result;
+	char	*prefix;
+	char	*variable;
+	char	*expanded_value;
+
+	if (!str || !ft_strchr(str, '$'))
+		return (ft_strdup(str));
+	result = ft_strdup("");
+	while (*str)
+	{
+		prefix = duplicate_until_variable(str);
+		str = locate_variable_reference(str);
+		if (!str)
 		{
 			result = ft_strjoin(result, prefix);
 			break ;
 		}
-		variable = ft_strdup_while_string(++original_str, LETTERS_DIGITS);
-		env_value = get_variable_value(shell, variable);
-		prefix = ft_strjoin(prefix, env_value);
-		original_str += ft_strlen(variable);
+		variable = ft_strdup_while_string(++str, LETTERS_DIGITS);
+		expanded_value = get_env_value(shell, variable);
+		prefix = ft_strjoin(prefix, expanded_value);
+		str += ft_strlen(variable);
 		result = ft_strjoin(result, prefix);
-		free_multiple_strings(prefix, variable, env_value);
+		free_multiple_strings(prefix, variable, expanded_value);
 	}
 	return (result);
 }
@@ -49,45 +76,12 @@ void	process_expansion(t_msh *shell)
 	current = shell->token;
 	while (current)
 	{
-		if (current->type == ENV_VAR)
+		if (ft_strchr(current->cmd, '$'))
 		{
-			if (current->prev && current->prev->type == HEREDOC)
-			{
-			}
-			else if (current->cmd[0] == '$' && current->cmd[1] == '?')
-				replace_status_with_value(shell, current);
-			else if (current->cmd[0] == '$' && current->cmd[1] == '$')
-			{
-				expand_exit_code(shell, current);
-				temp = current->cmd;
-				current->cmd = expand_variables(shell, temp);
-				free(temp);
-			}
-			else if (!ft_strcmp(current->cmd, "$?"))
-				replace_status_with_value(shell, current);
-			else if (ft_strcmp(current->cmd, "$$"))
-			{
-				expand_exit_code(shell, current);
-				temp = current->cmd;
-				current->cmd = expand_variables(shell, temp);
-				free(temp);
-			}
+			temp = current->cmd;
+			current->cmd = expand_variable(shell, temp);
+			free(temp);
 		}
 		current = current->next;
 	}
-}
-
-char *msh_expand_variable(t_msh *shell, char *token_value)
-{
-	if (ft_strncmp(token_value, "$?", 2) == 0)
-		return (ft_itoa(shell->code));
-	if (ft_strncmp(token_value, "$$", 2) == 0)
-		return (ft_itoa(getpid()));
-	if (token_value[0] == '$')
-	{
-		char *env_value = getenv(token_value + 1);
-		if (env_value)
-			return (ft_strdup(env_value));
-	}
-	return (ft_strdup(token_value));
 }
