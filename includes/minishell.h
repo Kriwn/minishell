@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/06 07:09:41 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/07 01:39:08 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,10 @@ char	*extract_single_quote(char **str);
 char	*extract_double_quote(char **str, t_msh *shell);
 
 char	*expand_variable(t_msh *shell, char *str);
+
+char	*get_env_value(t_msh *shell, char *key);
+char	*extract_variable_value(t_msh *shell, char **str);
+
 void	process_expansion(t_msh *shell);
 
 /***************

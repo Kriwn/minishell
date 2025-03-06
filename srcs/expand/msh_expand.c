@@ -6,80 +6,56 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:16:53 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/06 10:48:15 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/07 01:38:41 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*get_env_value(t_msh *shell, char *key)
-{
-	int		i;
-	int		key_len;
-	char	*env_value;
-
-	if (!key || !shell->env)
-		return (ft_strdup(""));
-	if (ft_strcmp(key, "$$") == 0)
-		return (ft_itoa(getpid()));
-	if (ft_strcmp(key, "$?") == 0)
-		return (ft_itoa(shell->code));
-	key_len = ft_strlen(key);
-	i = 0;
-	while (shell->env[i])
-	{
-		if (ft_strncmp(shell->env[i], key, key_len) == 0
-			&& shell->env[i][key_len] == '=')
-		{
-			env_value = ft_strdup(ft_strchr(shell->env[i], '=') + 1);
-			return (env_value);
-		}
-		i++;
-	}
-	return (ft_strdup(""));
-}
-
-char	*expand_variable(t_msh *shell, char *str)
+static char	*expand_string(t_msh *shell, char *str, int expand_vars)
 {
 	char	*result;
-	char	*prefix;
-	char	*variable;
-	char	*expanded_value;
-
-	if (!str || !ft_strchr(str, '$'))
-		return (ft_strdup(str));
+	char	*temp;
+	char	*segment;
+	char	*end;
 
 	result = ft_strdup("");
 	while (*str)
 	{
+		segment = NULL;
 		if (*str == '\'')
 		{
-			char *quoted_part = extract_single_quote(&str);
-			result = ft_strjoin(result, quoted_part);
-			continue;
+			str++;
+			end = ft_strchr(str, '\'');
+			if (!end)
+				end = str + ft_strlen(str);
+			segment = ft_substr(str, 0, end - str);
+			str = (*end == '\'') ? end + 1 : end;
 		}
 		else if (*str == '"')
 		{
-			char *quoted_part = extract_double_quote(&str, shell);
-			result = ft_strjoin(result, quoted_part);
-			continue;
+			str++;
+			end = ft_strchr(str, '"');
+			if (!end)
+				end = str + ft_strlen(str);
+			segment = expand_string(shell, ft_substr(str, 0, end - str), 1);
+			str = (*end == '"') ? end + 1 : end;
 		}
-		prefix = duplicate_until_variable(str);
-		str = locate_variable_reference(str);
-		if (!str)
-		{
-			result = ft_strjoin(result, prefix);
-			break ;
-		}
-		variable = ft_strdup_while_string(++str, LETTERS_DIGITS);
-		if (ft_strchr(variable, '?') == 0)
-			expanded_value = ft_itoa(shell->code);
+		else if (*str == '$' && expand_vars)
+			segment = extract_variable_value(shell, &str);
 		else
-			expanded_value = get_env_value(shell, variable);
-		prefix = ft_strjoin(prefix, expanded_value);
-		str += ft_strlen(variable);
-		result = ft_strjoin(result, prefix);
-		free(variable);
+		{
+			int len = 0;
+			while (str[len] && str[len] != '$' && str[len] != '\'' && str[len] != '"')
+				len++;
+			segment = ft_substr(str, 0, len);
+			str += len;
+		}
+		if (segment)
+		{
+			temp = result;
+			result = ft_strjoin(result, segment);
+		}
 	}
 	return (result);
 }
@@ -87,16 +63,16 @@ char	*expand_variable(t_msh *shell, char *str)
 void	process_expansion(t_msh *shell)
 {
 	t_token	*current;
-	char	*temp;
+	char	*expanded_cmd;
 
 	current = shell->token;
 	while (current)
 	{
-		if (ft_strchr(current->cmd, '$'))
+		if (ft_strchr(current->cmd, '$') || ft_strchr(current->cmd, '"') || ft_strchr(current->cmd, '\''))
 		{
-			temp = current->cmd;
-			current->cmd = expand_variable(shell, temp);
-			free(temp);
+			expanded_cmd = expand_string(shell, current->cmd, 1);
+			free(current->cmd);
+			current->cmd = expanded_cmd;
 		}
 		current = current->next;
 	}
