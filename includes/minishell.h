@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/06 02:16:50 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/06 07:09:41 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,20 +89,14 @@ char		*get_env_variable(t_tuple *env, const char *key);
 /***************
  * SRCS/EXPAND *
  ***************/
-
-void	replace_status_with_value(t_msh *shell, t_token *current);
-void	replace_exit_status(char *original, char *replacement, char *exit_code);
-void	expand_exit_code(t_msh *shell, t_token *current);
-char	*fetch_environment_value(t_msh *shell, char *key);
-char	*get_variable_value(t_msh *shell, char *key);
-
 char	*locate_variable_reference(char *str);
 char	*duplicate_until_variable(char *str);
 void	free_multiple_strings(char *s1, char *s2, char *s3);
+char	*extract_single_quote(char **str);
+char	*extract_double_quote(char **str, t_msh *shell);
 
-char	*expand_variables(t_msh *shell, char *original_str);
+char	*expand_variable(t_msh *shell, char *str);
 void	process_expansion(t_msh *shell);
-char	*msh_expand_variable(t_msh *shell, char *token_value);
 
 /***************
  * SRCS/PARSER *

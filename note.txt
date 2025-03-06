@@ -1,0 +1,22 @@
+minishell:/Users/Tisarji/Developer/42-dir/42-workspace/Rank03/minishell/main-Minishell 0$ ls
+Makefile  chart.tldr  includes	libft  minishell  objs	srcs
+minishell:/Users/Tisarji/Developer/42-dir/42-workspace/Rank03/minishell/main-Minishell 0$ echo $ENV
+
+minishell:/Users/Tisarji/Developer/42-dir/42-workspace/Rank03/minishell/main-Minishell 0$ echo $UESR
+
+minishell:/Users/Tisarji/Developer/42-dir/42-workspace/Rank03/minishell/main-Minishell 0$ echo $USER
+Tisarji
+minishell:/Users/Tisarji/Developer/42-dir/42-workspace/Rank03/minishell/main-Minishell 0$ echo $?
+?
+minishell:/Users/Tisarji/Developer/42-dir/42-workspace/Rank03/minishell/main-Minishell 0$ echo "$?"
+"?"
+minishell:/Users/Tisarji/Developer/42-dir/42-workspace/Rank03/minishell/main-Minishell 0$ echo "$UESR"
+""
+minishell:/Users/Tisarji/Developer/42-dir/42-workspace/Rank03/minishell/main-Minishell 0$ echo $UESR
+
+minishell:/Users/Tisarji/Developer/42-dir/42-workspace/Rank03/minishell/main-Minishell 0$ echo "$USER"
+"Tisarji"
+minishell:/Users/Tisarji/Developer/42-dir/42-workspace/Rank03/minishell/main-Minishell 0$ exit
+exit
+
+ur code it work now i need u fix about echo $? and double and single quote

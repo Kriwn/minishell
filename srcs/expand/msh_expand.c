@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:16:53 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/06 03:35:52 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:48:15 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,22 @@ char	*expand_variable(t_msh *shell, char *str)
 
 	if (!str || !ft_strchr(str, '$'))
 		return (ft_strdup(str));
+
 	result = ft_strdup("");
 	while (*str)
 	{
+		if (*str == '\'')
+		{
+			char *quoted_part = extract_single_quote(&str);
+			result = ft_strjoin(result, quoted_part);
+			continue;
+		}
+		else if (*str == '"')
+		{
+			char *quoted_part = extract_double_quote(&str, shell);
+			result = ft_strjoin(result, quoted_part);
+			continue;
+		}
 		prefix = duplicate_until_variable(str);
 		str = locate_variable_reference(str);
 		if (!str)
@@ -59,11 +72,14 @@ char	*expand_variable(t_msh *shell, char *str)
 			break ;
 		}
 		variable = ft_strdup_while_string(++str, LETTERS_DIGITS);
-		expanded_value = get_env_value(shell, variable);
+		if (ft_strchr(variable, '?') == 0)
+			expanded_value = ft_itoa(shell->code);
+		else
+			expanded_value = get_env_value(shell, variable);
 		prefix = ft_strjoin(prefix, expanded_value);
 		str += ft_strlen(variable);
 		result = ft_strjoin(result, prefix);
-		free_multiple_strings(prefix, variable, expanded_value);
+		free(variable);
 	}
 	return (result);
 }

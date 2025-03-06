@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 12:03:55 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/06 03:36:18 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:16:08 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,37 @@ void	free_multiple_strings(char *s1, char *s2, char *s3)
 		free(s2);
 	if (s3)
 		free(s3);
+}
+
+char	*extract_single_quote(char **str)
+{
+	char	*start;
+	char	*quoted_part;
+	int		len;
+
+	start = ++(*str);
+	while (**str && **str != '\'')
+		(*str)++;
+	len = *str - start;
+	quoted_part = ft_substr(start, 0, len);
+	if (**str == '\'')
+		(*str)++;
+	return (quoted_part);
+}
+
+char	*extract_double_quote(char **str, t_msh *shell)
+{
+	char	*start;
+	char	*quoted_part;
+	char	*expanded;
+
+	start = ++(*str);
+	while (**str && **str != '"')
+		(*str)++;
+	quoted_part = ft_substr(start, 0, *str - start);
+	expanded = expand_variable(shell, quoted_part);
+	free(quoted_part);
+	if (**str == '"')
+		(*str)++;
+	return (expanded);
 }

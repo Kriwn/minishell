@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:39:56 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/03 17:17:23 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:31:48 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_puterrstr(char *s)
 
 int	ft_puterrorcmd(char *s, int errnum)
 {
-	dprintf(2,"Errnum is %d\n",errnum);
+	// dprintf(2,"Errnum is %d\n",errnum);
 	if (errnum == 14 || errnum == 2) // in orb maybe is 2
 	{
 		ft_puterrstr(s);
