@@ -6,5 +6,6 @@ minishell
 libft.a
 minishell_tester
 *.tldr
+note.txt
 
 .codegpt
