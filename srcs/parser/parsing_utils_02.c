@@ -17,6 +17,7 @@ t_ast	*msh_get_heredoc_word(t_token **token)
 	t_ast	*heredoc_node;
 	t_ast	*heredoc_word_node;
 	t_ast	*next_heredoc_node;
+	t_token	*next_token;
 
 	if (!token || !*token || (*token)->type != HEREDOC)
 		return (NULL);
@@ -45,7 +46,7 @@ t_ast	*msh_get_heredoc_word(t_token **token)
 	heredoc_word_node->args[0] = ft_strdup((*token)->cmd);
 	heredoc_word_node->args[1] = NULL;
 	heredoc_node->right = heredoc_word_node;
-	t_token *next_token = (*token)->next;
+	next_token = (*token)->next;
 	free((*token)->cmd);
 	free(*token);
 	*token = next_token;
@@ -76,6 +77,8 @@ t_ast	*msh_get_cmd(t_token **tokens)
 	t_ast	*command_node;
 	int		arg_count;
 	t_token	*current;
+	int		i;
+	t_ast	*env_var_node;
 
 	command_node = msh_init_ast(CMD);
 	arg_count = count_cmd_arg(*tokens);
@@ -83,12 +86,12 @@ t_ast	*msh_get_cmd(t_token **tokens)
 	if (!command_node->args)
 		return (NULL);
 	current = *tokens;
-	int i = 0;
+	i = 0;
 	while (current && current->type != PIPE)
 	{
 		if (current->type == ENV_VAR)
 		{
-			t_ast *env_var_node = msh_init_ast(ENV_VAR);
+			env_var_node = msh_init_ast(ENV_VAR);
 			env_var_node->args = malloc(sizeof(char *) * 2);
 			if (!env_var_node->args)
 				return (NULL);
@@ -103,7 +106,6 @@ t_ast	*msh_get_cmd(t_token **tokens)
 	command_node->args[i] = NULL;
 	return (command_node);
 }
-
 
 t_ast	*msh_get_redirect(t_token **tokens)
 {
@@ -123,7 +125,8 @@ t_ast	*msh_get_redirect(t_token **tokens)
 	while (*tokens && (*tokens)->next)
 	{
 		next_token = (*tokens)->next;
-		if ((*tokens)->next->type >= INDIRECT && (*tokens)->next->type <= HEREDOC)
+		if ((*tokens)->next->type >= INDIRECT
+			&& (*tokens)->next->type <= HEREDOC)
 		{
 			if (next_token->type == HEREDOC)
 			{

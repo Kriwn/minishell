@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/07 01:39:08 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/07 01:50:23 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,30 +77,24 @@ int			msh_exit(t_msh *msh);
 char		*ft_getcwd(void);
 int			msh_pwd(t_p *list);
 int			msh_echo(t_p *list);
-void		expand_arguments(t_msh *shell, t_p *list);
 int			msh_cd(t_p *list);
 int			msh_env(t_p *list);
 int			msh_export(t_p *list);
 int			msh_unset(t_p *list);
 
-void		update_env_variable(t_tuple *env, const char *key, const char *value);
-char		*get_env_variable(t_tuple *env, const char *key);
-
 /***************
  * SRCS/EXPAND *
  ***************/
-char	*locate_variable_reference(char *str);
-char	*duplicate_until_variable(char *str);
-void	free_multiple_strings(char *s1, char *s2, char *s3);
-char	*extract_single_quote(char **str);
-char	*extract_double_quote(char **str, t_msh *shell);
+char		*get_env_value(t_msh *shell, char *key);
+char		*extract_variable_value(t_msh *shell, char **str);
 
-char	*expand_variable(t_msh *shell, char *str);
+char	*handle_single_quotes(char **str);
+char	*handle_double_quotes(t_msh *shell, char **str);
+char	*handle_plain_text(char **str);
 
-char	*get_env_value(t_msh *shell, char *key);
-char	*extract_variable_value(t_msh *shell, char **str);
-
-void	process_expansion(t_msh *shell);
+char		*process_segment(t_msh *shell, char **str, int expand_vars);
+char		*expand_string(t_msh *shell, char *str, int expand_vars);
+void		process_expansion(t_msh *shell);
 
 /***************
  * SRCS/PARSER *
