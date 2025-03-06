@@ -6,22 +6,11 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:04:43 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/15 23:39:29 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/07 02:44:45 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// char	*handle_line(char *input, t_token *current)
-// {
-// 	if (*input == '\'')
-// 		input = handle_single_quote(input, current);
-// 	else if (*input == '\"')
-// 		input = handle_double_quote(input, current);
-// 	else
-// 		input = token_word(input, current, WHITESPACE_Q_D);
-// 	return (input);
-// }
 
 t_token	*token_input(char *input)
 {
@@ -41,7 +30,6 @@ t_token	*token_input(char *input)
 		else
 			parse_cmd(&input, &tokens);
 	}
-	// free(msh);
 	return (tokens);
 }
 

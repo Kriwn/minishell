@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/07 01:50:23 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/07 03:03:55 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,11 @@ int			msh_unset(t_p *list);
  * SRCS/EXPAND *
  ***************/
 char		*get_env_value(t_msh *shell, char *key);
+char		*handle_single_quotes(char **str);
+char		*handle_double_quotes(t_msh *shell, char **str);
+char		*handle_plain_text(char **str);
+
 char		*extract_variable_value(t_msh *shell, char **str);
-
-char	*handle_single_quotes(char **str);
-char	*handle_double_quotes(t_msh *shell, char **str);
-char	*handle_plain_text(char **str);
-
 char		*process_segment(t_msh *shell, char **str, int expand_vars);
 char		*expand_string(t_msh *shell, char *str, int expand_vars);
 void		process_expansion(t_msh *shell);
@@ -168,11 +167,11 @@ void		clear_list(t_p *list);
 void 		free_list(t_p *list);
 void		ft_puterrstr(char *s);
 int			ft_puterrorcmd(char *s, int errnum);
-void	check_signal(int signal);
-void	mode_signal_exe(int mode);
-void	wait_all_process(t_p *list);
+void		check_signal(int signal);
+void		mode_signal_exe(int mode);
+void		wait_all_process(t_p *list);
 void		exe_single_cmd(t_ast *ast, t_p *list);
-char	**myft_split(char const *s, char c);
-char	*myft_strjoin(char const *s1, char const *s2);
+char		**myft_split(char const *s, char c);
+char		*myft_strjoin(char const *s1, char const *s2);
 
 #endif
