@@ -6,11 +6,47 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 12:03:55 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/07 02:01:38 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/08 01:47:15 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	*get_special_variable_value(t_msh *shell, char **str)
+{
+	char	*expanded_value;
+
+	if (**str == '?')
+	{
+		expanded_value = ft_itoa(shell->code);
+		(*str)++;
+	}
+	else if (**str == '$')
+	{
+		expanded_value = ft_itoa(getpid());
+		(*str)++;
+	}
+	else
+		expanded_value = NULL;
+	return (expanded_value);
+}
+
+char	*get_normal_variable_value(t_msh *shell, char **str)
+{
+	char	*var_name;
+	char	*expanded_value;
+
+	var_name = ft_strdup_while_string(*str, LETTERS_DIGITS);
+	if (!var_name || ft_strlen(var_name) == 0)
+	{
+		free(var_name);
+		return (ft_strdup("$"));
+	}
+	expanded_value = get_env_value(shell, var_name);
+	free(var_name);
+	(*str) += ft_strlen(var_name);
+	return (expanded_value);
+}
 
 char	*handle_single_quotes(char **str)
 {

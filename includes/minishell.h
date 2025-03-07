@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/07 03:03:55 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/08 01:48:59 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,19 @@ int			msh_unset(t_p *list);
 /***************
  * SRCS/EXPAND *
  ***************/
-char		*get_env_value(t_msh *shell, char *key);
+
+/** expand_utils_01 */
 char		*handle_single_quotes(char **str);
 char		*handle_double_quotes(t_msh *shell, char **str);
 char		*handle_plain_text(char **str);
+char		*get_special_variable_value(t_msh *shell, char **str);
+char		*get_normal_variable_value(t_msh *shell, char **str);
 
-char		*extract_variable_value(t_msh *shell, char **str);
+/** msh_expand */
+char		*get_env_value(t_msh *shell, char *key);
 char		*process_segment(t_msh *shell, char **str, int expand_vars);
+
+char		*expand_variable_value(t_msh *shell, char **str);
 char		*expand_string(t_msh *shell, char *str, int expand_vars);
 void		process_expansion(t_msh *shell);
 
@@ -111,6 +117,17 @@ void		msh_free_ast(t_ast *node);
 t_ast		*create_file_list_redir(t_token **tokens, t_token *tmp);
 int			count_cmd_arg(t_token *current);
 void		add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count);
+
+/** parsing_utils_03 */
+t_ast		*handle_heredoc(t_token **tokens, t_token *tmp);
+t_ast		*handle_redirect(t_token **tokens, t_token *tmp);
+t_ast		*create_heredoc_node(t_token **token);
+t_ast		*create_heredoc_word_node(t_token **token);
+t_ast		*msh_get_heredoc_word(t_token **token);
+
+t_ast		*create_env_var_node(t_token *current);
+void		fill_command_args(t_ast *command_node, t_token *current);
+t_ast		*create_pipe_node(t_token **tokens, t_token *tmp, t_token *next_token);
 
 /** msh_syntax */
 int			has_unclosed_quotes(const char *input);

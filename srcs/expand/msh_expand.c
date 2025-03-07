@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 11:16:53 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/07 02:43:07 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/08 01:46:56 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,34 +37,15 @@ char	*get_env_value(t_msh *shell, char *key)
 	return (ft_strdup(""));
 }
 
-char	*extract_variable_value(t_msh *shell, char **str)
+char	*expand_variable_value(t_msh *shell, char **str)
 {
-	char	*var_name;
 	char	*expanded_value;
 
 	(*str)++;
-	if (**str == '?')
-	{
-		expanded_value = ft_itoa(shell->code);
-		(*str)++;
+	expanded_value = get_special_variable_value(shell, str);
+	if (expanded_value)
 		return (expanded_value);
-	}
-	else if (**str == '$')
-	{
-		expanded_value = ft_itoa(getpid());
-		(*str)++;
-		return (expanded_value);
-	}
-	var_name = ft_strdup_while_string(*str, LETTERS_DIGITS);
-	if (!var_name || ft_strlen(var_name) == 0)
-	{
-		free(var_name);
-		return (ft_strdup("$"));
-	}
-	expanded_value = get_env_value(shell, var_name);
-	free(var_name);
-	(*str) += ft_strlen(var_name);
-	return (expanded_value);
+	return (get_normal_variable_value(shell, str));
 }
 
 char	*process_segment(t_msh *shell, char **str, int expand_vars)
@@ -74,7 +55,7 @@ char	*process_segment(t_msh *shell, char **str, int expand_vars)
 	else if (**str == '"')
 		return (handle_double_quotes(shell, str));
 	else if (**str == '$' && expand_vars)
-		return (extract_variable_value(shell, str));
+		return (expand_variable_value(shell, str));
 	else
 		return (handle_plain_text(str));
 }
