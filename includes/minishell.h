@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/02/05 22:11:43 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/07 20:04:20 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+#include  <stdint.h>
 # include <signal.h>
 # include "../libft/includes/libft.h"
 # include <stdbool.h>
