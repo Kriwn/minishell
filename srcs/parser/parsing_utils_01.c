@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:00 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/09 03:43:33 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/09 05:12:22 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ void	msh_free_ast(t_ast *node)
 {
 	int	i;
 
-	i = 0;
 	if (!node)
-		return;
+		return ;
 	if (node->type == CMD && node->args)
 	{
+		i = 0;
 		while (node->args[i])
-			free(node->args[i++]);
+		{
+			free(node->args[i]);
+			i++;
+		}
 		free(node->args);
 	}
 	if (node->type == ENV_VAR && node->args)
@@ -82,7 +85,7 @@ void	add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count)
 				free(cmd_node->args[--i]);
 			free(cmd_node->args);
 			free(cmd_node);
-			return;
+			return ;
 		}
 		tmp = *tokens;
 		*tokens = (*tokens)->next;

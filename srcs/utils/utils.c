@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/09 03:45:31 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/09 04:31:31 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void free_ast(t_ast *node)
 	i = 0;
 	if (!node)
 		return;
-	if (node->args)
+	if (node->args && node->type == CMD)
 	{
 		while (node->args[i])
 			free(node->args[i++]);
@@ -30,7 +30,7 @@ void free_ast(t_ast *node)
 	free(node);
 }
 
-void free_tokens(t_token *tokens)
+void free_token(t_token *tokens)
 {
 	t_token	*tmp;
 

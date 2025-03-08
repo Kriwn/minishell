@@ -45,6 +45,7 @@ char	*expand_variable_value(t_msh *shell, char **str)
 	expanded_value = get_special_variable_value(shell, str);
 	if (expanded_value)
 		return (expanded_value);
+	free(expanded_value);
 	return (get_normal_variable_value(shell, str));
 }
 
@@ -74,6 +75,8 @@ char	*expand_string(t_msh *shell, char *str, int expand_vars)
 		{
 			temp = result;
 			result = ft_strjoin(result, segment);
+			// free(temp);
+			// free(segment);
 		}
 	}
 	return (result);
