@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_pwd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:08:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/15 23:02:46 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/09 03:48:49 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	msh_pwd(t_p *list)
 		current_path = ft_getcwd();
 	handle_fd(list);
 	ft_putendl_fd(current_path, STDOUT_FILENO);
+	free(current_path);
 	if (list->fd_out != 1)
 	{
 		dup2(saved_stdout, STDOUT_FILENO);

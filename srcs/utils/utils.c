@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/08 23:57:29 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/09 03:45:31 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,16 @@ void free_ast(t_ast *node)
 	free(node);
 }
 
-void	free_token(t_token *tokens)
+void free_tokens(t_token *tokens)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	while (tokens)
 	{
-		tmp = tokens->next;
-		if (tokens->cmd)
-		{
-			free(tokens->cmd);
-			tokens->cmd = NULL;
-		}
-		free(tokens);
-		tokens = tmp;
+		tmp = tokens;
+		tokens = tokens->next;
+		free(tmp->cmd);
+		free(tmp);
 	}
 }
 
