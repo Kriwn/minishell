@@ -58,7 +58,8 @@ STRS_SRC =		strs/ft_atoi.c					\
 				strs/ft_tolower.c				\
 				strs/ft_toupper.c				\
 				strs/ft_strncpy.c				\
-				strs/ft_strdup_while_str.c
+				strs/ft_strdup_while_str.c		\
+				strs/ft_strjoin_for_other.c
 
 ADD_ON_SRC = 	add_on/ft_strcmp.c 				\
 				add_on/ft_abs.c					\

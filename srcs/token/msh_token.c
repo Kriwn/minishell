@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:04:43 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/07 02:44:45 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/09 00:08:31 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,8 @@
 t_token	*token_input(char *input)
 {
 	t_token	*tokens;
-	t_msh	*msh;
 
 	tokens = NULL;
-	msh = malloc(sizeof(t_msh));
-	if (!msh)
-		return (NULL);
 	while (*input)
 	{
 		while (*input && ft_strchr(" \t\n", *input))
@@ -45,6 +41,8 @@ t_token	*msh_parsing_input(t_msh *msh)
 	}
 	if (!input_trim)
 		return (NULL);
+	// if (msh->token)
+	// 	free_token(msh->token);
 	msh->token = token_input(input_trim);
 	free(input_trim);
 	free(msh->input);

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/06 03:39:11 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/09 03:29:02 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void msh_loop(t_msh *msh)
 int	main(int ac, char **av, char **env)
 {
 	t_msh	*msh;
-	t_ast	*ast;
 	char	*input;
 	int		status;
 
@@ -91,9 +90,8 @@ int	main(int ac, char **av, char **env)
 	init_minishell(msh, env);
 	setup_signal();
 	msh_loop(msh);
-	free(ast->args);
-	free(ast->args[0]);
 	ft_free(msh);
+	free(msh);
 	rl_clear_history();
 	return (0);
 }

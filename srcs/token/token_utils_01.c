@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 20:56:54 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/17 20:56:42 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/09 03:27:56 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,8 @@ t_token	*new_token(t_type type, char *value)
 		return (NULL);
 	token->type = type;
 	token->cmd = ft_strdup(value);
-	if (!token->cmd)
-	{
-		free(token);
-		return (NULL);
-	}
 	token->next = NULL;
+	token->prev = NULL;
 	return (token);
 }
 
@@ -34,6 +30,8 @@ void	add_token_to_list(t_token **tokens, t_token *new_token)
 {
 	t_token	*last;
 
+	if (!new_token)
+		return ;
 	if (!*tokens)
 		*tokens = new_token;
 	else
@@ -54,7 +52,13 @@ void	add_word_token_if_valid(char **start, char **input, t_token **tokens)
 		word = ft_strndup(*start, *input - *start);
 		if (word)
 		{
-			add_token_to_list(tokens, new_token(CMD, word));
+			t_token *token = new_token(CMD, word);
+			if (!token)
+			{
+				free(word);
+				return;
+			}
+			add_token_to_list(tokens, token);
 			free(word);
 		}
 		else

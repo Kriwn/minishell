@@ -4,7 +4,7 @@
 /*   expand_utils_01.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                +#+#+#+#+#+   */
 /*   Created: 2024/12/06 12:03:55 by jikarunw          #+#    #+#             */
 /*   Updated: 2025/03/08 01:47:15 by jikarunw         ###   ########.fr       */
 /*                                                                            */

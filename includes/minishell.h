@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/08 01:48:59 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/09 03:22:44 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int			msh_unset(t_p *list);
 /***************
  * SRCS/EXPAND *
  ***************/
-
 /** expand_utils_01 */
 char		*handle_single_quotes(char **str);
 char		*handle_double_quotes(t_msh *shell, char **str);
@@ -143,6 +142,7 @@ int			is_invalid_operator(const char **input);
 /**************
  * SRCS/TOKEN *
  **************/
+void		free_token(t_token *tokens);
 t_token		*msh_parsing_input(t_msh *msh);
 t_token		*token_input(char *input);
 void		msh_count_pipe(t_msh *msh);

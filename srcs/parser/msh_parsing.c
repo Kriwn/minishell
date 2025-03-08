@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/08 01:41:27 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/08 06:06:54 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ t_ast	*msh_get_cmd(t_token **tokens)
 	arg_count = count_cmd_arg(*tokens);
 	command_node->args = malloc(sizeof(char *) * (arg_count + 1));
 	if (!command_node->args)
+	{
+		free(command_node);
 		return (NULL);
+	}
 	current = *tokens;
 	fill_command_args(command_node, current);
 	return (command_node);
