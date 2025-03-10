@@ -6,30 +6,23 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/10 15:58:19 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/10 23:09:43 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_ast	*msh_get_redirect(t_token **tokens)
+t_ast *process_redirection_tokens(t_token **tokens, t_token *tmp)
 {
-	t_token	*tmp;
 	t_token	*next_token;
 	t_ast	*result;
 
-	if (!*tokens)
-		return (NULL);
-	tmp = *tokens;
 	if ((*tokens)->type >= INDIRECT && (*tokens)->type <= HEREDOC)
 	{
 		if ((*tokens)->type == HEREDOC)
 			result = msh_get_heredoc_word(tokens);
 		else
 			result = create_file_list_redir(tokens, tmp);
-		free(tmp->cmd);
-		free(tmp);
-		tmp = NULL;
 		return (result);
 	}
 	while (*tokens && (*tokens)->next)
@@ -41,12 +34,28 @@ t_ast	*msh_get_redirect(t_token **tokens)
 				result = handle_heredoc(tokens, tmp);
 			else
 				result = handle_redirect(tokens, tmp);
-			free(tmp->cmd);
-			free(tmp);
-			tmp = NULL;
 			return (result);
 		}
 		*tokens = next_token;
+	}
+	return (NULL);
+}
+
+t_ast *msh_get_redirect(t_token **tokens)
+{
+	t_token	*tmp;
+	t_ast	*result;
+
+	if (!*tokens)
+		return (NULL);
+	tmp = *tokens;
+	result = process_redirection_tokens(tokens, tmp);
+	if (result)
+	{
+		free(tmp->cmd);
+		free(tmp);
+		*tokens = (*tokens)->next;
+		return (result);
 	}
 	result = msh_get_cmd(&tmp);
 	free(tmp->cmd);
