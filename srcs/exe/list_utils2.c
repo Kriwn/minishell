@@ -6,12 +6,11 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 01:35:20 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/27 01:36:10 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/10 22:49:04 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	safe_close(int *fd)
 {

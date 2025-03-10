@@ -6,19 +6,19 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/10 09:25:41 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/10 22:52:37 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_ast(t_ast *node)
+void	free_ast(t_ast *node)
 {
 	int	i;
 
 	i = 0;
 	if (!node)
-		return;
+		return ;
 	if (node->args && node->type == CMD)
 	{
 		while (node->args[i])
@@ -30,7 +30,7 @@ void free_ast(t_ast *node)
 	free(node);
 }
 
-void free_token(t_token *tokens)
+void	free_token(t_token *tokens)
 {
 	t_token	*tmp;
 
