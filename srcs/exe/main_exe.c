@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/27 01:29:25 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:13:09 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,19 @@ void	mode_signal_exe(int mode)
 	}
 }
 
+/* segfault not work on some case
+			// if (WIFSIGNALED(status))
+			// {
+			// 	signal = WTERMSIG(status);
+			// 	if (signal == SIGSEGV)
+			// 	{
+			// 		*list->code = 128 + signal;
+			// 		ft_puterrstr("Segmentation fault (core dumped)\n");
+			// 	}
+			// }
+			// else
+*/
+
 void	wait_all_process(t_p *list)
 {
 	size_t	i;
@@ -43,17 +56,7 @@ void	wait_all_process(t_p *list)
 		if (list->process_pid[i] > -1)
 		{
 			waitpid(list->process_pid[i], &status, WUNTRACED);
-			if (WIFSIGNALED(status))
-			{
-				signal = WTERMSIG(status);
-				if (signal == SIGSEGV)
-				{
-					*list->code = 128 + signal;
-					ft_puterrstr("Segmentation fault (core dumped)\n");
-				}
-			}
-			else
-				*list->code = WEXITSTATUS(status);
+			*list->code = WEXITSTATUS(status);
 		}
 		i++;
 	}

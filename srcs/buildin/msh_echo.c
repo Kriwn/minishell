@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   msh_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:11:22 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/10 08:41:28 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:16:07 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void handle_fd_out(int saved_stdout, t_p *list)
+{
+	if (list->fd_out != 1)
+	{
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
+	}
+}
 
 int	msh_echo(t_p *list)
 {
@@ -36,10 +45,6 @@ int	msh_echo(t_p *list)
 	}
 	if (!n_flag)
 		ft_putstr_fd("\n", STDOUT_FILENO);
-	if (list->fd_out != 1)
-	{
-		dup2(saved_stdout, STDOUT_FILENO);
-		close(saved_stdout);
-	}
+	handle_fd_out(saved_stdout, list);
 	return (0);
 }

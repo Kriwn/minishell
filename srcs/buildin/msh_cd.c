@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:07:15 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/25 16:14:33 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:03:53 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	change_dir(char *old_pwd, char *new_path, t_p *list)
 	return (0);
 }
 
-// cd and cd ~ . .. fix PWD and OLDPWD to correct one
 int	msh_cd(t_p *list)
 {
 	char	*pwd;
