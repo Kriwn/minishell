@@ -6,13 +6,13 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:00 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/09 05:12:22 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:21:08 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	msh_free_ast(t_ast *node)
+void msh_free_ast(t_ast *node)
 {
 	int	i;
 
@@ -24,17 +24,23 @@ void	msh_free_ast(t_ast *node)
 		while (node->args[i])
 		{
 			free(node->args[i]);
+			node->args[i] = NULL;
 			i++;
 		}
 		free(node->args);
+		node->args = NULL;
 	}
 	if (node->type == ENV_VAR && node->args)
 	{
 		free(node->args[0]);
+		node->args[0] = NULL;
 		free(node->args);
+		node->args = NULL;
 	}
 	msh_free_ast(node->left);
+	node->left = NULL;
 	msh_free_ast(node->right);
+	node->right = NULL;
 	free(node);
 }
 

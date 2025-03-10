@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/10 10:37:40 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:37:41 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ void		free_ast(t_ast *ast);
 void		ft_free(t_msh *data);
 void		ft_error(t_msh *data,char *word);
 void		cleanup_and_exit(t_msh *msh, int exit_code);
-
 char		*get_promt(t_msh *data);
+
+void		clean_up_token(t_token **tokens);
 
 /*************
  * SRCS/INIT *

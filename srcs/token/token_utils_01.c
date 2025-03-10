@@ -6,25 +6,11 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 20:56:54 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/10 12:32:39 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/10 14:40:51 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// t_token	*new_token(t_type type, char *value)
-// {
-// 	t_token	*token;
-
-// 	token = malloc(sizeof(t_token));
-// 	if (!token)
-// 		return (NULL);
-// 	token->type = type;
-// 	token->cmd = ft_strdup(value);
-// 	token->next = NULL;
-// 	token->prev = NULL;
-// 	return (token);
-// }
 
 t_token	*new_token(t_type type, char *value)
 {
@@ -62,26 +48,6 @@ void	add_token_to_list(t_token **tokens, t_token *new_token)
 		new_token->prev = last;
 	}
 }
-
-// void	add_word_token_if_valid(char **start, char **input, t_token **tokens)
-// {
-// 	char	*word;
-// 	t_token *token;
-
-// 	if (*input > *start)
-// 	{
-// 		word = ft_strndup(*start, *input - *start);
-// 		if (!word)
-// 		{
-// 			ft_putstr_fd("Error: Malloc failed in handle_word.\n", 2);
-// 			return;
-// 		}
-// 		token = new_token(CMD, word);
-// 		if (!token)
-// 			return;
-// 		add_token_to_list(tokens, token);
-// 	}
-// }
 
 void add_word_token_if_valid(char **start, char **input, t_token **tokens)
 {
