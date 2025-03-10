@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:36:37 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/10 12:34:57 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/10 23:19:01 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ char	*expand_string(t_msh *shell, char *str, int expand_vars)
 	char	*segment;
 
 	result = ft_strdup("");
+	if (!result)
+		return (NULL);
 	while (*str)
 	{
 		segment = process_segment(shell, &str, expand_vars);

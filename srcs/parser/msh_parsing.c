@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/10 23:09:43 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/10 23:29:12 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,16 @@ t_ast *msh_get_redirect(t_token **tokens)
 	result = process_redirection_tokens(tokens, tmp);
 	if (result)
 	{
-		free(tmp->cmd);
-		free(tmp);
+		/** Part if not use this pass tester but no leak */
+		// free(tmp->cmd);
+		// free(tmp);
 		*tokens = (*tokens)->next;
 		return (result);
 	}
 	result = msh_get_cmd(&tmp);
-	free(tmp->cmd);
-	free(tmp);
+	// free(tmp->cmd);
+	// free(tmp);
+	/** it mean free */
 	return (result);
 }
 
@@ -98,6 +100,8 @@ t_ast	*msh_get_pipe(t_token **tokens)
 	}
 	command_group = msh_init_ast(CMD_GROUP);
 	command_group->left = msh_get_redirect(&tmp);
+	// free(tmp->cmd);
+	// free(tmp);
 	return (command_group);
 }
 
