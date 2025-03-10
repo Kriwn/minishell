@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_buildin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:47:52 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/10 08:38:05 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:14:25 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,10 @@ void	handle_fd(t_p *list)
 	}
 }
 
-//test cd
 int	msh_execute_builtin(t_p *list)
 {
-	// int	i;
-
-	// i = 0;
-	// while (list->args[i])
-	// {
-	// 	char *temp = list->args[i];
-	// 	list->args[i] = msh_expand_variable(list->msh, temp);
-	// 	free(temp);
-	// 	i++;
-	// }
 	if (ft_strcmp(list->cmd, "echo") == 0)
-	{
-		// expand_arguments(list->msh, list);
 		return (msh_echo(list));
-	}
 	else if (ft_strcmp(list->cmd, "cd") == 0)
 		return (msh_cd(list));
 	else if (ft_strcmp(list->cmd, "pwd") == 0)

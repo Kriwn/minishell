@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:39:56 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/10 08:37:29 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:09:18 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ void	ft_puterrstr(char *s)
 
 int	ft_puterrorcmd(char *s, int errnum)
 {
-	// dprintf(2,"Errnum is %d\n",errnum);
-	if (errnum == 14 || errnum == 2) // in orb maybe is 2
+	if (errnum == 14 || errnum == 2)
 	{
 		ft_puterrstr(s);
 		write(2, ": ", 2);
@@ -40,7 +39,7 @@ int	ft_puterrorcmd(char *s, int errnum)
 	{
 		ft_puterrstr(s);
 		write(2, ": ", 2);
-		ft_puterrstr("permision denine \n");
+		ft_puterrstr("Permission denied\n");
 		return (126);
 	}
 	return (errnum);

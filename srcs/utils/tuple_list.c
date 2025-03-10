@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tuple_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:51:08 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/10 08:36:59 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/10 20:12:18 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	remove_tuple(t_tuple **data, char *key)
 	{
 		if (ft_strlen(key) == ft_strlen(cur->key) && !ft_strncmp(cur->key, key, ft_strlen(key)))
 		{
-			dprintf(2,"Key is %s\n",cur->key);
 			if (temp == NULL)
 			{
 				cur->next->tail = (*data)->tail;
