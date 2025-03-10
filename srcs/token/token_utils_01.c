@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 20:56:54 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/09 05:01:51 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:18:08 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,11 @@ t_token	*new_token(t_type type, char *value)
 	if (!token)
 		return (NULL);
 	token->type = type;
-	if (value && *value && value[0] == '"' && value[ft_strlen(value)-1] == '"')
-		token->cmd = value;
-	else
+	token->cmd = ft_strdup(value);
+	if (!token->cmd)
 	{
-		token->cmd = ft_strdup(value);
-		if (!token->cmd)
-		{
-			free(token);
-			return (NULL);
-		}
+		free(token);
+		return (NULL);
 	}
 	token->next = NULL;
 	token->prev = NULL;
@@ -64,6 +59,7 @@ void	add_token_to_list(t_token **tokens, t_token *new_token)
 		while (last->next)
 			last = last->next;
 		last->next = new_token;
+		new_token->prev = last;
 	}
 }
 
@@ -97,7 +93,7 @@ void add_word_token_if_valid(char **start, char **input, t_token **tokens)
 		word = ft_strndup(*start, *input - *start);
 		if (!word)
 		{
-			ft_putstr_fd("Error: Malloc failed in handle_word.\n", 2);
+			ft_putstr_fd("Error: Malloc failed in add_word_token_if_valid.\n", 2);
 			return ;
 		}
 		token = new_token(CMD, word);
@@ -107,6 +103,7 @@ void add_word_token_if_valid(char **start, char **input, t_token **tokens)
 			return ;
 		}
 		add_token_to_list(tokens, token);
+		free(word);
 	}
 }
 

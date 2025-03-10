@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:36:37 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/10 08:36:41 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:26:07 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,16 @@ char	*get_env_value(t_msh *shell, char *key)
 char	*expand_variable_value(t_msh *shell, char **str)
 {
 	char	*expanded_value;
+	char	*result;
 
 	(*str)++;
 	expanded_value = get_special_variable_value(shell, str);
 	if (expanded_value)
-		return (expanded_value);
-	free(expanded_value);
+	{
+		result = ft_strdup(expanded_value);
+		free(expanded_value);
+		return (result);
+	}
 	return (get_normal_variable_value(shell, str));
 }
 
@@ -75,8 +79,6 @@ char	*expand_string(t_msh *shell, char *str, int expand_vars)
 		{
 			temp = result;
 			result = ft_strjoin(result, segment);
-			// free(temp);
-			// free(segment);
 		}
 	}
 	return (result);

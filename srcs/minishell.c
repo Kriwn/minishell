@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/10 08:36:01 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:26:55 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void msh_loop(t_msh *msh)
 		if (!msh->input)
 		{
 			printf("%sEXIT!%s💥\n", RED, RESET);
-			return ;
+			cleanup_and_exit(msh, 0);
 		}
 		msh->token = msh_parsing_input(msh);
 		if (msh->token)
@@ -75,7 +75,6 @@ void msh_loop(t_msh *msh)
 			process_expansion(msh);
 			msh->ast = msh_get_tokens(&msh->token);
 			main_exe(msh);
-			free_ast(msh->ast);
 		}
 	}
 }
@@ -93,7 +92,7 @@ int	main(int ac, char **av, char **env)
 	setup_signal();
 	msh_loop(msh);
 	ft_free(msh);
-	free(msh);
+	cleanup_and_exit(msh, 0);
 	rl_clear_history();
 	return (0);
 }

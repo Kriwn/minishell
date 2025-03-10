@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:04:43 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/09 04:24:57 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:22:30 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,10 @@ t_token	*msh_parsing_input(t_msh *msh)
 	}
 	if (!input_trim)
 		return (NULL);
-	// if (msh->token)
-	// 	free_token(msh->token);
 	msh->token = token_input(input_trim);
 	free(input_trim);
 	free(msh->input);
+	free_ast(msh->ast);
 	msh_count_pipe(msh);
 	return (msh->token);
 }
