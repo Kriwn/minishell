@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 18:59:11 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/11 19:00:49 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/08 23:55:58 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ t_ast	*file_ast_node(t_token *token)
 		return (NULL);
 	}
 	node->args[0] = ft_strdup(token->cmd);
+	if (!node->args[0])
+	{
+		free(node->args);
+		free(node);
+		return (NULL);
+	}
 	node->args[1] = NULL;
 	node->left = NULL;
 	node->right = NULL;

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:00 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/11 19:00:36 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/09 05:12:22 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,21 @@ void	msh_free_ast(t_ast *node)
 {
 	int	i;
 
-	i = 0;
 	if (!node)
 		return ;
 	if (node->type == CMD && node->args)
 	{
-		while (node->args && node->args[i])
+		i = 0;
+		while (node->args[i])
 		{
 			free(node->args[i]);
 			i++;
 		}
+		free(node->args);
+	}
+	if (node->type == ENV_VAR && node->args)
+	{
+		free(node->args[0]);
 		free(node->args);
 	}
 	msh_free_ast(node->left);
@@ -36,11 +41,17 @@ void	msh_free_ast(t_ast *node)
 t_ast	*create_file_list_redir(t_token **tokens, t_token *tmp)
 {
 	t_ast	*redirect_node;
+	t_token	*next;
 
 	redirect_node = msh_init_ast((*tokens)->type);
-	*tokens = (*tokens)->next->next;
+	if (!redirect_node)
+		return (NULL);
+	next = (*tokens)->next;
+	*tokens = next->next;
 	redirect_node->left = msh_get_redirect(tokens);
-	redirect_node->right = file_ast_node(tmp->next);
+	redirect_node->right = file_ast_node(next);
+	free(next->cmd);
+	free(next);
 	free(tmp->cmd);
 	free(tmp);
 	return (redirect_node);
@@ -68,6 +79,14 @@ void	add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count)
 	while (i < arg_count)
 	{
 		cmd_node->args[i] = ft_strdup((*tokens)->cmd);
+		if (!cmd_node->args[i])
+		{
+			while (i > 0)
+				free(cmd_node->args[--i]);
+			free(cmd_node->args);
+			free(cmd_node);
+			return ;
+		}
 		tmp = *tokens;
 		*tokens = (*tokens)->next;
 		free(tmp->cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/02/05 21:46:01 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/10 08:36:01 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,8 @@ void msh_loop(t_msh *msh)
 		msh->token = msh_parsing_input(msh);
 		if (msh->token)
 		{
+			process_expansion(msh);
 			msh->ast = msh_get_tokens(&msh->token);
-			// if (msh->ast)
-			// {
-			// 	printf("\nAbstract Syntax Tree:\n");
-			// 	display_ast_table(msh->ast, 0);
-			// }
 			main_exe(msh);
 			free_ast(msh->ast);
 		}
@@ -97,6 +93,7 @@ int	main(int ac, char **av, char **env)
 	setup_signal();
 	msh_loop(msh);
 	ft_free(msh);
+	free(msh);
 	rl_clear_history();
 	return (0);
 }

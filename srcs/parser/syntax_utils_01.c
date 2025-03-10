@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:55:35 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/12 13:09:19 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/08 01:42:14 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	is_invalid_operator(const char **input)
 		(*input)++;
 		if (ft_isspace(**input) || !**input)
 		{
-			ft_putstr_fd("Minishell: syntax error near unexpected token `newline'\n",
-							STDERR_FILENO);
+			ft_putstr_fd("Minishell: syntax error near \
+				unexpected token `newline'\n", STDERR_FILENO);
 			return (1);
 		}
 	}

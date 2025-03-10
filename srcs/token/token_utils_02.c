@@ -6,55 +6,11 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 22:56:36 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/21 21:18:51 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/25 02:54:19 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// char	*token_word(char *start, t_token *token, char *delimiter)
-// {
-// 	char	*cmd;
-
-// 	cmd = msh_strdup_delimiter_string(start, delimiter);
-// 	if (!cmd)
-// 		return (NULL);
-// 	token->cmd = cmd;
-// 	token->type = CMD;
-// 	start += ft_strlen(cmd);
-// 	return (start);
-// }
-
-// char	*handle_single_quote(char *start, t_token *token)
-// {
-// 	char	*cmd;
-
-// 	cmd = msh_strdup_delimiter_char(++start, '\'');
-// 	if (!cmd)
-// 		return (NULL);
-// 	token->cmd = cmd;
-// 	token->type = CMD;
-// 	start += ft_strlen(cmd) + 1;
-// 	return (start);
-// }
-
-// char	*handle_double_quote(char *start, t_token *token)
-// {
-// 	char	*cmd;
-// 	char	*dollar;
-
-// 	cmd = msh_strdup_delimiter_char(++start, '\"');
-// 	if (!cmd)
-// 		return (NULL);
-// 	token->cmd = cmd;
-// 	dollar = ft_strchr(cmd, '$');
-// 	if (dollar && ft_strchr(LETTERS_DIGITS_QM, *(dollar + 1)))
-// 		token->type = ENV_VAR;
-// 	else
-// 		token->type = CMD;
-// 	start += ft_strlen(cmd) + 1;
-// 	return (start);
-// }
 
 void	update_quote_status(char c, int *in_quote, char *quote_char)
 {
