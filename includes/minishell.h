@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/23 05:12:36 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/02/05 22:11:43 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@
 #include <fcntl.h>
 
 # include "../libft/includes/libft.h"
+# include "../libft/includes/get_next_line.h"
 # include "./struct.h"
-# include <termios.h>
 
 # define STDERR_FILENO 2
 # define WHITESPACE " \t\n\v\f\r"
+# define LETTERS_DIGITS "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
 
 /**************
  * SRCS/UTILS *
@@ -49,6 +50,7 @@ void		updata_value_from_key(t_tuple *data, char *key, char *new_value);
 void		remove_tuple(t_tuple **data, char *key);
 void		clear_tuple(t_tuple **data);
 
+void		free_ast(t_ast *ast);
 void		ft_free(t_msh *data);
 void		ft_error(t_msh *data,char *word);
 
@@ -57,7 +59,7 @@ char		*get_promt(t_msh *data);
 /*************
  * SRCS/INIT *
  *************/
-int			init_tuple(t_tuple **data, char **env);
+int			init_tuple(t_msh *data, char **env);
 void		*make_tuple(t_tuple *new_node, char *str, char c);
 
 void		init_minishell(t_msh *data, char **env);
@@ -69,15 +71,17 @@ t_ast		*msh_init_ast(t_type type);
 /****************
  * SRCS/BUILTIN *
  ****************/
-int			msh_execute_builtin(t_msh *msh);
-
-int			msh_exit(t_msh *msh);
-int			msh_pwd(t_msh *msh);
-int			msh_echo(t_msh **msh);
-int			msh_cd(t_msh *msh, t_token *token);
-int			msh_env(t_msh *msh);
-int			msh_export(t_msh *msh, char *arg);
-int			msh_unset(t_msh *msh, char *arg);
+void 		handle_fd(t_p *list);
+int			msh_execute_builtin(t_p *list);
+char		*copy(const char *s);
+int			msh_exit(t_p *list);
+char		*ft_getcwd(void);
+int			msh_pwd(t_p *list);
+int			msh_echo(t_p *list);
+int			msh_cd(t_p *list);
+int			msh_env(t_p *list);
+int			msh_export(t_p *list);
+int			msh_unset(t_p *list);
 
 void		update_env_variable(t_tuple *env, const char *key, const char *value);
 char		*get_env_variable(t_tuple *env, const char *key);
@@ -86,14 +90,13 @@ char		*get_env_variable(t_tuple *env, const char *key);
  * SRCS/EXPAND *
  ***************/
 
-/** Main Exapnd Use */
-void		process_expand(t_msh *msh);
 
 /***************
  * SRCS/PARSER *
  ***************/
 /** msh_parsing */
 t_ast		*msh_get_tokens(t_token **tokens);
+
 t_ast		*msh_get_pipe(t_token **tokens);
 t_ast		*msh_get_redirect(t_token **tokens);
 t_ast		*msh_get_heredoc_word(t_token **token);
@@ -104,12 +107,6 @@ void		msh_free_ast(t_ast *node);
 t_ast		*create_file_list_redir(t_token **tokens, t_token *tmp);
 int			count_cmd_arg(t_token *current);
 void		add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count);
-
-/** parsing_utils_02 */
-t_ast		*msh_init_heredoc_word_node(t_ast *heredoc_node, t_token *token);
-int			msh_validate_heredoc_token(t_token **token, t_ast *heredoc_node);
-t_ast		*msh_handle_heredoc(t_token **tokens);
-t_ast		*msh_handle_redirect(t_token **tokens, t_token **tmp);
 
 /** msh_syntax */
 int			has_unclosed_quotes(const char *input);
@@ -158,12 +155,11 @@ int			execute_ast(t_ast *ast, t_msh *msh);
 int			find_slash(char *command);
 int			do_here_doc(t_ast *ast,t_ast *temp ,t_p *list);
 void		is_build_in_command(t_ast *ast,int *a);
-int check_build_in_command(char *word,int *a);
-// int 		check_build_in_command(char *word);
-void		do_here_doc_task(t_ast *ast,t_p *list);
+void 		check_build_in_command(char *word,int *a);
+void		do_here_doc_task(t_ast *ast,t_p *list,int *b);
 void		main_exe(t_msh *msh);
-void exe_single_cmd(t_msh *msh, t_ast *ast, t_p *list);
-void		safe_close(t_p *list, int flag);
+void		safe_close(int *fd);
+void		safe_fd(t_p *list, int flag);
 void		prepare_cmd(t_ast *ast,t_p *list, int *status);
 void		open_in_file(char *argv, t_p *list,int *status);
 void		open_out_file(char *argv, t_p *list,int flag, int *status);
@@ -172,13 +168,13 @@ char 		*find_path(char *cmd, char **path);
 void		pipe_task(t_ast *ast, t_p *list);
 void		clear_list(t_p *list);
 void 		free_list(t_p *list);
-void	ft_puterrstr(char *s);
+void		ft_puterrstr(char *s);
 int			ft_puterrorcmd(char *s, int errnum);
-void	check_signal(int signal);
-void	mode_signal_exe(int mode);
-void	wait_all_process(t_p *list);
-void	here_doc_check_signal(int sig);
-int		clear_read_line(void);
-void	end_here_doc(t_p *list);
+void		check_signal(int signal);
+void		mode_signal_exe(int mode);
+void		wait_all_process(t_p *list);
+void		exe_single_cmd(t_ast *ast, t_p *list);
+char		**myft_split(char const *s, char c);
+char		*myft_strjoin(char const *s1, char const *s2);
 
 #endif

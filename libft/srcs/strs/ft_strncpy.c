@@ -1,17 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   msh_expand.c                                       :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 11:16:53 by jikarunw          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/03/10 08:32:16 by jikarunw         ###   ########.fr       */
-=======
-/*   Updated: 2024/12/24 03:25:14 by jikarunw         ###   ########.fr       */
->>>>>>> 4e77080c3707a9170a6fe3f88fdb68a26999d48c
+/*   Created: 2024/12/23 23:10:29 by jikarunw          #+#    #+#             */
+/*   Updated: 2024/12/23 23:10:56 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/libft.h"
+
+char	*ft_strncpy(char *dst, const char *src, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	while (src[i] && i < len)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}

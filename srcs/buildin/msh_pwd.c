@@ -3,37 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   msh_pwd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:08:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/05 13:26:02 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/01/25 16:17:17 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*msh_help_pwd(t_tuple *list)
+char	*copy(const char *s)
 {
-	char	*ans;
+	size_t	i;
+	char	*ptr;
 
-	ans = getcwd(NULL, 0);
-	if (ans == NULL)
-		ans = get_value_from_key(list, "PWD=");
-	return (ans);
+	if (s == NULL)
+		return (NULL);
+	i = 0;
+	ptr = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!ptr)
+		return (NULL);
+	while (s[i])
+	{
+		ptr[i] = s[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
 }
 
-int	msh_pwd(t_msh *msh)
+char	*ft_getcwd(void)
+{
+	char	*path;
+
+	path = getcwd(NULL, 0);
+	if (path == NULL)
+		return (NULL);
+	return (path);
+}
+
+int	msh_pwd(t_p *list)
 {
 	char	*current_path;
+	int		saved_stdout;
 
-	current_path = msh_help_pwd(msh->tuple);
+	saved_stdout = dup(STDOUT_FILENO);
+	current_path = copy(get_value_from_key(list->msh->tuple, "PWD"));
 	if (!current_path)
-	{
-		ft_putstr_fd("Error: Could not get current working directory\n",
-						STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
+		current_path = ft_getcwd();
+	handle_fd(list);
 	ft_putendl_fd(current_path, STDOUT_FILENO);
-	free(current_path);
+	if (list->fd_out != 1)
+	{
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
+	}
+	if (current_path)
+		free(current_path);
 	return (EXIT_SUCCESS);
 }

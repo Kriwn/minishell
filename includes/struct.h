@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/23 01:48:27 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/01/03 17:05:08 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,12 @@ typedef struct	s_msh
 	struct s_token	*token;
 	struct s_ast	*ast;
 	struct p_pipe	*list;
-
-	char	*home_path;
-	int		code; // -> status code
-	char	**env;
-	char	*cwd;
-	int		count_pipe;
-	
-	char	*input;
+	char			*home_path;
+	int				code;
+	char			**env;
+	char			*cwd;
+	int				count_pipe;
+	char			*input;
 }	t_msh;
 
 /***************
@@ -60,27 +58,33 @@ typedef struct	s_msh
  ***************/
 typedef struct s_token
 {
-	// char			*str;
 	char			*cmd;
-	// int				count_pipe;
 	t_type			type;
+	t_msh			*msh;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
 
 typedef struct s_ast
 {
-	t_type				type;
-	char				**args;
-	struct s_ast		*left;
-	struct s_ast		*right;
-	// int					(*builtin)(t_msh *msh);
+	t_type			type;
+	char			**args;
+	struct s_ast	*left;
+	struct s_ast	*right;
 }	t_ast;
+
+typedef struct s_expan
+{
+	char			*new_arg;
+	int				i;
+	int				j;
+}				t_expan;
 
 typedef struct s_env
 {
-	char				**original_env;
-	char				***parsed_env;
+	char			*key;
+	char			*value;
+	struct s_env	*next;
 }	t_env;
 
 /******************
@@ -102,7 +106,7 @@ typedef struct p_pipe
 	char	*cmd;
 	char	**env;
 	char	**args;
-	int		max;
+	t_msh	*msh;
 	int		fd_in;
 	int		fd_out;
 	int		iter;

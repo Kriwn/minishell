@@ -1,17 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   msh_expand.c                                       :+:      :+:    :+:   */
+/*   msh_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 11:16:53 by jikarunw          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/03/10 08:32:16 by jikarunw         ###   ########.fr       */
-=======
-/*   Updated: 2024/12/24 03:25:14 by jikarunw         ###   ########.fr       */
->>>>>>> 4e77080c3707a9170a6fe3f88fdb68a26999d48c
+/*   Created: 2024/12/25 13:04:26 by krwongwa          #+#    #+#             */
+/*   Updated: 2025/01/27 01:22:04 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	msh_env(t_p *list)
+{
+	t_msh	*msh;
+	int		saved_stdout;
+
+	saved_stdout = dup(STDOUT_FILENO);
+	handle_fd(list);
+	msh = list->msh;
+	print_tuple(msh->tuple);
+	if (list->fd_out != 1)
+	{
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
+	}
+	return (EXIT_SUCCESS);
+}

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 12:07:52 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/07/28 00:28:25 by jikarunw         ###   ########.fr       */
+/*   Updated: 2024/12/23 23:11:38 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 int		ft_abs(int n);
 int		ft_isspace(int c);
 char	*ft_strndup(const char *s, size_t size);
+char	*ft_strncpy(char *dst, const char *src, size_t len);
+char	*ft_strdup_while_string(char *str, char *charset);
 
 #endif

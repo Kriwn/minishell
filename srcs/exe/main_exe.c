@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_exe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/23 02:03:55 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/01/27 01:29:25 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 void	mode_signal_exe(int mode)
 {
-	if (mode == 0) // normal minishell mode
+	if (mode == 0)
 	{
 		signal(SIGINT, &check_signal);
 		signal(SIGQUIT, &check_signal);
 	}
-	else if (mode == 1) // parent
+	else if (mode == 1)
 	{
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 	}
-	else if (mode == 2) // child
+	else if (mode == 2)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
@@ -34,32 +34,44 @@ void	mode_signal_exe(int mode)
 void	wait_all_process(t_p *list)
 {
 	size_t	i;
-	int	status;
+	int		status;
+	int		signal;
 
 	i = 0;
-	while (i < list->max)
+	while (i < list->msh->count_pipe + 1)
 	{
 		if (list->process_pid[i] > -1)
+		{
 			waitpid(list->process_pid[i], &status, WUNTRACED);
+			if (WIFSIGNALED(status))
+			{
+				signal = WTERMSIG(status);
+				if (signal == SIGSEGV)
+				{
+					*list->code = 128 + signal;
+					ft_puterrstr("Segmentation fault (core dumped)\n");
+				}
+			}
+			else
+				*list->code = WEXITSTATUS(status);
+		}
 		i++;
 	}
-	// dprintf(2,"Eed All Process\n");
-	*list->code = WEXITSTATUS(status);
 }
 
 void	init_pipe(t_p **temp, t_msh *msh)
 {
-	t_p		*list;
-	int		i;
+	t_p	*list;
+	int	i;
 
 	i = 0;
 	list = *temp;
 	list->process_pid = malloc(sizeof(int) * (msh->count_pipe + 1));
 	list->iter = 0;
-	list->path = ft_split(get_value_from_key(msh->tuple, "PATH"), ':');
+	list->path = myft_split(get_value_from_key(msh->tuple, "PATH"), ':');
 	list->env = msh->env;
 	list->code = &msh->code;
-	list->max = msh->count_pipe + 1;
+	list->msh = msh;
 	list->pipe[0] = -1;
 	list->pipe[1] = -1;
 	list->fd_in = -1;
@@ -73,28 +85,21 @@ void	init_pipe(t_p **temp, t_msh *msh)
 	}
 }
 
-//cannot ues ./a.out
 void	main_exe(t_msh *msh)
 {
-	t_p		*list;
-	int		a;
+	t_p	*list;
+	int	a;
+	int	b;
 
 	a = -1;
-	msh->count_pipe = 1;
+	b = -1;
 	list = msh->list;
-	init_pipe(&list,msh);
-	do_here_doc_task(msh->ast, list);
-	// dprintf(2,"After here_doc code %d\n",msh->code);
+	init_pipe(&list, msh);
+	do_here_doc_task(msh->ast, list, &b);
 	is_build_in_command(msh->ast, &a);
-	// dprintf(2,"Out %d\n",msh->code);
 	if (msh->count_pipe == 0 && a == 0)
-	{
-		// dprintf(2,"Single CMD\n");
-		// run_buid in command;
-		// mode_signal_exe(1);
-		// exe_single_cmd(msh,msh->ast, list);
-	}
-	else
+		exe_single_cmd(msh->ast, list);
+	else if (b == 1)
 	{
 		mode_signal_exe(1);
 		pipe_task(msh->ast, list);
@@ -102,5 +107,4 @@ void	main_exe(t_msh *msh)
 	}
 	mode_signal_exe(0);
 	free_list(list);
-	// dprintf(2,"EXITCODE %d\n",msh->code);
 }

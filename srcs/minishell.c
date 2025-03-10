@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/23 01:42:56 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/02/05 21:46:01 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,34 +31,17 @@ void	check_signal(int signal)
 	}
 }
 
-int	setup_termios(void)
-{
-	struct termios	config;
-
-	if (!isatty(STDIN_FILENO))
-	{
-		ft_putstr_fd("Not a terminal.\n", 2);
-		return (-1);
-	}
-	tcgetattr(STDIN_FILENO, &config);
-	config.c_lflag &= ~(ECHOCTL | ICANON);
-	config.c_cc[VMIN] = 0;
-	config.c_cc[VTIME] = 0;
-	tcsetattr(STDIN_FILENO, TCSANOW, &config);
-	return (1);
-}
-
 void	setup_signal(void)
 {
 	struct sigaction	act;
 
 	g_signal = 0;
-	ft_bzero(&act, sizeof(sigaction));
+	ft_bzero(&act, sizeof(struct sigaction));
 	act.sa_handler = &check_signal;
 	act.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &act, NULL);
 	sigaction(SIGQUIT, &act, NULL);
-	ft_bzero(&act, sizeof(sigaction));
+	ft_bzero(&act, sizeof(struct sigaction));
 }
 
 char	*ft_readline(t_msh *var)
@@ -67,14 +50,16 @@ char	*ft_readline(t_msh *var)
 	char	*promt;
 
 	promt = get_promt(var);
+	// input = get_next_line(0);  for debug cuase readline leak
 	input = readline(promt);
 	if (promt)
 		free(promt);
+	// if (input != NULL)
 	add_history(input);
 	return (input);
 }
 
-void	msh_loop(t_msh *msh)
+void msh_loop(t_msh *msh)
 {
 	while (1)
 	{
@@ -82,29 +67,26 @@ void	msh_loop(t_msh *msh)
 		if (!msh->input)
 		{
 			printf("%sEXIT!%s💥\n", RED, RESET);
-			exit(1);
+			return ;
 		}
 		msh->token = msh_parsing_input(msh);
 		if (msh->token)
 		{
 			msh->ast = msh_get_tokens(&msh->token);
-			if (msh->ast)
-			{
-				printf("\nAbstract Syntax Tree:\n");
-				display_ast_table(msh->ast, 0);
-			}
+			// if (msh->ast)
+			// {
+			// 	printf("\nAbstract Syntax Tree:\n");
+			// 	display_ast_table(msh->ast, 0);
+			// }
 			main_exe(msh);
-			// execute_ast(msh->ast, msh);
-			// msh_execute_builtin(msh);
+			free_ast(msh->ast);
 		}
-		// printf("%sToken count pipe %d\n%s", GREEN, msh->count_pipe, RESET);
 	}
 }
 
 int	main(int ac, char **av, char **env)
 {
 	t_msh	*msh;
-	t_ast	*ast;
 	char	*input;
 	int		status;
 
@@ -113,15 +95,7 @@ int	main(int ac, char **av, char **env)
 		return (1);
 	init_minishell(msh, env);
 	setup_signal();
-	if (setup_termios() == -1)
-	{
-		ft_error(msh, "Termios setup error\n");
-		ft_free(msh);
-		return (1);
-	}
 	msh_loop(msh);
-	free(ast->args);
-	free(ast->args[0]);
 	ft_free(msh);
 	rl_clear_history();
 	return (0);

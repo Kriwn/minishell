@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/23 23:52:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/27 01:40:03 by krwongwa         ###   ########.fr       */
+/*   Created: 2024/12/24 22:08:42 by krwongwa          #+#    #+#             */
+/*   Updated: 2025/01/25 17:21:09 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+void	do_here_doc_task(t_ast *ast, t_p *list, int *b)
 {
-	size_t	i;
+	int status;
 
-	i = 0;
-	while (n > 0 && s1[i] && s1[i] == s2[i])
-	{
-		n--;
-		i++;
-	}
-	if (n == 0)
-		return (0);
+	status = 0;
+	if (!ast)
+		return ;
+	if (ast->type == HEREDOC)
+		list->fd_in = do_here_doc(ast->right, ast->left, list);
+	if (ast->type == CMD)
+		*b = 1;
 	else
-		return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	{
+		do_here_doc_task(ast->left, list, b);
+		do_here_doc_task(ast->right, list, b);
+	}
 }

@@ -1,43 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc_sig.c                                     :+:      :+:    :+:   */
+/*   list_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/17 20:30:45 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/21 21:41:57 by krwongwa         ###   ########.fr       */
+/*   Created: 2025/01/27 01:35:20 by krwongwa          #+#    #+#             */
+/*   Updated: 2025/01/27 01:36:10 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static volatile sig_atomic_t	g_signal;
 
-int	clear_read_line(void)
+void	safe_close(int *fd)
 {
-	if (g_signal == 1)
+	if (*fd != -1)
+		close(*fd);
+	*fd = -1;
+}
+
+void	safe_fd(t_p *list, int flag)
+{
+	if (flag == 0)
 	{
-		rl_on_new_line();
-		rl_replace_line("\n", 1);
-		rl_redisplay();
-		rl_done = 1;
+		if (list->fd_in != -1)
+		{
+			close(list->fd_in);
+			list->fd_in = -1;
+		}
 	}
-	return (0);
-}
-
-void	here_doc_check_signal(int sig)
-{
-	if (sig == SIGINT)
-		g_signal = 1;
-}
-
-void	end_here_doc(t_p *list)
-{
-	dprintf(2,"End Here\n");
-	if (g_signal == 1)
-		*list->code = 130;
-	g_signal = 0;
-	signal(SIGINT, &check_signal);
-	rl_event_hook = NULL;
+	else
+	{
+		if (list->fd_out != -1)
+		{
+			close(list->fd_out);
+			list->fd_out = -1;
+		}
+	}
 }

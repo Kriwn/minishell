@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:24:33 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/11/17 16:57:11 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/02/05 22:04:19 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	*make_tuple(t_tuple *new_node, char *str, char c)
 	return ((void *)(1));
 }
 
-int	init_tuple(t_tuple **data, char **env)
+int	init_tuple(t_msh *data, char **env)
 {
 	size_t	i;
 	t_tuple	*new_node;
@@ -46,20 +46,23 @@ int	init_tuple(t_tuple **data, char **env)
 	i = 0;
 	while (env[i])
 	{
-		new_node = malloc(sizeof(t_tuple) * 1);
-		if (new_node == NULL || make_tuple(new_node, env[i], '=') == NULL)
-			return (-1);
+		new_node = malloc(sizeof(t_tuple));
+		if (new_node == NULL)
+			return (0);
 		new_node->next = NULL;
-		if (!*data)
+		if (make_tuple(new_node, env[i], '=') == NULL)
+			return (0);
+		if (!data->tuple)
 		{
-			*data = new_node;
-			(*data)->tail = new_node;
+			data->tuple = new_node;
+			data->tuple->tail = new_node;
 		}
 		else
 		{
-			(*data)->tail->next = new_node;
-			(*data)->tail = new_node;
+			data->tuple->tail->next = new_node;
+			data->tuple->tail = new_node;
 		}
 		i++;
 	}
+	return (1);
 }

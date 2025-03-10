@@ -3,33 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:28:33 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/23 01:48:23 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/02/05 22:10:00 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-// need to add run build in here;
-void run_cmd(t_p *list,int status)
+void	run_cmd(t_p *list, int status)
 {
-	char *cmd_path;
+	char	*cmd_path;
 
 	cmd_path = find_path(list->cmd, list->path);
-	dprintf(2,"CMD PATH is %s\n",cmd_path);
 	dup2(list->fd_in, 0);
-	safe_close(list, 0);
+	safe_fd(list, 0);
 	if (status == -1)
 	{
 		*list->code = 1;
 		exit(*list->code);
 	}
-	if (execve(cmd_path, list->args , list->env) == -1)
+	if (execve(cmd_path, list->args, list->env) == -1)
 	{
-		dprintf(2,"Errno is %d\n", errno);
 		*list->code = ft_puterrorcmd(list->cmd, errno);
 		if (cmd_path != NULL)
 			free(cmd_path);
@@ -38,43 +34,46 @@ void run_cmd(t_p *list,int status)
 	free(cmd_path);
 }
 
-void child_process(t_p *list, int status)
+void	child_process(t_p *list, int status)
 {
-	int a;
+	int	a;
 
 	a = -1;
 	mode_signal_exe(2);
 	if (list->fd_out != -1)
 	{
 		dup2(list->fd_out, 1);
-		close(list->pipe[0]);
-		close(list->pipe[1]);
-		safe_close(list, 1);
+		safe_close(&list->pipe[0]);
+		safe_close(&list->pipe[1]);
+		safe_fd(list, 1);
 	}
 	else
 		pipe_write(list);
 	check_build_in_command(list->cmd, &a);
 	if (a == 0)
-		dprintf(2,"RUN BUILD IN (PIPE)\n");
+	{
+		*list->code = msh_execute_builtin(list);
+		exit(*list->code);
+	}
 	else
-		run_cmd(list,status);
+		run_cmd(list, status);
 }
 
-void parent_process(t_p *list)
+void	parent_process(t_p *list)
 {
 	if (list->fd_in > -1)
-		safe_close(list, 0);
+		safe_fd(list, 0);
 	list->fd_in = dup(list->pipe[0]);
-	close(list->pipe[0]);
-	close(list->pipe[1]);
+	safe_close(&list->pipe[0]);
+	safe_close(&list->pipe[1]);
 }
 
-void mutiple_exe(t_ast *ast, t_p *list)
+void	mutiple_exe(t_ast *ast, t_p *list)
 {
-	int status;
+	int	status;
 
 	status = 1;
-	prepare_cmd(ast, list, &status); // check fd in this before run
+	prepare_cmd(ast, list, &status);
 	list->process_pid[list->iter] = fork();
 	if (list->process_pid[list->iter] == -1)
 	{
@@ -89,11 +88,10 @@ void mutiple_exe(t_ast *ast, t_p *list)
 	list->iter++;
 }
 
-void pipe_task(t_ast *ast, t_p *list)
+void	pipe_task(t_ast *ast, t_p *list)
 {
 	if (!ast)
-		wait_all_process(list);
-
+		;
 	if (ast->type == CMD_GROUP)
 		mutiple_exe(ast, list);
 	else if (ast->type == PIPE)

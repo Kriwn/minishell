@@ -6,13 +6,29 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:47:55 by krwongwa          #+#    #+#             */
-/*   Updated: 2024/12/21 21:37:34 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/01/28 02:28:21 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*myft_strjoin(char const *s1, char const *s2)
+int	find_slash(char *command)
+{
+	size_t	i;
+
+	if (!command)
+		return (0);
+	i = 0;
+	while (command[i])
+	{
+		if (command[i] == '/')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*myft_strjoin(char const *s1, char const *s2)
 {
 	size_t	i;
 	size_t	n;
@@ -39,17 +55,19 @@ static char	*myft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-char *find_path(char *cmd, char **path)
+char	*find_path(char *cmd, char **path)
 {
-	int i;
-	char *temp;
-	char *cmd_path;
-	char **temp_path;
+	int		i;
+	char	*temp;
+	char	*cmd_path;
+	char	**temp_path;
 
 	i = 0;
 	temp_path = path;
+	if (temp_path == NULL)
+		return (NULL);
 	if (find_slash(cmd))
-			return (cmd);
+		return (cmd);
 	while (temp_path[i])
 	{
 		temp = myft_strjoin(temp_path[i], "/");
@@ -60,21 +78,5 @@ char *find_path(char *cmd, char **path)
 		free(cmd_path);
 		i++;
 	}
-	return NULL;
-}
-
-int find_slash(char *command)
-{
-	size_t i;
-
-	if (!command)
-		return (0);
-	i = 0;
-	while (command[i])
-	{
-		if (command[i] == '/')
-			return (1);
-		i++;
-	}
-	return (0);
+	return (cmd);
 }
