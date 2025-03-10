@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:36:37 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/10 12:26:07 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/10 12:34:57 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ char	*expand_string(t_msh *shell, char *str, int expand_vars)
 		if (segment)
 		{
 			temp = result;
-			result = ft_strjoin(result, segment);
+			result = ft_strjoin_for_other(result, segment);
+			free(temp);
+			free(segment);
 		}
 	}
 	return (result);
