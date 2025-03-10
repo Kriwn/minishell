@@ -3,33 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   promt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:17:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/15 23:07:11 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/09 03:53:51 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// char	*get_promt(t_msh *data)
+// {
+// 	char	*ans;
+// 	char	*temp;
+// 	char	*getpath;
+
+// 	getpath = copy(get_value_from_key(data->tuple,"PWD"));
+// 	if(!getpath)
+// 		getpath = ft_getcwd();
+// 	ans = ft_strdup("minishell:");
+// 	temp = ft_strjoin(ans, getpath);
+// 	ans = temp;
+// 	temp = ft_strjoin(ans, " ");
+// 	ans = temp;
+// 	temp = ft_itoa(data->code);
+// 	ans = ft_strjoin(ans, temp);
+// 	free(temp);
+// 	temp = ft_strjoin(ans, "$ ");
+// 	ans = temp;
+// 	return (ans);
+// }
+
 char	*get_promt(t_msh *data)
 {
-	char	*ans;
-	char	*temp;
-	char	*getpath;
-
-	getpath = copy(get_value_from_key(data->tuple,"PWD"));
-	if(!getpath)
-		getpath = ft_getcwd();
-	ans = ft_strdup("minishell:");
-	temp = ft_strjoin(ans, getpath);
-	ans = temp;
-	temp = ft_strjoin(ans, " ");
-	ans = temp;
-	temp = ft_itoa(data->code);
-	ans = ft_strjoin(ans, temp);
-	free(temp);
-	temp = ft_strjoin(ans, "$ ");
-	ans = temp;
-	return (ans);
+	return (ft_strdup("minishell: "));
 }

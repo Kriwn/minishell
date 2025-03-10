@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/02/05 21:46:01 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/10 09:32:29 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,13 @@ char	*ft_readline(t_msh *var)
 	char	*promt;
 
 	promt = get_promt(var);
-	// input = get_next_line(0);  for debug cuase readline leak
+	// // for debug cuase readline leak
+	// input = get_next_line(0);
 	input = readline(promt);
 	if (promt)
 		free(promt);
-	// if (input != NULL)
-	add_history(input);
+	if (input != NULL)
+		add_history(input);
 	return (input);
 }
 
@@ -72,12 +73,8 @@ void msh_loop(t_msh *msh)
 		msh->token = msh_parsing_input(msh);
 		if (msh->token)
 		{
+			process_expansion(msh);
 			msh->ast = msh_get_tokens(&msh->token);
-			// if (msh->ast)
-			// {
-			// 	printf("\nAbstract Syntax Tree:\n");
-			// 	display_ast_table(msh->ast, 0);
-			// }
 			main_exe(msh);
 			free_ast(msh->ast);
 		}

@@ -6,22 +6,41 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/28 02:59:53 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/10 09:25:41 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_ast(t_ast *ast)
+void free_ast(t_ast *node)
 {
-	if (!ast)
-		return ;
-	if (ast->args)
+	int	i;
+
+	i = 0;
+	if (!node)
+		return;
+	if (node->args && node->type == CMD)
 	{
-		free(ast->args[0]);
-		free(ast->args);
+		while (node->args[i])
+			free(node->args[i++]);
+		free(node->args);
 	}
-	free(ast);
+	free_ast(node->left);
+	free_ast(node->right);
+	free(node);
+}
+
+void free_token(t_token *tokens)
+{
+	t_token	*tmp;
+
+	while (tokens)
+	{
+		tmp = tokens;
+		tokens = tokens->next;
+		free(tmp->cmd);
+		free(tmp);
+	}
 }
 
 void	ft_free(t_msh *data)
@@ -29,7 +48,8 @@ void	ft_free(t_msh *data)
 	data->home_path = NULL;
 	clear_tuple(&data->tuple);
 	free(data->list);
-	free(data);
+	if (data)
+		free(data);
 }
 
 void	ft_error(t_msh *data, char *word)

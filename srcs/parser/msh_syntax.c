@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:47 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/23 23:32:32 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/08 01:30:49 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ int	has_logical_operators(const char *input)
 	while (*input)
 	{
 		update_quote_counts(*input, &s_q_count, &d_q_count);
-		if (!(d_q_count % 2) && !(s_q_count % 2) && ((*input == '&' && *(input
-						+ 1) == '&') || (*input == '|' && *(input + 1) == '|')))
+		if (!(d_q_count % 2) && !(s_q_count % 2) && ((*input == '&' && *(input \
+			+ 1) == '&') || (*input == '|' && *(input + 1) == '|')))
 			return (1);
 		input++;
 	}
@@ -106,27 +106,15 @@ int	has_logical_operators(const char *input)
 int	syntax_error_checker(const char *input)
 {
 	if (has_unclosed_quotes(input))
-	{
 		ft_putstr_fd("minishell: syntax error unclosed quote\n", STDERR_FILENO);
-		// return (1);
-	}
 	if (has_invalid_redirections(input))
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",
-						STDERR_FILENO);
-		// return (1);
-	}
+		ft_putstr_fd("minishell: syntax error near \
+			unexpected token `newline'\n", STDERR_FILENO);
 	if (has_misplaced_operators(input))
-	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `&', \
-				`&&' and `|', `||' \n",
-						STDERR_FILENO);
-		// return (1);
-	}
+			`&&' and `|', `||' \n",
+			STDERR_FILENO);
 	if (has_logical_operators(input))
-	{
 		ft_putstr_fd("minishell: command not found' \n", STDERR_FILENO);
-		// return (1);
-	}
 	return (0);
 }
