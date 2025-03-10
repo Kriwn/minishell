@@ -6,11 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/02/05 22:11:43 by krwongwa         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/09 03:22:44 by jikarunw         ###   ########.fr       */
->>>>>>> f17656605f2d1dbcf0603fa1ff574610378aa554
+/*   Updated: 2025/03/10 08:39:49 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,12 +170,8 @@ void		display_ast(t_ast *ast, int idx);
 int			find_slash(char *command);
 int			do_here_doc(t_ast *ast,t_ast *temp ,t_p *list);
 void		is_build_in_command(t_ast *ast,int *a);
-<<<<<<< HEAD
-void 		check_build_in_command(char *word,int *a);
-=======
 int			check_build_in_command(char *word,int *a);
 // int 		check_build_in_command(char *word);
->>>>>>> f17656605f2d1dbcf0603fa1ff574610378aa554
 void		do_here_doc_task(t_ast *ast,t_p *list,int *b);
 void		main_exe(t_msh *msh);
 void		safe_close(int *fd);
