@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:47 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/08 01:30:49 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:40:40 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,14 @@ int	has_invalid_redirections(const char *input)
 	while (*input)
 	{
 		update_quote_counts(*input, &s_q_count, &d_q_count);
-		if ((!(s_q_count % 2) && !(d_q_count % 2)) && (*input == '>'
-				|| *input == '<'))
+		if ((!(s_q_count % 2) && !(d_q_count % 2)) \
+			&& (*input == '>' || *input == '<'))
 		{
-			if (*(input + 1) == '\0' || *(input + 1) == '>' || *(input
-					+ 1) == '<')
-				return (1);
-			if (is_invalid_operator(&input))
+			if (*(input + 1) == '\0' || *(input + 1) == '>' \
+				|| *(input + 1) == '<')
 				return (1);
 		}
-		else
-			input++;
+		input++;
 	}
 	return (0);
 }
@@ -62,9 +59,11 @@ int	has_misplaced_operators(const char *input)
 	int	s_q_count;
 	int	d_q_count;
 
+	expect_command_next = 0;
 	s_q_count = 0;
 	d_q_count = 0;
-	expect_command_next = 0;
+	if (!input || *input == '\0')
+		return (0);
 	if (*input == '|' || *input == '&')
 		return (1);
 	while (*input)
@@ -80,9 +79,7 @@ int	has_misplaced_operators(const char *input)
 			expect_command_next = 0;
 		input++;
 	}
-	if (expect_command_next)
-		return (1);
-	return (0);
+	return (expect_command_next);
 }
 
 int	has_logical_operators(const char *input)
@@ -95,8 +92,8 @@ int	has_logical_operators(const char *input)
 	while (*input)
 	{
 		update_quote_counts(*input, &s_q_count, &d_q_count);
-		if (!(d_q_count % 2) && !(s_q_count % 2) && ((*input == '&' && *(input \
-			+ 1) == '&') || (*input == '|' && *(input + 1) == '|')))
+		if (!(d_q_count % 2) && !(s_q_count % 2) && ((*input == '&' \
+			&& *(input + 1) == '&') || (*input == '|' && *(input + 1) == '|')))
 			return (1);
 		input++;
 	}
@@ -106,15 +103,28 @@ int	has_logical_operators(const char *input)
 int	syntax_error_checker(const char *input)
 {
 	if (has_unclosed_quotes(input))
-		ft_putstr_fd("minishell: syntax error unclosed quote\n", STDERR_FILENO);
+	{
+		ft_putstr_fd("minishell: syntax error: unclosed quote\n", \
+			STDERR_FILENO);
+		return (1);
+	}
 	if (has_invalid_redirections(input))
+	{
 		ft_putstr_fd("minishell: syntax error near \
 			unexpected token `newline'\n", STDERR_FILENO);
+		return (1);
+	}
 	if (has_misplaced_operators(input))
-		ft_putstr_fd("minishell: syntax error near unexpected token `&', \
-			`&&' and `|', `||' \n",
-			STDERR_FILENO);
+	{
+		ft_putstr_fd("minishell: syntax error near \
+			unexpected token `|', `||', `&', `&&'\n", STDERR_FILENO);
+		return (1);
+	}
 	if (has_logical_operators(input))
-		ft_putstr_fd("minishell: command not found' \n", STDERR_FILENO);
+	{
+		ft_putstr_fd("minishell: syntax error: \
+			logical operator not allowed\n", STDERR_FILENO);
+		return (1);
+	}
 	return (0);
 }

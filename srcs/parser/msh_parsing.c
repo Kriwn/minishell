@@ -6,13 +6,13 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/10 23:29:12 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:37:27 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_ast *process_redirection_tokens(t_token **tokens, t_token *tmp)
+t_ast	*process_redirection_tokens(t_token **tokens, t_token *tmp)
 {
 	t_token	*next_token;
 	t_ast	*result;
@@ -41,7 +41,7 @@ t_ast *process_redirection_tokens(t_token **tokens, t_token *tmp)
 	return (NULL);
 }
 
-t_ast *msh_get_redirect(t_token **tokens)
+t_ast	*msh_get_redirect(t_token **tokens)
 {
 	t_token	*tmp;
 	t_ast	*result;
@@ -52,16 +52,10 @@ t_ast *msh_get_redirect(t_token **tokens)
 	result = process_redirection_tokens(tokens, tmp);
 	if (result)
 	{
-		/** Part if not use this pass tester but no leak */
-		// free(tmp->cmd);
-		// free(tmp);
 		*tokens = (*tokens)->next;
 		return (result);
 	}
 	result = msh_get_cmd(&tmp);
-	// free(tmp->cmd);
-	// free(tmp);
-	/** it mean free */
 	return (result);
 }
 
@@ -100,8 +94,6 @@ t_ast	*msh_get_pipe(t_token **tokens)
 	}
 	command_group = msh_init_ast(CMD_GROUP);
 	command_group->left = msh_get_redirect(&tmp);
-	// free(tmp->cmd);
-	// free(tmp);
 	return (command_group);
 }
 

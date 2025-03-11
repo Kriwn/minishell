@@ -6,43 +6,11 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:00 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/10 15:21:08 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:34:21 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void msh_free_ast(t_ast *node)
-{
-	int	i;
-
-	if (!node)
-		return ;
-	if (node->type == CMD && node->args)
-	{
-		i = 0;
-		while (node->args[i])
-		{
-			free(node->args[i]);
-			node->args[i] = NULL;
-			i++;
-		}
-		free(node->args);
-		node->args = NULL;
-	}
-	if (node->type == ENV_VAR && node->args)
-	{
-		free(node->args[0]);
-		node->args[0] = NULL;
-		free(node->args);
-		node->args = NULL;
-	}
-	msh_free_ast(node->left);
-	node->left = NULL;
-	msh_free_ast(node->right);
-	node->right = NULL;
-	free(node);
-}
 
 t_ast	*create_file_list_redir(t_token **tokens, t_token *tmp)
 {
@@ -100,4 +68,17 @@ void	add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count)
 		i++;
 	}
 	cmd_node->args[arg_count] = NULL;
+}
+
+void	free_cmd_tokens(t_token **tokens)
+{
+	t_token	*tmp;
+
+	while (*tokens && (*tokens)->type == CMD)
+	{
+		tmp = *tokens;
+		*tokens = (*tokens)->next;
+		free(tmp->cmd);
+		free(tmp);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/10 21:03:41 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:33:36 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,10 @@ t_ast		*msh_get_heredoc_word(t_token **token);
 t_ast		*create_env_var_node(t_token *current);
 void		fill_command_args(t_ast *command_node, t_token *current);
 t_ast		*create_pipe_node(t_token **tokens, t_token *tmp, t_token *next_token);
+
+int			allocate_cmd_args(t_ast *cmd_node, int arg_count);
+void		copy_command_args(t_ast *cmd_node, t_token **tokens);
+void		free_cmd_tokens(t_token **tokens);
 
 /** msh_syntax */
 int			has_unclosed_quotes(const char *input);

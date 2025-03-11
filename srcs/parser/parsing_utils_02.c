@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:09:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/10 15:55:12 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:33:42 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,31 @@ t_ast	*create_pipe_node(t_token **tokens, t_token *tmp, t_token *next_token)
 	free(next_token->cmd);
 	free(next_token);
 	return (pipe_node);
+}
+
+int	allocate_cmd_args(t_ast *cmd_node, int arg_count)
+{
+	cmd_node->args = malloc(sizeof(char *) * (arg_count + 1));
+	if (!cmd_node->args)
+	{
+		free(cmd_node);
+		return (0);
+	}
+	return (1);
+}
+
+void	copy_command_args(t_ast *cmd_node, t_token **tokens)
+{
+	t_token	*current;
+	int		i;
+
+	current = *tokens;
+	i = 0;
+	while (current && current->type == CMD)
+	{
+		cmd_node->args[i] = ft_strdup(current->cmd);
+		i++;
+		current = current->next;
+	}
+	cmd_node->args[i] = NULL;
 }
