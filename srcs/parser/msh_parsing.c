@@ -6,13 +6,13 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/11 16:37:27 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:52:54 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_ast	*process_redirection_tokens(t_token **tokens, t_token *tmp)
+t_ast *process_redirection_tokens(t_token **tokens, t_token *tmp)
 {
 	t_token	*next_token;
 	t_ast	*result;
@@ -41,7 +41,7 @@ t_ast	*process_redirection_tokens(t_token **tokens, t_token *tmp)
 	return (NULL);
 }
 
-t_ast	*msh_get_redirect(t_token **tokens)
+t_ast *msh_get_redirect(t_token **tokens)
 {
 	t_token	*tmp;
 	t_ast	*result;
@@ -62,19 +62,18 @@ t_ast	*msh_get_redirect(t_token **tokens)
 t_ast	*msh_get_cmd(t_token **tokens)
 {
 	t_ast	*command_node;
-	t_token	*current;
 	int		arg_count;
 
-	command_node = msh_init_ast(CMD);
-	arg_count = count_cmd_arg(*tokens);
-	command_node->args = malloc(sizeof(char *) * (arg_count + 1));
-	if (!command_node->args)
-	{
-		free(command_node);
+	if (!tokens || !*tokens)
 		return (NULL);
-	}
-	current = *tokens;
-	fill_command_args(command_node, current);
+	command_node = msh_init_ast(CMD);
+	if (!command_node)
+		return (NULL);
+	arg_count = count_cmd_arg(*tokens);
+	if (!allocate_cmd_args(command_node, arg_count))
+		return (NULL);
+	copy_command_args(command_node, tokens);
+	free_cmd_tokens(tokens);
 	return (command_node);
 }
 
