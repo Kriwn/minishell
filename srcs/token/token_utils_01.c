@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 20:56:54 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/10 14:40:51 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:42:11 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	add_token_to_list(t_token **tokens, t_token *new_token)
 	}
 }
 
-void add_word_token_if_valid(char **start, char **input, t_token **tokens)
+void	add_word_token_if_valid(char **start, char **input, t_token **tokens)
 {
 	char	*word;
 	t_token	*token;
@@ -59,7 +59,8 @@ void add_word_token_if_valid(char **start, char **input, t_token **tokens)
 		word = ft_strndup(*start, *input - *start);
 		if (!word)
 		{
-			ft_putstr_fd("Error: Malloc failed in add_word_token_if_valid.\n", 2);
+			ft_putstr_fd("Error: Malloc failed in \
+				add_word_token_if_valid.\n", 2);
 			return ;
 		}
 		token = new_token(CMD, word);
