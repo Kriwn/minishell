@@ -6,13 +6,13 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 18:53:16 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/10 08:42:33 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:41:28 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int check_build_in_command(char *word,int *a)
+int	check_build_in_command(char *word, int *a)
 {
 	if (ft_strcmp(word, "echo") == 0)
 		*a = 0;
@@ -52,9 +52,9 @@ int check_build_in_command(char *word,int *a)
 // 		return (1);
 // }
 
-void	is_build_in_command(t_ast *ast,int *a)
+void	is_build_in_command(t_ast *ast, int *a)
 {
-	char *word;
+	char	*word;
 
 	if (!ast || *a == 0 || *a == 1)
 		return ;
@@ -64,19 +64,19 @@ void	is_build_in_command(t_ast *ast,int *a)
 			word = ast->args[0];
 		else
 			word = ast->left->args[0];
-		check_build_in_command(word,a);
+		check_build_in_command(word, a);
 		return ;
 	}
 	else
 	{
-		is_build_in_command(ast->left,a);
-		is_build_in_command(ast->right,a);
+		is_build_in_command(ast->left, a);
+		is_build_in_command(ast->right, a);
 	}
 }
 
 void	exe_single_cmd(t_ast *ast, t_p *list)
 {
-	int status;
+	int	status;
 
 	status = 1;
 	prepare_cmd(ast, list, &status);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:01 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/01/27 01:24:37 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:38:39 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,10 @@ int	do_here_doc(t_ast *ast, t_ast *temp, t_p *list)
 		return (-1);
 	while (1)
 	{
-		getline = readline("> ");
+		getline = readline(">");
 		if (getline == NULL || g_signal == 1 || \
-			ft_strncmp(getline, list->here_doc_cut, ft_strlen(list->here_doc_cut)) == 0 )
+			ft_strncmp(getline, list->here_doc_cut, \
+		ft_strlen(list->here_doc_cut)) == 0)
 			break ;
 		write(list->pipe[1], getline, ft_strlen(getline));
 		write(list->pipe[1], "\n", 1);
