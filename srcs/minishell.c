@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 08:40:46 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:26:01 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ int	main(int ac, char **av, char **env)
 	init_minishell(msh, env);
 	setup_signal();
 	msh_loop(msh);
-	ft_free(msh);
 	cleanup_and_exit(msh, 0);
+	ft_free(msh);
 	rl_clear_history();
 	return (0);
 }
