@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:04:43 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/12 08:12:44 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/12 10:57:56 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_token	*msh_parsing_input(t_msh *msh)
 	if (syntax_error_checker(input_trim))
 	{
 		free(input_trim);
+		msh->code = 1;
 		return (NULL);
 	}
 	if (!input_trim)
