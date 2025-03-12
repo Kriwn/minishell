@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 17:02:11 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/12 21:01:55 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ char	*ft_readline(t_msh *var)
 	char	*promt;
 
 	promt = get_promt(var);
-	// // for debug cuase readline leak
-	// input = get_next_line(0);
 	input = readline(promt);
 	if (promt)
 		free(promt);
@@ -92,8 +90,8 @@ int	main(int ac, char **av, char **env)
 	init_minishell(msh, env);
 	setup_signal();
 	msh_loop(msh);
-	ft_free(msh);
 	cleanup_and_exit(msh, 0);
+	ft_free(msh);
 	rl_clear_history();
 	return (0);
 }

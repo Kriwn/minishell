@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/11 16:33:36 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/12 20:03:18 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-#include  <stdint.h>
+# include <stdint.h>
 # include <signal.h>
 # include "../libft/includes/libft.h"
 # include <stdbool.h>
 # include <errno.h>
 
-#include <sys/wait.h>
-#include <fcntl.h>
+# include <sys/wait.h>
+# include <fcntl.h>
 
 # include "../libft/includes/libft.h"
 # include "../libft/includes/get_next_line.h"
@@ -40,20 +40,21 @@
 
 # define STDERR_FILENO 2
 # define WHITESPACE " \t\n\v\f\r"
-# define LETTERS_DIGITS "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"
+# define LETTERS_DIGITS "abcdefghijklmnopqrstuvwxyzABCDEFGH \
+	IJKLMNOPQRSTUVWXYZ0123456789_"
 
 /**************
  * SRCS/UTILS *
  **************/
 void		print_tuple(t_tuple *data);
-char		*get_value_from_key(t_tuple *data,char *key);
+char		*get_value_from_key(t_tuple *data, char *key);
 void		updata_value_from_key(t_tuple *data, char *key, char *new_value);
 void		remove_tuple(t_tuple **data, char *key);
 void		clear_tuple(t_tuple **data);
 
 void		free_ast(t_ast *ast);
 void		ft_free(t_msh *data);
-void		ft_error(t_msh *data,char *word);
+void		ft_error(t_msh *data, char *word);
 void		cleanup_and_exit(t_msh *msh, int exit_code);
 char		*get_promt(t_msh *data);
 
@@ -74,7 +75,7 @@ t_ast		*msh_init_ast(t_type type);
 /****************
  * SRCS/BUILTIN *
  ****************/
-void 		handle_fd(t_p *list);
+void		handle_fd(t_p *list);
 int			msh_execute_builtin(t_p *list);
 char		*copy(const char *s);
 int			msh_exit(t_p *list);
@@ -130,7 +131,8 @@ t_ast		*msh_get_heredoc_word(t_token **token);
 
 t_ast		*create_env_var_node(t_token *current);
 void		fill_command_args(t_ast *command_node, t_token *current);
-t_ast		*create_pipe_node(t_token **tokens, t_token *tmp, t_token *next_token);
+t_ast		*create_pipe_node(t_token **tokens, \
+		t_token *tmp, t_token *next_token);
 
 int			allocate_cmd_args(t_ast *cmd_node, int arg_count);
 void		copy_command_args(t_ast *cmd_node, t_token **tokens);
@@ -157,7 +159,8 @@ void		msh_count_pipe(t_msh *msh);
 
 t_token		*new_token(t_type type, char *value);
 void		add_token_to_list(t_token **tokens, t_token *new_token);
-void		add_word_token_if_valid(char **start, char **input, t_token **tokens);
+void		add_word_token_if_valid(char **start, \
+	char **input, t_token **tokens);
 void		parse_cmd(char **input, t_token **tokens);
 void		parse_type(char **input, t_token **tokens);
 
@@ -175,22 +178,22 @@ void		display_ast(t_ast *ast, int idx);
  * SRCS/EXE *
  ************/
 int			find_slash(char *command);
-int			do_here_doc(t_ast *ast,t_ast *temp ,t_p *list);
-void		is_build_in_command(t_ast *ast,int *a);
-int			check_build_in_command(char *word,int *a);
+int			do_here_doc(t_ast *ast, t_ast *temp, t_p *list);
+void		is_build_in_command(t_ast *ast, int *a);
+int			check_build_in_command(char *word, int *a);
 // int 		check_build_in_command(char *word);
-void		do_here_doc_task(t_ast *ast,t_p *list,int *b);
+void		do_here_doc_task(t_ast *ast, t_p *list, int *b);
 void		main_exe(t_msh *msh);
 void		safe_close(int *fd);
 void		safe_fd(t_p *list, int flag);
-void		prepare_cmd(t_ast *ast,t_p *list, int *status);
-void		open_in_file(char *argv, t_p *list,int *status);
-void		open_out_file(char *argv, t_p *list,int flag, int *status);
+void		prepare_cmd(t_ast *ast, t_p *list, int *status);
+void		open_in_file(char *argv, t_p *list, int *status);
+void		open_out_file(char *argv, t_p *list, int flag, int *status);
 void		pipe_write(t_p *list);
-char 		*find_path(char *cmd, char **path);
+char		*find_path(char *cmd, char **path);
 void		pipe_task(t_ast *ast, t_p *list);
 void		clear_list(t_p *list);
-void 		free_list(t_p *list);
+void		free_list(t_p *list);
 void		ft_puterrstr(char *s);
 int			ft_puterrorcmd(char *s, int errnum);
 void		check_signal(int signal);

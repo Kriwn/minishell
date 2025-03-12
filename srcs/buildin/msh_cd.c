@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:07:15 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/12 08:33:43 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:32:32 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ void	clear_mem(char *pwd, char *new_path)
 
 char	*get_path(t_p *list, char *pwd)
 {
-	char *path;
+	char	*path;
 
 	if (list->args[1] == NULL)
 		path = copy(get_value_from_key(list->msh->tuple, "HOME"));
-	else if (ft_strncmp(list->args[1], "-", 2) == 0 && ft_strlen(list->args[1]) == 1)
+	else if (ft_strncmp(list->args[1], "-", 2) \
+		== 0 && ft_strlen(list->args[1]) == 1)
 		path = copy(get_value_from_key(list->msh->tuple, "OLDPWD"));
 	else
 		path = copy(list->args[1]);

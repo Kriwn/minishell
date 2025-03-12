@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 17:02:51 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/12 21:01:59 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	free_ast(t_ast *node)
 	free(node);
 }
 
-void clean_up_token(t_token **tokens)
+void	clean_up_token(t_token **tokens)
 {
 	t_token	*current;
 	t_token	*next;
