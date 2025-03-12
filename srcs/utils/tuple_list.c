@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tuple_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:51:08 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/10 20:12:18 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:49:17 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	print_tuple(t_tuple *data)
 {
 	while (data != NULL)
 	{
-		// printf("Key is %s Value is %s\n",data->key,data->value);
 		ft_putstr_fd(data->key, 1);
 		ft_putstr_fd("=", 1);
 		ft_putstr_fd(data->value, 1);
@@ -25,7 +24,7 @@ void	print_tuple(t_tuple *data)
 	}
 }
 
-char	*get_value_from_key(t_tuple *data,char *key)
+char	*get_value_from_key(t_tuple *data, char *key)
 {
 	char	*value;
 
@@ -54,14 +53,15 @@ void	updata_value_from_key(t_tuple *data, char *key, char *new_value)
 
 void	remove_tuple(t_tuple **data, char *key)
 {
-	t_tuple *cur;
+	t_tuple	*cur;
 	t_tuple	*temp;
 
 	cur = *data;
 	temp = NULL;
 	while (cur)
 	{
-		if (ft_strlen(key) == ft_strlen(cur->key) && !ft_strncmp(cur->key, key, ft_strlen(key)))
+		if (ft_strlen(key) == ft_strlen(cur->key) && \
+			!ft_strncmp(cur->key, key, ft_strlen(key)))
 		{
 			if (temp == NULL)
 			{
@@ -82,7 +82,7 @@ void	remove_tuple(t_tuple **data, char *key)
 
 void	clear_tuple(t_tuple **data)
 {
-	t_tuple *cur;
+	t_tuple	*cur;
 	t_tuple	*temp;
 
 	cur = *data;
