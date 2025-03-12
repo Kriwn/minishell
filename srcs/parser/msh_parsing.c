@@ -6,13 +6,13 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/11 16:52:54 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:53:47 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_ast *process_redirection_tokens(t_token **tokens, t_token *tmp)
+t_ast	*process_redirection_tokens(t_token **tokens, t_token *tmp)
 {
 	t_token	*next_token;
 	t_ast	*result;
@@ -41,7 +41,7 @@ t_ast *process_redirection_tokens(t_token **tokens, t_token *tmp)
 	return (NULL);
 }
 
-t_ast *msh_get_redirect(t_token **tokens)
+t_ast	*msh_get_redirect(t_token **tokens)
 {
 	t_token	*tmp;
 	t_ast	*result;
