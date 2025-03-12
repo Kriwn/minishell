@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:19:20 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/02/05 22:05:02 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/12 19:42:37 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_p *init_pipe(void)
+static t_p	*init_pipe(void)
 {
 	t_p	*list;
 
@@ -34,7 +34,7 @@ void	init_minishell(t_msh *data, char **env)
 	data->token = NULL;
 	data->list = NULL;
 	data->ast = NULL;
-	temp = init_tuple(data,env);
+	temp = init_tuple(data, env);
 	if (!temp)
 	{
 		clear_tuple(&data->tuple);
