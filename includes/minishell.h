@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/12 19:55:15 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/12 20:01:14 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,8 +159,7 @@ void		msh_count_pipe(t_msh *msh);
 
 t_token		*new_token(t_type type, char *value);
 void		add_token_to_list(t_token **tokens, t_token *new_token);
-void		add_word_token_if_valid(char **start, char c \
-		**input, t_token **tokens);
+void		add_word_token_if_valid(char **start, char **input, t_token **tokens);
 void		parse_cmd(char **input, t_token **tokens);
 void		parse_type(char **input, t_token **tokens);
 
