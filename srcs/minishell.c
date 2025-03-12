@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 17:00:26 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:02:11 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_readline(t_msh *var)
 	return (input);
 }
 
-void msh_loop(t_msh *msh)
+void	msh_loop(t_msh *msh)
 {
 	while (1)
 	{
