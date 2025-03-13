@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:09:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 14:19:32 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:27:26 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,14 @@ t_ast	*create_pipe_node(t_token **tokens, t_token *tmp, t_token *next_token)
 	return (pipe_node);
 }
 
-int	allocate_cmd_args(t_ast *cmd_node, int arg_count)
+int	allocate_cmd_args(t_ast *command_node, int arg_count)
 {
-	cmd_node->args = malloc(sizeof(char *) * (arg_count + 1));
-	if (!cmd_node->args)
+	if (!command_node)
+		return (0);
+	command_node->args = malloc(sizeof(char *) * (arg_count + 1));
+	if (!command_node->args)
 	{
-		free(cmd_node);
+		free(command_node);
 		return (0);
 	}
 	return (1);
@@ -72,17 +74,21 @@ void	free_cmd_args(t_ast *cmd_node)
 {
 	int	i;
 
+	i = 0;
 	if (!cmd_node || !cmd_node->args)
 		return;
-	for (i = 0; cmd_node->args[i]; i++)
+	while (cmd_node->args[i])
+	{
 		free(cmd_node->args[i]);
+		i++;
+	}
 	free(cmd_node->args);
 	cmd_node->args = NULL;
 }
 
 int	copy_command_args(t_ast *command_node, t_token **tokens)
 {
-	int	i = 0;
+	int		i = 0;
 	t_token	*current = *tokens;
 
 	if (!command_node || !command_node->args)
@@ -92,7 +98,10 @@ int	copy_command_args(t_ast *command_node, t_token **tokens)
 		command_node->args[i] = ft_strdup(current->cmd);
 		if (!command_node->args[i])
 		{
-			free_cmd_args(command_node);
+			while (i > 0)
+				free(command_node->args[--i]);
+			free(command_node->args);
+			command_node->args = NULL;
 			return (0);
 		}
 		i++;
