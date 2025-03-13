@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:00 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 15:06:37 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:53:39 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ t_ast	*create_file_list_redir(t_token **tokens, t_token *tmp)
 	*tokens = next->next;
 	redirect_node->left = msh_get_redirect(tokens);
 	redirect_node->right = file_ast_node(next);
-	free(next->cmd);
-	free(next);
 	free(tmp->cmd);
 	free(tmp);
 	return (redirect_node);
@@ -82,4 +80,20 @@ void	free_cmd_tokens(t_token **tokens)
 			free(tmp->cmd);
 		free(tmp);
 	}
+}
+
+void	free_cmd_args(t_ast *cmd_node)
+{
+	int	i;
+
+	i = 0;
+	if (!cmd_node || !cmd_node->args)
+		return ;
+	while (cmd_node->args[i])
+	{
+		free(cmd_node->args[i]);
+		i++;
+	}
+	free(cmd_node->args);
+	cmd_node->args = NULL;
 }
