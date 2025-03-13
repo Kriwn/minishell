@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 18:28:28 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:03:03 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ t_ast	*msh_get_redirect(t_token **tokens)
 	result = process_redirection_tokens(tokens, tmp);
 	if (result)
 	{
-		if (*tokens == tmp)
+		if (*tokens == NULL)
 			*tokens = tmp->next;
 		return (result);
-	}
+	}	
 	result = msh_get_cmd(&tmp);
 	return (result);
 }
@@ -93,6 +93,8 @@ t_ast	*msh_get_pipe(t_token **tokens)
 	t_token	*next_token;
 	t_ast	*command_group;
 
+	if (!tokens || !*tokens)
+		return (NULL);
 	tmp = *tokens;
 	while (*tokens && (*tokens)->next)
 	{
