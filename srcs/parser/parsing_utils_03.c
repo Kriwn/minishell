@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 04:08:17 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/12 09:59:50 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:12:14 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,17 @@ t_ast	*handle_heredoc(t_token **tokens, t_token *tmp)
 	t_ast	*redirect_node;
 	t_token	*next_token;
 
+	if (!tokens || !*tokens || !(*tokens)->next)
+		return (NULL);
 	next_token = (*tokens)->next;
 	redirect_node = msh_init_ast(HEREDOC);
-	(*tokens)->next = next_token->next->next;
+	if (!redirect_node)
+		return (NULL);
+	*tokens = next_token->next;
 	redirect_node->left = msh_get_redirect(&tmp);
 	redirect_node->right = msh_get_heredoc_word(&next_token->next);
+	free(next_token->cmd);
+	free(next_token);
 	return (redirect_node);
 }
 

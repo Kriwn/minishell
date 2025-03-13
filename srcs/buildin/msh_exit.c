@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:35:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 14:43:31 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:08:47 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	msh_exit(t_p *list)
 		else
 		{
 			ft_puterrstr("minishell: exit: numeric argument required\n");
-			// free_list(msh->list);
 			cleanup_and_exit(list->msh, 2);
 		}
 		if (list->args[2] != NULL)
