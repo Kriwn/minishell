@@ -6,42 +6,11 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:21:47 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 16:41:45 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:17:54 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	has_valid_heredoc(const char *input)
-{
-	int	s_q_count;
-	int	d_q_count;
-
-	s_q_count = 0;
-	d_q_count = 0;
-	while (*input)
-	{
-		update_quote_counts(*input, &s_q_count, &d_q_count);
-		if (!(s_q_count % 2) && !(d_q_count % 2))
-		{
-			if (*input == '<' && *(input + 1) == '<')
-			{
-				input += 2;
-				while (*input == ' ')
-					input++;
-				if (*input == '\0' || *input == '|' || *input == '&')
-				{
-					ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",
-									STDERR_FILENO);
-					return (1);
-				}
-				return (0);
-			}
-		}
-		input++;
-	}
-	return (0);
-}
 
 int	has_invalid_redirections(const char *input)
 {
@@ -59,17 +28,9 @@ int	has_invalid_redirections(const char *input)
 		{
 			if (*input == '>' || *input == '<')
 			{
-				if (*(input + 1) == '\0')
+				if (check_redirection_end(input))
 					return (1);
-				if ((*input == '>' && *(input + 1) == '>') || (*input == '<'
-						&& *(input + 1) == '<'))
-				{
-					input++;
-					if (*(input + 1) == '\0' || *(input + 1) == '|' || *(input
-							+ 1) == '&')
-						return (1);
-				}
-				else if (*(input + 1) == '|' || *(input + 1) == '&')
+				if (handle_special_redirection(input))
 					return (1);
 			}
 		}
@@ -135,8 +96,8 @@ int	has_logical_operators(const char *input)
 	while (*input)
 	{
 		update_quote_counts(*input, &s_q_count, &d_q_count);
-		if (!(d_q_count % 2) && !(s_q_count % 2) && ((*input == '&' && *(input
-						+ 1) == '&') || (*input == '|' && *(input + 1) == '|')))
+		if (!(d_q_count % 2) && !(s_q_count % 2) && ((*input == '&' && *(input \
+				+ 1) == '&') || (*input == '|' && *(input + 1) == '|')))
 			return (1);
 		input++;
 	}
@@ -146,23 +107,10 @@ int	has_logical_operators(const char *input)
 int	syntax_error_checker(const char *input)
 {
 	if (has_unclosed_quotes(input))
-	{
-		ft_putstr_fd("minishell: syntax error: unclosed quote\n",
-						STDERR_FILENO);
 		return (1);
-	}
 	if (has_invalid_redirections(input))
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",
-						STDERR_FILENO);
 		return (1);
-	}
 	if (has_misplaced_operators(input))
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `|', `||', \
-				`&', `&&'\n",
-						STDERR_FILENO);
 		return (1);
-	}
 	return (0);
 }

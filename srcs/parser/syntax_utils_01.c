@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:55:35 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 15:21:59 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:47:13 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,59 @@ int	is_invalid_operator(const char **input)
 	{
 		(*input)++;
 		if (**input == '\0' || ft_isspace(**input))
-		{
-			ft_putstr_fd("Minishell: syntax error near \
-				unexpected token `newline'\n", STDERR_FILENO);
 			return (1);
-		}
 	}
 	return (0);
 }
 
-void	free_cmd_args(t_ast *cmd_node)
+int	check_redirection_end(const char *input)
 {
-	int	i;
+	if (*(input + 1) == '\0')
+		return (1);
+	if (*(input + 1) == '|' || *(input + 1) == '&')
+		return (1);
+	return (0);
+}
 
-	i = 0;
-	if (!cmd_node || !cmd_node->args)
-		return ;
-	while (cmd_node->args[i])
+int	handle_special_redirection(const char *input)
+{
+	if ((*input == '>' && *(input + 1) == '>') || (*input == '<' && *(input
+				+ 1) == '<'))
 	{
-		free(cmd_node->args[i]);
-		i++;
+		input++;
+		if (check_redirection_end(input))
+			return (1);
 	}
-	free(cmd_node->args);
-	cmd_node->args = NULL;
+	else if (*(input + 1) == '|' || *(input + 1) == '&')
+	{
+		return (1);
+	}
+	return (0);
+}
+
+int	has_valid_heredoc(const char *input)
+{
+	int	s_q_count;
+	int	d_q_count;
+
+	s_q_count = 0;
+	d_q_count = 0;
+	while (*input)
+	{
+		update_quote_counts(*input, &s_q_count, &d_q_count);
+		if (!(s_q_count % 2) && !(d_q_count % 2))
+		{
+			if (*input == '<' && *(input + 1) == '<')
+			{
+				input += 2;
+				while (*input == ' ')
+					input++;
+				if (*input == '\0' || *input == '|' || *input == '&')
+					return (1);
+				return (0);
+			}
+		}
+		input++;
+	}
+	return (0);
 }
