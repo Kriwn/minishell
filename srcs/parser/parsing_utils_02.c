@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:09:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/12 08:22:32 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:19:32 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,36 @@ int	allocate_cmd_args(t_ast *cmd_node, int arg_count)
 	return (1);
 }
 
-void	copy_command_args(t_ast *command_node, t_token **tokens)
+void	free_cmd_args(t_ast *cmd_node)
 {
-	t_token	*current;
-	int		i;
+	int	i;
 
-	current = *tokens;
-	i = 0;
+	if (!cmd_node || !cmd_node->args)
+		return;
+	for (i = 0; cmd_node->args[i]; i++)
+		free(cmd_node->args[i]);
+	free(cmd_node->args);
+	cmd_node->args = NULL;
+}
+
+int	copy_command_args(t_ast *command_node, t_token **tokens)
+{
+	int	i = 0;
+	t_token	*current = *tokens;
+
+	if (!command_node || !command_node->args)
+		return (0);
 	while (current && current->type == CMD)
 	{
 		command_node->args[i] = ft_strdup(current->cmd);
 		if (!command_node->args[i])
 		{
-			while (--i >= 0)
-				free(command_node->args[i]);
-			free(command_node->args);
-			command_node->args = NULL;
-			return ;
+			free_cmd_args(command_node);
+			return (0);
 		}
 		i++;
 		current = current->next;
 	}
 	command_node->args[i] = NULL;
+	return (1);
 }
