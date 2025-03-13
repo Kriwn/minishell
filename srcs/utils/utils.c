@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/13 11:18:38 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 11:59:19 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	ft_error(t_msh *data, char *word)
 
 void	cleanup_and_exit(t_msh *msh, int exit_code)
 {
+	if (!msh)
+		exit(exit_code);
 	if (msh->ast)
 		free_ast(msh->ast);
 	if (msh->input)
