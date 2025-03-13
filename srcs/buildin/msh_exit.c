@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   msh_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:35:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 12:30:28 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:43:31 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	free2d(char **str)
+{
+	int	i;
+
+	if (!str)
+		return ;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i])
+			free(str[i]);
+		i++;
+	}
+	free(str);
+}
 
 int	msh_is_valid_number(char *str)
 {
@@ -46,7 +62,8 @@ int	msh_exit(t_p *list)
 		else
 		{
 			ft_puterrstr("minishell: exit: numeric argument required\n");
-			cleanup_and_exit(msh, 2);
+			// free_list(msh->list);
+			cleanup_and_exit(list->msh, 2);
 		}
 		if (list->args[2] != NULL)
 		{
@@ -55,6 +72,7 @@ int	msh_exit(t_p *list)
 		}
 	}
 	ft_putstr_fd("exit\n", 1);
-	cleanup_and_exit(msh, exit_status);
+	free_list(list);
+	cleanup_and_exit(list->msh, exit_status);
 	return (0);
 }
