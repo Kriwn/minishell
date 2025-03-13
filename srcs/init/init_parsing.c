@@ -6,13 +6,13 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 18:59:11 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 18:30:49 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:42:56 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_ast	*msh_init_ast(t_type type)
+t_ast *msh_init_ast(t_type type)
 {
 	t_ast	*node;
 
@@ -20,9 +20,9 @@ t_ast	*msh_init_ast(t_type type)
 	if (!node)
 		return (NULL);
 	node->type = type;
-	node->args = NULL;
 	node->left = NULL;
 	node->right = NULL;
+	node->args = NULL;
 	return (node);
 }
 
@@ -38,9 +38,9 @@ t_ast	*create_ast_node(t_token *token)
 	node->type = token->type;
 	node->left = NULL;
 	node->right = NULL;
+	node->args = NULL;
 	return (node);
 }
-
 char	**allocate_ast_args(char *cmd)
 {
 	char	**args;
@@ -52,6 +52,7 @@ char	**allocate_ast_args(char *cmd)
 	if (!args[0])
 	{
 		free(args);
+		args = NULL;
 		return (NULL);
 	}
 	args[1] = NULL;
@@ -62,6 +63,8 @@ t_ast	*file_ast_node(t_token *token)
 {
 	t_ast	*node;
 
+	if (!token)
+		return (NULL);
 	node = create_ast_node(token);
 	if (!node)
 		return (NULL);
@@ -71,8 +74,6 @@ t_ast	*file_ast_node(t_token *token)
 		free(node);
 		return (NULL);
 	}
-	if (token->cmd)
-		free(token->cmd);
 	free(token);
 	return (node);
 }

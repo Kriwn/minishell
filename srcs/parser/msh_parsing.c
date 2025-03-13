@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 19:17:49 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:45:30 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,13 @@ t_ast	*msh_get_redirect(t_token **tokens)
 	result = process_redirection_tokens(tokens, tmp);
 	if (result)
 	{
-		if (*tokens == NULL)
-			*tokens = tmp->next;
+		if (*tokens)
+			*tokens = (*tokens)->next;
 		return (result);
 	}
 	result = msh_get_cmd(&tmp);
+	if (!result)
+		return (NULL);
 	return (result);
 }
 
