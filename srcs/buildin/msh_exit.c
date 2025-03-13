@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:35:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 15:18:00 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:28:05 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,5 @@ int	msh_exit(t_p *list)
 	ft_putstr_fd("exit\n", 1);
 	free_list_exit(list);
 	cleanup_and_exit(list->msh, exit_status);
+	return (0);
 }
