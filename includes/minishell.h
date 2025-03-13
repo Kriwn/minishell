@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 14:45:09 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:10:33 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ void		is_build_in_command(t_ast *ast, int *a);
 int			check_build_in_command(char *word, int *a);
 // int 		check_build_in_command(char *word);
 void		do_here_doc_task(t_ast *ast, t_p *list, int *b);
+void		free2d(char **str);
 void		main_exe(t_msh *msh);
 void		safe_close(int *fd);
 void		safe_fd(t_p *list, int flag);

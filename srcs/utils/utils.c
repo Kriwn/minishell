@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/13 14:35:55 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:15:44 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ void	cleanup_and_exit(t_msh *msh, int exit_code)
 		exit(exit_code);
 	if (msh->ast)
 		free_ast(msh->ast);
-	if (msh->input)
-		free(msh->input);
 	clear_tuple(&msh->tuple);
 	if (msh->list)
 		free(msh->list);

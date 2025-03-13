@@ -6,26 +6,26 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:35:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 14:43:31 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:15:31 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	free2d(char **str)
+static void	free_list_exit(t_p *list)
 {
-	int	i;
-
-	if (!str)
-		return ;
-	i = 0;
-	while (str[i])
-	{
-		if (str[i])
-			free(str[i]);
-		i++;
-	}
-	free(str);
+	clear_list(list);
+	free(list->process_pid);
+	if (list->path)
+		free2d(list->path);
+	list->path = NULL;
+	list->env = NULL;
+	safe_close(&list->pipe[0]);
+	safe_close(&list->pipe[1]);
+	list->pipe[0] = -1;
+	list->pipe[1] = -1;
+	safe_fd(list, 0);
+	safe_fd(list, 1);
 }
 
 int	msh_is_valid_number(char *str)
@@ -62,7 +62,7 @@ int	msh_exit(t_p *list)
 		else
 		{
 			ft_puterrstr("minishell: exit: numeric argument required\n");
-			// free_list(msh->list);
+			free_list_exit(msh->list);
 			cleanup_and_exit(list->msh, 2);
 		}
 		if (list->args[2] != NULL)
@@ -72,7 +72,6 @@ int	msh_exit(t_p *list)
 		}
 	}
 	ft_putstr_fd("exit\n", 1);
-	free_list(list);
+	free_list_exit(list);
 	cleanup_and_exit(list->msh, exit_status);
-	return (0);
 }
