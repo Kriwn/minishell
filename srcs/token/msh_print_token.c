@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_print_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:08:36 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 21:25:35 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 21:36:23 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
