@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 14:55:35 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/11 16:40:53 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:21:59 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,20 @@ int	is_invalid_operator(const char **input)
 		}
 	}
 	return (0);
+}
+
+void	free_cmd_args(t_ast *cmd_node)
+{
+	int	i;
+
+	i = 0;
+	if (!cmd_node || !cmd_node->args)
+		return ;
+	while (cmd_node->args[i])
+	{
+		free(cmd_node->args[i]);
+		i++;
+	}
+	free(cmd_node->args);
+	cmd_node->args = NULL;
 }

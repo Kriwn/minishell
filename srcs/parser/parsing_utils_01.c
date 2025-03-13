@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:00 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/12 08:16:53 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:06:37 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,12 @@ void	free_cmd_tokens(t_token **tokens)
 {
 	t_token	*tmp;
 
-	while (*tokens && (*tokens)->type == CMD)
+	while (*tokens)
 	{
 		tmp = *tokens;
 		*tokens = (*tokens)->next;
-		free(tmp->cmd);
+		if (tmp->cmd)
+			free(tmp->cmd);
 		free(tmp);
 	}
 }
