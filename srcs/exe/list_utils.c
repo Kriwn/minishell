@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:20:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/13 22:27:06 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/14 02:43:31 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	prepare_cmd(t_ast *ast, t_p *list, int *status)
 	if (ast->type == REDIRECT || ast->type == APPEND || ast->type == INDIRECT)
 	{
 		if (ast->type == REDIRECT)
-			open_out_file(ast->right->args[0], list, 0, status);
-		else if (ast->type == APPEND)
 			open_out_file(ast->right->args[0], list, 1, status);
+		else if (ast->type == APPEND)
+			open_out_file(ast->right->args[0], list, 0, status);
 		else if (ast->type == INDIRECT)
 			open_in_file(ast->right->args[0], list, status);
 	}
