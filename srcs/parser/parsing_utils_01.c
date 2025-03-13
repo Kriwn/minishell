@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils_01.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:00 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 15:06:37 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:02:49 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count)
 		tmp = *tokens;
 		*tokens = (*tokens)->next;
 		free(tmp->cmd);
+		free_cmd_tokens(&tmp);
 		free(tmp);
 		i++;
 	}

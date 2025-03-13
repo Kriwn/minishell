@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 22:08:42 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 21:00:51 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:13:56 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_here_doc_task(t_ast *ast, t_p *list, int *b)
+void	do_here_doc_task(t_ast *ast, t_p *list, int *isBuildIn)
 {
 	int	status;
 
@@ -22,10 +22,10 @@ void	do_here_doc_task(t_ast *ast, t_p *list, int *b)
 	if (ast->type == HEREDOC)
 		list->fd_in = do_here_doc(ast->right, ast->left, list);
 	if (ast->type == CMD)
-		*b = 1;
+		*isBuildIn = 1;
 	else
 	{
-		do_here_doc_task(ast->left, list, b);
-		do_here_doc_task(ast->right, list, b);
+		do_here_doc_task(ast->left, list, isBuildIn);
+		do_here_doc_task(ast->right, list, isBuildIn);
 	}
 }

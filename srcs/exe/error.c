@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:39:56 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 09:44:52 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 17:06:36 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@ void	ft_puterrstr(char *s)
 		return ;
 	write(2, s, ft_strlen(s));
 }
-
-/*
- in orb maybe is 2
-*/
 
 int	ft_puterrorcmd(char *s, int errnum)
 {

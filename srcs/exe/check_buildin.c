@@ -6,38 +6,37 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 18:53:16 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/13 14:02:36 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:15:22 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_build_in_command(char *word, int *a)
+void	check_build_in_command(char *word, int *isBuildIn)
 {
 	if (ft_strcmp(word, "echo") == 0)
-		*a = 0;
+		*isBuildIn = 0;
 	else if (ft_strcmp(word, "cd") == 0)
-		*a = 0;
+		*isBuildIn = 0;
 	else if (ft_strcmp(word, "pwd") == 0)
-		*a = 0;
+		*isBuildIn = 0;
 	else if (ft_strcmp(word, "export") == 0)
-		*a = 0;
+		*isBuildIn = 0;
 	else if (ft_strcmp(word, "unset") == 0)
-		*a = 0;
+		*isBuildIn = 0;
 	else if (ft_strcmp(word, "env") == 0)
-		*a = 0;
+		*isBuildIn = 0;
 	else if (ft_strcmp(word, "exit") == 0)
-		*a = 0;
+		*isBuildIn = 0;
 	else
-		*a = 1;
-	return (-1);
+		*isBuildIn = 1;
 }
 
-void	is_build_in_command(t_ast *ast, int *a)
+void	is_build_in_command(t_ast *ast, int *isBuildIn)
 {
 	char	*word;
 
-	if (!ast || *a == 0 || *a == 1)
+	if (!ast || *isBuildIn == 0 || *isBuildIn == 1)
 		return ;
 	if (ast->type == CMD)
 	{
@@ -45,13 +44,13 @@ void	is_build_in_command(t_ast *ast, int *a)
 			word = ast->args[0];
 		else
 			word = ast->left->args[0];
-		check_build_in_command(word, a);
+		check_build_in_command(word, isBuildIn);
 		return ;
 	}
 	else
 	{
-		is_build_in_command(ast->left, a);
-		is_build_in_command(ast->right, a);
+		is_build_in_command(ast->left, isBuildIn);
+		is_build_in_command(ast->right, isBuildIn);
 	}
 }
 

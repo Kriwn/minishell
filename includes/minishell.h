@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 16:17:11 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:12:41 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,10 +182,10 @@ void		display_ast(t_ast *ast, int idx);
  ************/
 int			find_slash(char *command);
 int			do_here_doc(t_ast *ast, t_ast *temp, t_p *list);
-void		is_build_in_command(t_ast *ast, int *a);
-int			check_build_in_command(char *word, int *a);
+void		is_build_in_command(t_ast *ast, int *isBuildIn);
+void		check_build_in_command(char *word, int *isBuildIn);
 // int 		check_build_in_command(char *word);
-void		do_here_doc_task(t_ast *ast, t_p *list, int *b);
+void		do_here_doc_task(t_ast *ast, t_p *list, int *isBuildIn);
 void		free2d(char **str);
 void		main_exe(t_msh *msh);
 void		safe_close(int *fd);

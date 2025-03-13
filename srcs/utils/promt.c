@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   promt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:17:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 08:12:18 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:14:26 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 // 	free(temp);
 // 	temp = ft_strjoin(ans, "$ ");
 // 	ans = temp;
+// 	free(getpath);
 // 	return (ans);
 // }
 

@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:20:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/13 14:41:36 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 19:04:10 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	free_list(t_p *list)
 
 void	prepare_cmd(t_ast *ast, t_p *list, int *status)
 {
-	if (!ast || *status == -1)
+	if (!ast)
 		return ;
 	if (ast->type == REDIRECT || ast->type == APPEND || ast->type == INDIRECT)
 	{
