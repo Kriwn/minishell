@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 04:09:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 14:27:26 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:20:51 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,27 +70,13 @@ int	allocate_cmd_args(t_ast *command_node, int arg_count)
 	return (1);
 }
 
-void	free_cmd_args(t_ast *cmd_node)
-{
-	int	i;
-
-	i = 0;
-	if (!cmd_node || !cmd_node->args)
-		return;
-	while (cmd_node->args[i])
-	{
-		free(cmd_node->args[i]);
-		i++;
-	}
-	free(cmd_node->args);
-	cmd_node->args = NULL;
-}
-
 int	copy_command_args(t_ast *command_node, t_token **tokens)
 {
-	int		i = 0;
-	t_token	*current = *tokens;
+	int		i;
+	t_token	*current;
 
+	i = 0;
+	current = *tokens;
 	if (!command_node || !command_node->args)
 		return (0);
 	while (current && current->type == CMD)

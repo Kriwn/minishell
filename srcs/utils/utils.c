@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/13 15:17:44 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:19:45 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,6 @@ void	cleanup_and_exit(t_msh *msh, int exit_code)
 		exit(exit_code);
 	if (msh->ast)
 		free_ast(msh->ast);
-	if (msh->input)
-		free(msh->input);
-	if (msh->token)
-	{
-		free_cmd_args(msh->ast);
-		free_cmd_tokens(&msh->token);
-	}
 	clear_tuple(&msh->tuple);
 	if (msh->list)
 		free(msh->list);
