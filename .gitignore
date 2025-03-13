@@ -8,3 +8,5 @@ minishell_tester
 *.tldr
 note.txt
 .codegpt
+
+readline.supp
