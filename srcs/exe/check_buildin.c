@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_buildin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 18:53:16 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 21:01:02 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:02:36 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	check_build_in_command(char *word, int *a)
 		*a = 0;
 	else
 		*a = 1;
+	return (-1);
 }
 
 void	is_build_in_command(t_ast *ast, int *a)

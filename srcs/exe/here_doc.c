@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:01 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 21:01:40 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 13:49:54 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	init_here_doc(t_ast *ast, t_ast *temp, t_p *list)
 	return (0);
 }
 
-// LOST NODE REDIRECT
 int	do_here_doc(t_ast *ast, t_ast *temp, t_p *list)
 {
 	char	*getline;

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/13 14:26:48 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:47:55 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	*ft_readline(t_msh *var)
 	char	*input;
 	char	*promt;
 
+	// input = get_next_line(0);
 	promt = get_promt(var);
 	input = readline(promt);
 	if (promt)

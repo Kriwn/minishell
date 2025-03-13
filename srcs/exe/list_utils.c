@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:20:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 19:39:09 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:41:36 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	free_list(t_p *list)
 {
 	clear_list(list);
 	free(list->process_pid);
-	free2d(list->path);
+	if (list->path)
+		free2d(list->path);
 	list->path = NULL;
 	list->msh = NULL;
 	list->env = NULL;
