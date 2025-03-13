@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 15:10:33 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:17:11 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ int			is_invalid_operator(const char **input);
 /**************
  * SRCS/TOKEN *
  **************/
+bool		check_tokens(t_token *tokens);
 void		free_token(t_token *tokens);
 t_token		*msh_parsing_input(t_msh *msh);
 t_token		*token_input(char *input);
