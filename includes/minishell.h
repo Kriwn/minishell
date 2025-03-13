@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 16:17:11 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:55:52 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,9 @@ int			syntax_error_checker(const char *input);
 /** syntax_utils_01 */
 void		update_quote_counts(char c, int *s_q_count, int *d_q_count);
 int			is_invalid_operator(const char **input);
+int			has_valid_heredoc(const char *input);
+int			check_redirection_end(const char *input);
+int			handle_special_redirection(const char *input);
 
 /**************
  * SRCS/TOKEN *
