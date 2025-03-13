@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 21:23:45 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 21:37:14 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,13 @@ t_ast	*msh_get_redirect(t_token **tokens)
 	t_token	*tmp;
 	t_ast	*result;
 
-	if (!*tokens)
+	if (!tokens || !*tokens)
 		return (NULL);
 	tmp = *tokens;
-	dprintf(2,"tmp->cmd: %s\n", tmp->cmd);
 	result = process_redirection_tokens(tokens, tmp);
 	if (result)
 	{
-		dprintf(2,"%p\n", tokens);
-		dprintf(2,"Token %p\n", *tokens);
-		dprintf(2,"Next is %p\n", (*tokens)->next);
-		if (*tokens)
+		if (*tokens && *tokens != tmp)
 			*tokens = (*tokens)->next;
 		return (result);
 	}
