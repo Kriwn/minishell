@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 21:01:59 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 11:18:38 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	ft_free(t_msh *data)
 {
 	data->home_path = NULL;
 	clear_tuple(&data->tuple);
-	free(data->list);
+	if (data->list)
+	{
+		free(data->list);
+	}
 	if (data)
 		free(data);
 }
@@ -68,6 +71,9 @@ void	cleanup_and_exit(t_msh *msh, int exit_code)
 		free_ast(msh->ast);
 	if (msh->input)
 		free(msh->input);
+	clear_tuple(&msh->tuple);
+	if (msh->list)
+		free(msh->list);
 	free(msh);
 	rl_clear_history();
 	exit(exit_code);
