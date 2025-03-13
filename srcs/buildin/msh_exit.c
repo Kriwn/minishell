@@ -6,19 +6,18 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:35:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 12:26:14 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 12:30:28 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int msh_is_valid_number(char *str)
+int	msh_is_valid_number(char *str)
 {
-	int i;
+	int	i;
 
 	if (!str || !*str)
 		return (0);
-
 	i = 0;
 	if (str[i] == '+' || str[i] == '-')
 		i++;
@@ -33,7 +32,7 @@ int msh_is_valid_number(char *str)
 	return (1);
 }
 
-int msh_exit(t_p *list)
+int	msh_exit(t_p *list)
 {
 	int		exit_status;
 	t_msh	*msh;
@@ -55,7 +54,6 @@ int msh_exit(t_p *list)
 			return (1);
 		}
 	}
-
 	ft_putstr_fd("exit\n", 1);
 	cleanup_and_exit(msh, exit_status);
 	return (0);
