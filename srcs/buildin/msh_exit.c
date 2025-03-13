@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:35:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 15:28:05 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 21:42:17 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	msh_exit(t_p *list)
 		else
 		{
 			ft_puterrstr("minishell: exit: numeric argument required\n");
-			free_list_exit(msh->list);
+			free_list_exit(list);
 			cleanup_and_exit(list->msh, 2);
 		}
 		if (list->args[2] != NULL)
