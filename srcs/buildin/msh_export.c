@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:26:50 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/25 16:16:50 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 22:29:44 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	msh_export(t_p *list)
 	}
 	data = &list->msh->tuple;
 	new_node = malloc(sizeof(t_tuple));
+	myft_split(list->args[1], '=');
 	if (new_node == NULL || make_tuple(new_node, list->args[1], '=') == NULL)
 		return (EXIT_FAILURE);
 	new_node->next = NULL;
