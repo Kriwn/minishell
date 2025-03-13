@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 19:48:23 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 11:13:45 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,5 @@ void	cleanup_and_exit(t_msh *msh, int exit_code)
 	if (msh->input)
 		free(msh->input);
 	free(msh);
-	rl_clear_history();
 	exit(exit_code);
 }
