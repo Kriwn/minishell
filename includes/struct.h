@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 21:14:36 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 22:27:42 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct p_pipe
 {
 	int				pipe[2];
 	int				*process_pid;
+	int				status_pid;
 	char			**path;
 	char			*cmd;
 	char			**env;

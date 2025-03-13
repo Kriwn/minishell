@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:26:50 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/01/25 16:16:50 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 22:26:27 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	export_no_args(t_p *list)
 	}
 }
 
-// make_tuple not work here
+// make_tuple  bug on  export ""=""
 int	msh_export(t_p *list)
 {
 	t_tuple	*new_node;

@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/13 19:06:20 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 22:37:07 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,23 @@ void	wait_all_process(t_p *list)
 {
 	size_t	i;
 	int		status;
-	int		signal;
+	int		resault;
 
 	i = 0;
-	while (i < list->msh->count_pipe + 1)
+	while (list->status_pid)
 	{
 		if (list->process_pid[i] > -1)
 		{
-			waitpid(list->process_pid[i], &status, WUNTRACED);
+			resault = waitpid(list->process_pid[i], &status, WNOHANG);
 			*list->code = WEXITSTATUS(status);
+			if (resault > 0)
+				list->status_pid--;
+			if (resault == 0)
+				continue ;
 		}
 		i++;
+		if (i == list->msh->count_pipe + 1)
+			i = 0;
 	}
 }
 
@@ -70,6 +76,7 @@ void	init_pipe(t_p **temp, t_msh *msh)
 	i = 0;
 	list = *temp;
 	list->process_pid = malloc(sizeof(int) * (msh->count_pipe + 1));
+	list->status_pid = msh->count_pipe + 1;
 	list->iter = 0;
 	list->path = myft_split(get_value_from_key(msh->tuple, "PATH"), ':');
 	list->env = msh->env;
