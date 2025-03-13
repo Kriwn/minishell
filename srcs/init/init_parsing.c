@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 18:59:11 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/12 19:46:20 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 18:30:49 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ t_ast	*file_ast_node(t_token *token)
 		free(node);
 		return (NULL);
 	}
-	free(token->cmd);
+	if (token->cmd)
+		free(token->cmd);
 	free(token);
 	return (node);
 }
