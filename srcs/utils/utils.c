@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/13 11:13:45 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 12:08:52 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	ft_free(t_msh *data)
 {
 	data->home_path = NULL;
 	clear_tuple(&data->tuple);
-	free(data->list);
+	if (data->list)
+	{
+		free(data->list);
+	}
 	if (data)
 		free(data);
 }
@@ -64,10 +67,15 @@ void	ft_error(t_msh *data, char *word)
 
 void	cleanup_and_exit(t_msh *msh, int exit_code)
 {
+	if (!msh)
+		exit(exit_code);
 	if (msh->ast)
 		free_ast(msh->ast);
 	if (msh->input)
 		free(msh->input);
+	clear_tuple(&msh->tuple);
+	if (msh->list)
+		free(msh->list);
 	free(msh);
 	exit(exit_code);
 }

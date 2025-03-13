@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 19:49:51 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 11:23:33 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,5 @@ int	main(int ac, char **av, char **env)
 	setup_signal();
 	msh_loop(msh);
 	cleanup_and_exit(msh, 0);
-	ft_free(msh);
-	rl_clear_history();
 	return (0);
 }

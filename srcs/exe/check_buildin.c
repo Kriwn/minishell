@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 18:53:16 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 19:41:28 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/12 21:01:02 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,6 @@ int	check_build_in_command(char *word, int *a)
 	else
 		*a = 1;
 }
-
-// int check_build_in_command(char *word)
-// {
-// 	if (ft_strcmp(word, "echo") == 0)
-// 		return (0);
-// 	else if (ft_strcmp(word, "cd") == 0)
-// 		return (0);
-// 	else if (ft_strcmp(word, "pwd") == 0)
-// 		return (0);
-// 	else if (ft_strcmp(word, "export") == 0)
-// 		return (0);
-// 	else if (ft_strcmp(word, "unset") == 0)
-// 		return (0);
-// 	else if (ft_strcmp(word, "env") == 0)
-// 		return (0);
-// 	else if (ft_strcmp(word, "exit") == 0)
-// 		return (0);
-// 	else
-// 		return (1);
-// }
 
 void	is_build_in_command(t_ast *ast, int *a)
 {

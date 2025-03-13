@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:35:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/12 19:33:41 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/13 12:01:58 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ int	msh_exit(t_p *list)
 {
 	int		exit_status;
 	char	*str;
+	t_msh	*msh;
 
 	exit_status = 0;
+	msh = NULL;
 	if (list->args[1])
 	{
 		if (msh_is_digit_str(list->args[1]) == 1)
@@ -48,7 +50,6 @@ int	msh_exit(t_p *list)
 		}
 	}
 	ft_putstr_fd("exit\n", 1);
-	ft_free(list->msh);
-	exit(exit_status);
+	cleanup_and_exit(msh, exit_status);
 	return (0);
 }
