@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 13:47:34 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:45:09 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,8 @@ t_ast		*create_pipe_node(t_token **tokens, \
 		t_token *tmp, t_token *next_token);
 
 int			allocate_cmd_args(t_ast *cmd_node, int arg_count);
-void		copy_command_args(t_ast *cmd_node, t_token **tokens);
+// void		copy_command_args(t_ast *cmd_node, t_token **tokens);
+int			copy_command_args(t_ast *command_node, t_token **tokens);
 void		free_cmd_tokens(t_token **tokens);
 
 /** msh_syntax */
@@ -166,6 +167,7 @@ void		parse_type(char **input, t_token **tokens);
 
 void		update_quote_status(char c, int *in_quote, char *quote_char);
 // void		parse_type(char **input, t_token **tokens, t_msh *msh);
+void		free_cmd_args(t_ast *cmd_node);
 
 /** File: Test Function for show Display */
 const char	*msh_name_type(t_type type);
