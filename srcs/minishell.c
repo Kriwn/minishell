@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/14 12:40:55 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:19:17 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*ft_readline(t_msh *var)
 	input = readline(promt);
 	if (promt)
 		free(promt);
-	if (input != NULL)
+	if (input != NULL && *input != '\0')
 		add_history(input);
 	return (input);
 }
