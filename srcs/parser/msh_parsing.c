@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 21:37:14 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/14 11:09:09 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_ast	*process_redirection_tokens(t_token **tokens, t_token *tmp)
 		if (next_token->type >= INDIRECT && next_token->type <= HEREDOC)
 		{
 			if (next_token->type == HEREDOC)
-				result = handle_heredoc(tokens, tmp);
+				result = msh_get_heredoc_word(tokens);
 			else
 				result = handle_redirect(tokens, tmp);
 			return (result);

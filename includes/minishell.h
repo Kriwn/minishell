@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 19:17:30 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/14 03:37:26 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ int			count_cmd_arg(t_token *current);
 void		add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count);
 
 /** parsing_utils_03 */
-t_ast		*handle_heredoc(t_token **tokens, t_token *tmp);
+// t_ast		*handle_heredoc(t_token **tokens, t_token *tmp);
+t_ast		*handle_heredoc(t_token **tokens);
 t_ast		*handle_redirect(t_token **tokens, t_token *tmp);
 t_ast		*create_heredoc_node(t_token **token);
 t_ast		*create_heredoc_word_node(t_token **token);
