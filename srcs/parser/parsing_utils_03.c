@@ -6,11 +6,42 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 04:08:17 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 11:02:21 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/14 11:59:09 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+/** Note:
+ * 🚨 Rule 1: No consecutive redirections or pipes
+ * 🚨 Rule 2: No standalone redirections
+ * 🚨 Rule 3: No leading or trailing pipes
+ */
+int	validate_tokens(t_token *tokens)
+{
+	t_token	*prev;
+	t_token	*curr;
+
+	if (!tokens)
+		return (0);
+	prev = NULL;
+	curr = tokens;
+	while (curr)
+	{
+		if (prev && ((prev->type >= INDIRECT && prev->type <= HEREDOC && \
+			curr->type >= INDIRECT && curr->type <= HEREDOC) || \
+			(prev->type == PIPE && curr->type == PIPE)))
+			return (0);
+		if ((curr->type >= INDIRECT && curr->type <= HEREDOC) && \
+			(!curr->next || curr->next->type >= INDIRECT))
+			return (0);
+		if ((curr->type == PIPE) && (!prev || !curr->next))
+			return (0);
+		prev = curr;
+		curr = curr->next;
+	}
+	return (1);
+}
 
 t_ast	*create_heredoc_node(t_token **token)
 {

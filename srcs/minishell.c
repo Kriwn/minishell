@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/13 21:36:05 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/14 11:54:03 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ void	msh_loop(t_msh *msh)
 		msh->token = msh_parsing_input(msh);
 		if (msh->token)
 		{
+			if (!validate_tokens(msh->token))
+			{
+				free_cmd_tokens(&msh->token);
+				continue ;
+			}
 			process_expansion(msh);
 			msh->ast = msh_get_tokens(&msh->token);
 			main_exe(msh);

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 03:37:26 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/14 11:53:09 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ t_ast		*msh_get_heredoc_word(t_token **token);
 t_ast		*msh_get_cmd(t_token **tokens);
 
 /** parsing_utils_01 */
-void		msh_free_ast(t_ast *node);
+int			validate_tokens(t_token *tokens);
 t_ast		*create_file_list_redir(t_token **tokens, t_token *tmp);
 int			count_cmd_arg(t_token *current);
 void		add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count);

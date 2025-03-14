@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 11:09:09 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/14 11:52:23 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_ast	*msh_get_redirect(t_token **tokens)
 	if (!tokens || !*tokens)
 		return (NULL);
 	tmp = *tokens;
+	// dprintf(2, "msh_get_redirect: %s\n", tmp->cmd);
 	result = process_redirection_tokens(tokens, tmp);
 	if (result)
 	{
@@ -101,6 +102,8 @@ t_ast	*msh_get_pipe(t_token **tokens)
 	while (*tokens && (*tokens)->next)
 	{
 		next_token = (*tokens)->next;
+		if (next_token->type == PIPE && (!next_token->next || next_token->next->type == PIPE))
+			return (NULL);
 		if (next_token->type == PIPE)
 			return (create_pipe_node(tokens, tmp, next_token));
 		*tokens = next_token;
@@ -115,6 +118,8 @@ t_ast	*msh_get_tokens(t_token **tokens)
 	t_msh	*msh;
 
 	if (!tokens || !*tokens)
+		return (NULL);
+	if (!validate_tokens(*tokens))
 		return (NULL);
 	return (msh_get_pipe(tokens));
 }
