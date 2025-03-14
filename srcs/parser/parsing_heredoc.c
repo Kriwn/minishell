@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 12:03:40 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 15:13:38 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:16:46 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_ast	*create_heredoc_word_node(t_token **token)
 		heredoc_word_node->args[0] = ft_strdup("");
 	heredoc_word_node->args[1] = NULL;
 	*token = (*token)->next;
-	dprintf(2, "heredoc_word_node->args[0]: %s\n", heredoc_word_node->args[0]);
 	return (heredoc_word_node);
 }
 
