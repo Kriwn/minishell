@@ -6,11 +6,31 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 12:03:40 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 16:44:58 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/14 19:21:22 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	free_heredoc_nodes(t_ast *node)
+{
+	if (!node)
+		return ;
+	free_heredoc_nodes(node->left);
+	free_heredoc_nodes(node->right);
+	if (node->type == HEREDOC || node->type == HEREDOC_WORD)
+	{
+		if (node->args)
+		{
+			free(node->args[0]);
+			node->args[0] = NULL;
+			free(node->args);
+			node->args = NULL;
+		}
+	}
+	free(node);
+	node = NULL;
+}
 
 t_ast	*create_heredoc_node(t_token **token)
 {
@@ -44,6 +64,7 @@ t_ast	*create_heredoc_word_node(t_token **token)
 	heredoc_word_node->args[0] = ft_strdup((*token)->cmd);
 	if (!heredoc_word_node->args[0])
 	{
+		free_heredoc_nodes(heredoc_word_node);
 		free(heredoc_word_node->args);
 		free_ast(heredoc_word_node);
 		return (NULL);
@@ -63,11 +84,6 @@ t_ast	*msh_get_heredoc_word(t_token **token)
 	heredoc_node = create_heredoc_node(token);
 	if (!heredoc_node)
 		return (NULL);
-	// if (!(*token)->next || (*token)->next->type != CMD) // segmentation fault ?
-	// {
-	// 	free_ast(heredoc_node);
-	// 	return (NULL);
-	// }
 	heredoc_word_node = create_heredoc_word_node(token);
 	if (!heredoc_word_node)
 	{

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/13 15:19:45 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/14 19:22:14 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,12 @@ void	cleanup_and_exit(t_msh *msh, int exit_code)
 	clear_tuple(&msh->tuple);
 	if (msh->list)
 		free(msh->list);
+	if (msh->token != NULL)
+	{
+		if (msh->token && (msh->token->type == HEREDOC \
+			|| msh->token->type == HEREDOC_WORD))
+			free_heredoc_nodes(msh->ast);
+	}
 	free(msh);
 	exit(exit_code);
 }
