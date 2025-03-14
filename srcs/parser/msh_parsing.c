@@ -6,61 +6,66 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 11:52:23 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:19:27 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_ast	*process_redirection_tokens(t_token **tokens, t_token *tmp)
+int	allocate_cmd_args(t_ast *command_node, int arg_count)
 {
-	t_token	*next_token;
-	t_ast	*result;
-
-	if ((*tokens)->type >= INDIRECT && (*tokens)->type <= HEREDOC)
+	if (!command_node)
+		return (0);
+	command_node->args = malloc(sizeof(char *) * (arg_count + 1));
+	if (!command_node->args)
 	{
-		if ((*tokens)->type == HEREDOC)
-			result = msh_get_heredoc_word(tokens);
-		else
-			result = create_file_list_redir(tokens, tmp);
-		return (result);
+		free(command_node);
+		return (0);
 	}
-	while (*tokens && (*tokens)->next)
-	{
-		next_token = (*tokens)->next;
-		if (next_token->type >= INDIRECT && next_token->type <= HEREDOC)
-		{
-			if (next_token->type == HEREDOC)
-				result = msh_get_heredoc_word(tokens);
-			else
-				result = handle_redirect(tokens, tmp);
-			return (result);
-		}
-		*tokens = next_token;
-	}
-	return (NULL);
+	return (1);
 }
 
-t_ast	*msh_get_redirect(t_token **tokens)
+int	copy_command_args(t_ast *command_node, t_token **tokens)
 {
-	t_token	*tmp;
-	t_ast	*result;
+	int		i;
+	t_token	*current;
 
-	if (!tokens || !*tokens)
-		return (NULL);
-	tmp = *tokens;
-	// dprintf(2, "msh_get_redirect: %s\n", tmp->cmd);
-	result = process_redirection_tokens(tokens, tmp);
-	if (result)
+	i = 0;
+	current = *tokens;
+	if (!command_node || !command_node->args)
+		return (0);
+	while (current && current->type == CMD)
 	{
-		if (*tokens && *tokens != tmp)
-			*tokens = (*tokens)->next;
-		return (result);
+		command_node->args[i] = ft_strdup(current->cmd);
+		if (!command_node->args[i])
+		{
+			while (i > 0)
+				free(command_node->args[--i]);
+			free(command_node->args);
+			command_node->args = NULL;
+			return (0);
+		}
+		i++;
+		current = current->next;
 	}
-	result = msh_get_cmd(&tmp);
-	if (!result)
-		return (NULL);
-	return (result);
+	command_node->args[i] = NULL;
+	return (1);
+}
+
+void	fill_command_args(t_ast *command_node, t_token *current)
+{
+	int	i;
+
+	i = 0;
+	while (current && current->type != PIPE)
+	{
+		if (current->type == ENV_VAR)
+			command_node->left = create_env_var_node(current);
+		else
+			command_node->args[i++] = ft_strdup(current->cmd);
+		current = current->next;
+	}
+	command_node->args[i] = NULL;
 }
 
 t_ast	*msh_get_cmd(t_token **tokens)
@@ -88,29 +93,6 @@ t_ast	*msh_get_cmd(t_token **tokens)
 	}
 	free_cmd_tokens(tokens);
 	return (command_node);
-}
-
-t_ast	*msh_get_pipe(t_token **tokens)
-{
-	t_token	*tmp;
-	t_token	*next_token;
-	t_ast	*command_group;
-
-	if (!tokens || !*tokens)
-		return (NULL);
-	tmp = *tokens;
-	while (*tokens && (*tokens)->next)
-	{
-		next_token = (*tokens)->next;
-		if (next_token->type == PIPE && (!next_token->next || next_token->next->type == PIPE))
-			return (NULL);
-		if (next_token->type == PIPE)
-			return (create_pipe_node(tokens, tmp, next_token));
-		*tokens = next_token;
-	}
-	command_group = msh_init_ast(CMD_GROUP);
-	command_group->left = msh_get_redirect(&tmp);
-	return (command_group);
 }
 
 t_ast	*msh_get_tokens(t_token **tokens)

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:36:37 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 11:11:23 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:46:24 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,12 @@ char	*expand_variable_value(t_msh *shell, char **str)
 		free(expanded_value);
 		return (result);
 	}
-	return (get_normal_variable_value(shell, str));
+	result = get_normal_variable_value(shell, str);
+	if (!result)
+		return (ft_strdup(""));
+	return (result);
 }
+
 
 char	*process_segment(t_msh *shell, char **str, int expand_vars)
 {

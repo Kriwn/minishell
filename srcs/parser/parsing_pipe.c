@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils_02.c                                 :+:      :+:    :+:   */
+/*   parsing_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/23 04:09:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 15:20:51 by jikarunw         ###   ########.fr       */
+/*   Created: 2025/03/14 12:03:44 by jikarunw          #+#    #+#             */
+/*   Updated: 2025/03/14 12:19:22 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,6 @@ t_ast	*create_env_var_node(t_token *current)
 	return (env_var_node);
 }
 
-void	fill_command_args(t_ast *command_node, t_token *current)
-{
-	int	i;
-
-	i = 0;
-	while (current && current->type != PIPE)
-	{
-		if (current->type == ENV_VAR)
-			command_node->left = create_env_var_node(current);
-		else
-			command_node->args[i++] = ft_strdup(current->cmd);
-		current = current->next;
-	}
-	command_node->args[i] = NULL;
-}
-
 t_ast	*create_pipe_node(t_token **tokens, t_token *tmp, t_token *next_token)
 {
 	t_ast	*pipe_node;
@@ -57,42 +41,25 @@ t_ast	*create_pipe_node(t_token **tokens, t_token *tmp, t_token *next_token)
 	return (pipe_node);
 }
 
-int	allocate_cmd_args(t_ast *command_node, int arg_count)
+t_ast	*msh_get_pipe(t_token **tokens)
 {
-	if (!command_node)
-		return (0);
-	command_node->args = malloc(sizeof(char *) * (arg_count + 1));
-	if (!command_node->args)
-	{
-		free(command_node);
-		return (0);
-	}
-	return (1);
-}
+	t_token	*tmp;
+	t_token	*next_token;
+	t_ast	*command_group;
 
-int	copy_command_args(t_ast *command_node, t_token **tokens)
-{
-	int		i;
-	t_token	*current;
-
-	i = 0;
-	current = *tokens;
-	if (!command_node || !command_node->args)
-		return (0);
-	while (current && current->type == CMD)
+	if (!tokens || !*tokens)
+		return (NULL);
+	tmp = *tokens;
+	while (*tokens && (*tokens)->next)
 	{
-		command_node->args[i] = ft_strdup(current->cmd);
-		if (!command_node->args[i])
-		{
-			while (i > 0)
-				free(command_node->args[--i]);
-			free(command_node->args);
-			command_node->args = NULL;
-			return (0);
-		}
-		i++;
-		current = current->next;
+		next_token = (*tokens)->next;
+		if (next_token->type == PIPE && (!next_token->next || next_token->next->type == PIPE))
+			return (NULL);
+		if (next_token->type == PIPE)
+			return (create_pipe_node(tokens, tmp, next_token));
+		*tokens = next_token;
 	}
-	command_node->args[i] = NULL;
-	return (1);
+	command_group = msh_init_ast(CMD_GROUP);
+	command_group->left = msh_get_redirect(&tmp);
+	return (command_group);
 }

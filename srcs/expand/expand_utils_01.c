@@ -31,20 +31,23 @@ char	*get_special_variable_value(t_msh *shell, char **str)
 	return (expanded_value);
 }
 
+/** note: fix invalid read size 1 */
 char	*get_normal_variable_value(t_msh *shell, char **str)
 {
 	char	*var_name;
 	char	*expanded_value;
+	int		var_length;
 
 	var_name = ft_strdup_while_string(*str, LETTERS_DIGITS);
-	if (!var_name || ft_strlen(var_name) == 0)
+	if (!var_name || var_name[0] == '\0')
 	{
 		free(var_name);
 		return (ft_strdup("$"));
 	}
+	var_length = ft_strlen(var_name);
 	expanded_value = get_env_value(shell, var_name);
 	free(var_name);
-	(*str) += ft_strlen(var_name);
+	(*str) += var_length;
 	return (expanded_value);
 }
 
@@ -65,6 +68,7 @@ char	*handle_single_quotes(char **str)
 	return (segment);
 }
 
+/** bug: single quote in double quote */
 char	*handle_double_quotes(t_msh *shell, char **str)
 {
 	char	*segment;

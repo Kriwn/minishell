@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 11:53:09 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/14 12:19:37 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,37 +108,35 @@ void		process_expansion(t_msh *shell);
 /***************
  * SRCS/PARSER *
  ***************/
-/** msh_parsing */
-t_ast		*msh_get_tokens(t_token **tokens);
+/** parsing_utils */
+int		validate_tokens(t_token *tokens);
+int		count_cmd_arg(t_token *current);
+void	add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count);
+void	free_cmd_tokens(t_token **tokens);
+void	free_cmd_args(t_ast *cmd_node);
 
+/** parsing_pipe */
+t_ast		*create_pipe_node(t_token **tokens, t_token *tmp, t_token *next_token);
 t_ast		*msh_get_pipe(t_token **tokens);
-t_ast		*msh_get_redirect(t_token **tokens);
-t_ast		*msh_get_heredoc_word(t_token **token);
-t_ast		*msh_get_cmd(t_token **tokens);
+t_ast		*create_env_var_node(t_token *current);
 
-/** parsing_utils_01 */
-int			validate_tokens(t_token *tokens);
-t_ast		*create_file_list_redir(t_token **tokens, t_token *tmp);
-int			count_cmd_arg(t_token *current);
-void		add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count);
-
-/** parsing_utils_03 */
-// t_ast		*handle_heredoc(t_token **tokens, t_token *tmp);
-t_ast		*handle_heredoc(t_token **tokens);
-t_ast		*handle_redirect(t_token **tokens, t_token *tmp);
+/** parsing_heredoc */
 t_ast		*create_heredoc_node(t_token **token);
 t_ast		*create_heredoc_word_node(t_token **token);
 t_ast		*msh_get_heredoc_word(t_token **token);
 
-t_ast		*create_env_var_node(t_token *current);
-void		fill_command_args(t_ast *command_node, t_token *current);
-t_ast		*create_pipe_node(t_token **tokens, \
-		t_token *tmp, t_token *next_token);
+/** parsing_redir */
+t_ast		*create_file_list_redir(t_token **tokens, t_token *tmp);
+t_ast		*handle_redirect(t_token **tokens, t_token *tmp);
+t_ast		*process_redirection_tokens(t_token **tokens, t_token *tmp);
+t_ast		*msh_get_redirect(t_token **tokens);
 
-int			allocate_cmd_args(t_ast *cmd_node, int arg_count);
-// void		copy_command_args(t_ast *cmd_node, t_token **tokens);
+/** msh_parsing */
+int			allocate_cmd_args(t_ast *command_node, int arg_count);
 int			copy_command_args(t_ast *command_node, t_token **tokens);
-void		free_cmd_tokens(t_token **tokens);
+void		fill_command_args(t_ast *command_node, t_token *current);
+t_ast		*msh_get_cmd(t_token **tokens);
+t_ast		*msh_get_tokens(t_token **tokens);
 
 /** msh_syntax */
 int			has_unclosed_quotes(const char *input);

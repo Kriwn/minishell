@@ -1,32 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils_01.c                                 :+:      :+:    :+:   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/20 02:01:00 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 11:08:34 by jikarunw         ###   ########.fr       */
+/*   Created: 2025/03/14 12:04:29 by jikarunw          #+#    #+#             */
+/*   Updated: 2025/03/14 12:10:07 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_ast	*create_file_list_redir(t_token **tokens, t_token *tmp)
+/** Note:
+ * 🚨 Rule 1: No consecutive redirections or pipes
+ * 🚨 Rule 2: No standalone redirections
+ * 🚨 Rule 3: No leading or trailing pipes
+ */
+int	validate_tokens(t_token *tokens)
 {
-	t_ast	*redirect_node;
-	t_token	*next;
+	t_token	*prev;
+	t_token	*curr;
 
-	redirect_node = msh_init_ast((*tokens)->type);
-	if (!redirect_node)
-		return (NULL);
-	next = (*tokens)->next;
-	*tokens = next->next;
-	redirect_node->left = msh_get_redirect(tokens);
-	redirect_node->right = file_ast_node(next);
-	free(tmp->cmd);
-	free(tmp);
-	return (redirect_node);
+	if (!tokens)
+		return (0);
+	prev = NULL;
+	curr = tokens;
+	while (curr)
+	{
+		if (prev && ((prev->type >= INDIRECT && prev->type <= HEREDOC && \
+			curr->type >= INDIRECT && curr->type <= HEREDOC) || \
+			(prev->type == PIPE && curr->type == PIPE)))
+			return (0);
+		if ((curr->type >= INDIRECT && curr->type <= HEREDOC) && \
+			(!curr->next || curr->next->type >= INDIRECT))
+			return (0);
+		if ((curr->type == PIPE) && (!prev || !curr->next))
+			return (0);
+		prev = curr;
+		curr = curr->next;
+	}
+	return (1);
 }
 
 int	count_cmd_arg(t_token *current)
@@ -92,7 +106,6 @@ void	free_cmd_tokens(t_token **tokens)
 	}
 	*tokens = NULL;
 }
-
 
 void	free_cmd_args(t_ast *cmd_node)
 {
