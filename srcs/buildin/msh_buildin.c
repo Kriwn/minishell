@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:47:52 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 15:28:28 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/14 16:18:15 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	handle_fd(t_p *list)
 
 int	msh_execute_builtin(t_p *list)
 {
-	dprintf(2, "cmd: %s\n", list->msh->ast->args[0]);
 	if (ft_strcmp(list->cmd, "echo") == 0)
 		return (msh_echo(list));
 	else if (ft_strcmp(list->cmd, "cd") == 0)
