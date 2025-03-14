@@ -31,23 +31,20 @@ char	*get_special_variable_value(t_msh *shell, char **str)
 	return (expanded_value);
 }
 
-/** note: fix invalid read size 1 */
 char	*get_normal_variable_value(t_msh *shell, char **str)
 {
 	char	*var_name;
 	char	*expanded_value;
-	int		var_length;
 
 	var_name = ft_strdup_while_string(*str, LETTERS_DIGITS);
-	if (!var_name || var_name[0] == '\0')
+	if (!var_name || ft_strlen(var_name) == 0)
 	{
 		free(var_name);
 		return (ft_strdup("$"));
 	}
-	var_length = ft_strlen(var_name);
 	expanded_value = get_env_value(shell, var_name);
 	free(var_name);
-	(*str) += var_length;
+	(*str) += ft_strlen(var_name);
 	return (expanded_value);
 }
 
@@ -67,8 +64,6 @@ char	*handle_single_quotes(char **str)
 		*str = end;
 	return (segment);
 }
-
-/** bug: single quote in double quote */
 char	*handle_double_quotes(t_msh *shell, char **str)
 {
 	char	*segment;
@@ -76,19 +71,21 @@ char	*handle_double_quotes(t_msh *shell, char **str)
 	char	*end;
 
 	(*str)++;
-	end = ft_strchr(*str, '"');
-	if (!end)
-		end = *str + ft_strlen(*str);
+	end = *str;
+	while (*end && *end != '"')
+		end++;
 	segment = ft_substr(*str, 0, end - *str);
+	// dprintf(2, "segment: %s\n", segment);
 	expanded = expand_string(shell, segment, 1);
+	dprintf(2, "expanded: %s\n", expanded);
 	free(segment);
 	if (*end == '"')
 		*str = end + 1;
 	else
 		*str = end;
+	dprintf(2, "str: %s\n", *str);
 	return (expanded);
 }
-
 char	*handle_plain_text(char **str)
 {
 	int		len;
