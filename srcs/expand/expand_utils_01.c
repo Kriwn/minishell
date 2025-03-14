@@ -17,12 +17,17 @@ char	*get_special_variable_value(t_msh *shell, char **str)
 	char	*expanded_value;
 
 	if (**str == '?')
+	{
 		expanded_value = ft_itoa(shell->code);
+		(*str)++;
+	}
 	else if (**str == '$')
+	{
 		expanded_value = ft_itoa(getpid());
+		(*str)++;
+	}
 	else
-		expanded_value = ft_strdup("");
-	(*str)++;
+		expanded_value = NULL;
 	return (expanded_value);
 }
 
@@ -32,7 +37,7 @@ char	*get_normal_variable_value(t_msh *shell, char **str)
 	char	*expanded_value;
 
 	var_name = ft_strdup_while_string(*str, LETTERS_DIGITS);
-	if (!var_name || !*var_name)
+	if (!var_name || ft_strlen(var_name) == 0)
 	{
 		free(var_name);
 		return (ft_strdup("$"));
@@ -48,13 +53,15 @@ char	*handle_single_quotes(char **str)
 	char	*segment;
 	char	*end;
 
-	(*str)++;  // Move past opening quote
+	(*str)++;
 	end = ft_strchr(*str, '\'');
 	if (!end)
-		end = *str + ft_strlen(*str);  // Handle unclosed single quotes
-
+		end = *str + ft_strlen(*str);
 	segment = ft_substr(*str, 0, end - *str);
-	*str = (*end == '\'') ? end + 1 : end;  // Move past closing quote
+	if (*end == '\'')
+		*str = end + 1;
+	else
+		*str = end;
 	return (segment);
 }
 
@@ -67,13 +74,14 @@ char	*handle_double_quotes(t_msh *shell, char **str)
 	(*str)++;
 	end = ft_strchr(*str, '"');
 	if (!end)
-		end = *str + ft_strlen(*str);  // Handle missing closing quotes
-
+		end = *str + ft_strlen(*str);
 	segment = ft_substr(*str, 0, end - *str);
-	expanded = expand_string(shell, segment, 1); // Expand inside double quotes
+	expanded = expand_string(shell, segment, 1);
 	free(segment);
-
-	*str = (*end == '"') ? end + 1 : end; // Move past closing quote
+	if (*end == '"')
+		*str = end + 1;
+	else
+		*str = end;
 	return (expanded);
 }
 
