@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 12:03:47 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 16:52:04 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/15 16:06:01 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,13 @@ t_ast	*process_redirection_tokens(t_token **tokens, t_token *tmp)
 	t_token	*next_token;
 	t_ast	*result;
 
-	if ((*tokens)->type == HEREDOC)
+	if ((*tokens)->type >= INDIRECT && (*tokens)->type <= HEREDOC)
 	{
-		result = msh_get_heredoc_word(tokens);
-		if (*tokens && (*tokens)->type >= INDIRECT && (*tokens)->type <= HEREDOC)
-			result->right = process_redirection_tokens(tokens, tmp);
-		return result;
-	}
-	if ((*tokens)->type >= INDIRECT && (*tokens)->type <= REDIRECT)
-	{
-		if ((*tokens)->type == REDIRECT)
-			result = create_file_list_redir(tokens, tmp);
+		if ((*tokens)->type == HEREDOC)
+			result = msh_get_heredoc_word(tokens);
 		else
-			result = handle_redirect(tokens, tmp);
-		return result;
+			result = create_file_list_redir(tokens, tmp);
+		return (result);
 	}
 	while (*tokens && (*tokens)->next)
 	{
@@ -73,11 +66,11 @@ t_ast	*process_redirection_tokens(t_token **tokens, t_token *tmp)
 				result = msh_get_heredoc_word(tokens);
 			else
 				result = handle_redirect(tokens, tmp);
-			return result;
+			return (result);
 		}
 		*tokens = next_token;
 	}
-	return NULL;
+	return (NULL);
 }
 
 t_ast	*msh_get_redirect(t_token **tokens)
