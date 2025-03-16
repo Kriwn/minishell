@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tuple_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:51:08 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 21:02:04 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/16 19:31:48 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,31 +54,38 @@ void	updata_value_from_key(t_tuple *data, char *key, char *new_value)
 void	remove_tuple(t_tuple **data, char *key)
 {
 	t_tuple	*cur;
-	t_tuple	*temp;
+	t_tuple	*prev;
 
 	cur = *data;
-	temp = NULL;
+	prev = NULL;
+
 	while (cur)
 	{
 		if (ft_strlen(key) == ft_strlen(cur->key) && \
 			!ft_strncmp(cur->key, key, ft_strlen(key)))
 		{
-			if (temp == NULL)
+			if (prev == NULL) // Deleting head node
 			{
-				cur->next->tail = (*data)->tail;
 				*data = cur->next;
+				if (*data)
+					(*data)->tail = cur->tail;
 			}
-			else if (cur->next == NULL)
-				(*data)->tail = temp;
 			else
-				temp->next = cur->next;
+			{
+				prev->next = cur->next;
+				if (cur->next == NULL) // Updating tail
+					(*data)->tail = prev;
+			}
 			free(cur->key);
 			free(cur->value);
+			free(cur);
+			return;
 		}
-		temp = *data;
+		prev = cur;
 		cur = cur->next;
 	}
 }
+
 
 void	clear_tuple(t_tuple **data)
 {

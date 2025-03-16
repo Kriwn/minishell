@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:26:50 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 22:38:56 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/16 02:04:55 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	msh_export(t_p *list)
 {
 	t_tuple	*new_node;
 	t_tuple	**data;
+	char	**temp;
 
 	if (list->args[1] == NULL)
 	{
@@ -67,8 +68,14 @@ int	msh_export(t_p *list)
 		return (EXIT_SUCCESS);
 	}
 	data = &list->msh->tuple;
+	temp = myft_split(list->args[1], '=');
+	if (!temp[0] || !temp[1])
+	{
+		free2d(temp);
+		return (EXIT_FAILURE);
+	}
+	free2d(temp);
 	new_node = malloc(sizeof(t_tuple));
-	myft_split(list->args[1], '=');
 	if (new_node == NULL || make_tuple(new_node, list->args[1], '=') == NULL)
 		return (EXIT_FAILURE);
 	new_node->next = NULL;

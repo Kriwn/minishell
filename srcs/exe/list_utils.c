@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:20:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/14 02:43:31 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/16 02:00:32 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,3 +76,4 @@ void	prepare_cmd(t_ast *ast, t_p *list, int *status)
 	prepare_cmd(ast->left, list, status);
 	prepare_cmd(ast->right, list, status);
 }
+

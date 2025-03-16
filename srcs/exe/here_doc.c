@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:01 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/13 13:49:54 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:04:36 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,12 @@ void	end_here_doc(t_p *list)
 int	init_here_doc(t_ast *ast, t_ast *temp, t_p *list)
 {
 	if (ast->type == HEREDOC_WORD)
-		list->here_doc_cut = ast->args[0];
+	{
+		dprintf(2,"ast->args[0]: %p\n", ast);
+		dprintf(2,"ast->args%p\n",ast->args);
+		dprintf(2,"ast->args[0]: %s\n", ast->args[0]);
+		// list->here_doc_cut = ast->args[0]; // here_not work
+	}
 	if (pipe(list->pipe) == -1)
 	{
 		ft_puterrstr("PIPE ERROR");
@@ -76,6 +81,7 @@ int	do_here_doc(t_ast *ast, t_ast *temp, t_p *list)
 {
 	char	*getline;
 
+	dprintf(2, "heredoc\n");
 	if (init_here_doc(ast, temp, list) == -1)
 		return (-1);
 	while (1)
@@ -93,5 +99,6 @@ int	do_here_doc(t_ast *ast, t_ast *temp, t_p *list)
 	if (getline)
 		free(getline);
 	safe_close(&list->pipe[1]);
+	dprintf(2, "End function\n");
 	return (list->pipe[0]);
 }
