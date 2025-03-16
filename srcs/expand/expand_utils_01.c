@@ -75,15 +75,12 @@ char	*handle_double_quotes(t_msh *shell, char **str)
 	while (*end && *end != '"')
 		end++;
 	segment = ft_substr(*str, 0, end - *str);
-	// dprintf(2, "segment: %s\n", segment);
 	expanded = expand_string(shell, segment, 1);
-	dprintf(2, "expanded: %s\n", expanded);
 	free(segment);
 	if (*end == '"')
 		*str = end + 1;
 	else
 		*str = end;
-	dprintf(2, "str: %s\n", *str);
 	return (expanded);
 }
 char	*handle_plain_text(char **str)

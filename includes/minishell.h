@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 12:19:37 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/14 19:02:41 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ t_ast		*msh_get_pipe(t_token **tokens);
 t_ast		*create_env_var_node(t_token *current);
 
 /** parsing_heredoc */
+void		free_heredoc_nodes(t_ast *node);
 t_ast		*create_heredoc_node(t_token **token);
 t_ast		*create_heredoc_word_node(t_token **token);
 t_ast		*msh_get_heredoc_word(t_token **token);

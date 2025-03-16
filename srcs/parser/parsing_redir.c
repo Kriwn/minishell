@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 12:03:47 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 12:50:35 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/15 16:22:24 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,13 @@ t_ast	*msh_get_redirect(t_token **tokens)
 	if (!tokens || !*tokens)
 		return (NULL);
 	tmp = *tokens;
-	// dprintf(2, "msh_get_redirect: %s\n", tmp->cmd);
+	if (tmp->type == HEREDOC)
+	{
+		result = msh_get_heredoc_word(tokens);
+		if (*tokens && (*tokens)->type >= INDIRECT && (*tokens)->type <= HEREDOC)
+			result->right = msh_get_redirect(tokens);
+		return (result);
+	}
 	result = process_redirection_tokens(tokens, tmp);
 	if (result)
 	{
@@ -90,7 +96,7 @@ t_ast	*msh_get_redirect(t_token **tokens)
 		return (result);
 	}
 	result = msh_get_cmd(&tmp);
-	if (!result)
-		return (NULL);
-	return (result);
+	if (result)
+		return (result);
+	return (NULL);
 }
