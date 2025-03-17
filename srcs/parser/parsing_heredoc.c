@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 12:03:40 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/17 17:08:57 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:50:08 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,15 @@ t_ast	*msh_get_heredoc_word(t_token **token)
 		return (NULL);
 	}
 	heredoc_node->right = heredoc_word_node;
-	if (*token && (*token)->type == HEREDOC)
+	if (*token && (*token)->type >= INDIRECT && (*token)->type <= APPEND)
 	{
-		heredoc_node->left = msh_get_heredoc_word(token);
-		if (!heredoc_node->left)
+		t_ast *next_redirect = msh_get_redirect(token);
+		if (!next_redirect)
+		{
 			free_heredoc_nodes(heredoc_node);
+			return (NULL);
+		}
+		heredoc_word_node->right = next_redirect;
 	}
 	return (heredoc_node);
 }
