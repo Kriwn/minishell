@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:17:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/17 17:14:10 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 19:51:14 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@
 // 	free(getpath);
 // 	return (ans);
 // }
+
+void	ft_error(t_msh *data, char *word)
+{
+	ft_putstr_fd(word, 2);
+	ft_free(data);
+	exit(EXIT_FAILURE);
+}
 
 char	*get_promt(t_msh *data)
 {

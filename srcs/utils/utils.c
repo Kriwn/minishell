@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/17 19:43:18 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:00:11 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,17 @@ void	free_token(t_token **token)
 	t_token	*current;
 	t_token	*next;
 
+	if (!token || !*token) 
+		return;
 	current = *token;
 	while (current)
 	{
 		next = current->next;
-		free(current->cmd);
+		if (current->cmd)
+		{
+			free(current->cmd);
+			current->cmd = NULL;
+		}
 		free(current);
 		current = next;
 	}
@@ -79,13 +85,6 @@ void	ft_free(t_msh *data)
 	}
 	if (data)
 		free(data);
-}
-
-void	ft_error(t_msh *data, char *word)
-{
-	ft_putstr_fd(word, 2);
-	ft_free(data);
-	exit(EXIT_FAILURE);
 }
 
 void	cleanup_and_exit(t_msh *msh, int exit_code)
