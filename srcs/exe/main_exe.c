@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_exe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/17 20:39:35 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/18 01:46:54 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,18 +98,18 @@ void	init_pipe(t_p **temp, t_msh *msh)
 void	main_exe(t_msh *msh)
 {
 	t_p	*list;
-	int	isBuildIn;
-	int	nextCMD;
+	int	is_build_in;
+	int	next_cmd;
 
-	isBuildIn = -1;
-	nextCMD = -1;
+	is_build_in = -1;
+	next_cmd = -1;
 	list = msh->list;
 	init_pipe(&list, msh);
-	do_here_doc_task(msh->ast, list, &nextCMD);
-	is_build_in_command(msh->ast, &isBuildIn);
-	if (msh->count_pipe == 0 && isBuildIn == 0)
+	do_here_doc_task(msh->ast, list, &next_cmd);
+	is_build_in_command(msh->ast, &is_build_in);
+	if (msh->count_pipe == 0 && is_build_in == 0)
 		exe_single_cmd(msh->ast, list);
-	else if (nextCMD == 1)
+	else if (next_cmd == 1)
 	{
 		mode_signal_exe(1);
 		pipe_task(msh->ast, list);

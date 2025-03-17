@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:39:56 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/18 00:57:43 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/18 01:48:22 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,22 @@ void	ft_puterrstr(char *s)
 	if (!s)
 		return ;
 	write(2, s, ft_strlen(s));
+}
+
+int	errorcode(char *s)
+{
+	ft_puterrstr(s);
+	write(2, ": ", 2);
+	if (access(s, F_OK) == 0 && find_slash(s))
+		ft_puterrstr("Is a directory\n");
+	else if (access(s, R_OK) == 0)
+	{
+		ft_puterrstr("command not found\n");
+		return (127);
+	}
+	else
+		ft_puterrstr("Permission denied\n");
+	return (126);
 }
 
 int	ft_puterrorcmd(char *s, int errnum)
@@ -33,18 +49,7 @@ int	ft_puterrorcmd(char *s, int errnum)
 	}
 	else if (errnum == 13)
 	{
-		ft_puterrstr(s);
-		write(2, ": ", 2);
-		if (access(s, F_OK) == 0 && find_slash(s))
-			ft_puterrstr("Is a directory\n");
-		else if (access(s, R_OK) == 0)
-		{
-			ft_puterrstr("command not found\n");
-			return (127);
-		}
-		else
-			ft_puterrstr("Permission denied\n");
-		return (126);
+		return (errorcode(s));
 	}
 	return (errnum);
 }
