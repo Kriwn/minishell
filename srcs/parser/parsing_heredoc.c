@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 12:03:40 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/17 20:13:22 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 23:47:35 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,29 @@ void	free_heredoc_nodes(t_ast *node)
 	if ((node->type == HEREDOC || node->type == HEREDOC_WORD) && node->args)
 	{
 		if (node->args[0])
-			free(node->args[0]);
+			free(node->args[0]); 
 		free(node->args);
 	}
-	free(node);
+	if (node->type == HEREDOC)
+		free(node);
 }
 
 t_ast	*create_heredoc_node(t_token **token)
 {
 	t_ast	*heredoc_node;
+	t_token *next_token;
 
 	heredoc_node = msh_init_ast(HEREDOC);
 	if (!heredoc_node)
 		return (NULL);
-	*token = (*token)->next;
+	next_token = (*token)->next;
+	free((*token)->cmd);
+	free(*token);
+	*token = next_token;
 	if (!*token || (*token)->type != CMD)
 	{
 		free(heredoc_node);
+		free_cmd_tokens(token);
 		return (NULL);
 	}
 	return (heredoc_node);
@@ -89,6 +95,8 @@ t_ast	*process_heredoc_redirection(t_ast *heredoc_word_node, t_token **token)
 {
 	t_ast	*next_redirect;
 
+	if (!heredoc_word_node)
+		return (NULL);
 	if (*token && (*token)->type >= INDIRECT && (*token)->type <= APPEND)
 	{
 		next_redirect = msh_get_redirect(token);
