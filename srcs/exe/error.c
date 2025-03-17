@@ -35,7 +35,15 @@ int	ft_puterrorcmd(char *s, int errnum)
 	{
 		ft_puterrstr(s);
 		write(2, ": ", 2);
-		ft_puterrstr("Permission denied\n");
+		if (access(s,F_OK) == 0 && find_slash(s))
+			ft_puterrstr("Is a directory\n");
+		else if (access(s,R_OK) == 0)
+		{
+			ft_puterrstr("command not found\n");
+			return (127);
+		}
+		else
+			ft_puterrstr("Permission denied\n");
 		return (126);
 	}
 	return (errnum);

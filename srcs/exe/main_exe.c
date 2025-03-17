@@ -98,18 +98,18 @@ void	init_pipe(t_p **temp, t_msh *msh)
 void	main_exe(t_msh *msh)
 {
 	t_p	*list;
-	int	a;
-	int	b;
+	int	isBuildIn;
+	int	nextCMD;
 
-	a = -1;
-	b = -1;
+	isBuildIn = -1;
+	nextCMD = -1;
 	list = msh->list;
 	init_pipe(&list, msh);
-	do_here_doc_task(msh->ast, list, &b);
-	is_build_in_command(msh->ast, &a);
-	if (msh->count_pipe == 0 && a == 0)
+	do_here_doc_task(msh->ast, list, &nextCMD);
+	is_build_in_command(msh->ast, &isBuildIn);
+	if (msh->count_pipe == 0 && isBuildIn == 0)
 		exe_single_cmd(msh->ast, list);
-	else if (b == 1)
+	else if (nextCMD == 1)
 	{
 		mode_signal_exe(1);
 		pipe_task(msh->ast, list);
