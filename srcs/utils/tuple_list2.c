@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 17:25:05 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/17 17:26:57 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:31:28 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	delete_node(t_tuple **data, t_tuple *cur, t_tuple *prev)
 		(*data)->tail = prev;
 }
 
-
 void	remove_tuple(t_tuple **data, char *key)
 {
 	t_tuple	*cur;
@@ -34,7 +33,6 @@ void	remove_tuple(t_tuple **data, char *key)
 
 	cur = *data;
 	prev = NULL;
-
 	while (cur)
 	{
 		if (ft_strlen(key) == ft_strlen(cur->key) && \
@@ -47,7 +45,7 @@ void	remove_tuple(t_tuple **data, char *key)
 			free(cur->key);
 			free(cur->value);
 			free(cur);
-			return;
+			return ;
 		}
 		prev = cur;
 		cur = cur->next;
