@@ -6,27 +6,50 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/17 17:14:16 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 19:43:18 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	free_token(t_token **token)
+{
+	t_token	*current;
+	t_token	*next;
+
+	current = *token;
+	while (current)
+	{
+		next = current->next;
+		free(current->cmd);
+		free(current);
+		current = next;
+	}
+	*token = NULL;
+}
+
 void	free_ast(t_ast *node)
 {
 	int	i;
 
-	i = 0;
 	if (!node)
 		return ;
-	if (node->args && node->type == CMD)
+	if (node->args)
 	{
+		i = 0;
 		while (node->args[i])
-			free(node->args[i++]);
+		{
+			free(node->args[i]);
+			node->args[i] = NULL;
+			i++;
+		}
 		free(node->args);
+		node->args = NULL;
 	}
 	free_ast(node->left);
+	node->left = NULL;
 	free_ast(node->right);
+	node->right = NULL;
 	free(node);
 }
 
