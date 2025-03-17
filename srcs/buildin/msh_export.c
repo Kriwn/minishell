@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:26:50 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/17 17:11:38 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:24:17 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	sort_env(t_tuple **env)
 	}
 }
 
-void	export_no_args(t_p *list)
+int	export_no_args(t_p *list)
 {
 	t_tuple	*current;
 	int		saved_stdout;
@@ -54,6 +54,21 @@ void	export_no_args(t_p *list)
 		dup2(saved_stdout, STDOUT_FILENO);
 		close(saved_stdout);
 	}
+	return (EXIT_SUCCESS);
+}
+
+int	check_export(t_p *list)
+{
+	char	**temp;
+
+	temp = myft_split(list->args[1], '=');
+	if (!temp[0] || !temp[1])
+	{
+		free2d(temp);
+		return (1);
+	}
+	free2d(temp);
+	return (0);
 }
 
 int	msh_export(t_p *list)
@@ -63,18 +78,10 @@ int	msh_export(t_p *list)
 	char	**temp;
 
 	if (list->args[1] == NULL)
-	{
-		export_no_args(list);
-		return (EXIT_SUCCESS);
-	}
+		return (export_no_args(list));
 	data = &list->msh->tuple;
-	temp = myft_split(list->args[1], '=');
-	if (!temp[0] || !temp[1])
-	{
-		free2d(temp);
+	if (check_export(list))
 		return (EXIT_FAILURE);
-	}
-	free2d(temp);
 	new_node = malloc(sizeof(t_tuple));
 	if (new_node == NULL || make_tuple(new_node, list->args[1], '=') == NULL)
 		return (EXIT_FAILURE);

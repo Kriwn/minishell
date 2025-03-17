@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:01 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/17 16:53:11 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:23:44 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ void	end_here_doc(t_p *list)
 int	init_here_doc(t_ast *ast, t_ast *temp, t_p *list)
 {
 	if (ast->type == HEREDOC_WORD)
-	{
 		list->here_doc_cut = ast->args[0];
-	}
 	if (pipe(list->pipe) == -1)
 	{
 		ft_puterrstr("PIPE ERROR");
