@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tuple_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:51:08 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/17 17:22:28 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:30:52 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,40 +52,6 @@ void	updata_value_from_key(t_tuple *data, char *key, char *new_value)
 	}
 	if (new_value)
 		free(new_value);
-}
-
-void	remove_tuple(t_tuple **data, char *key)
-{
-	t_tuple	*cur;
-	t_tuple	*prev;
-
-	cur = *data;
-	prev = NULL;
-	while (cur)
-	{
-		if (ft_strlen(key) == ft_strlen(cur->key) && \
-			!ft_strncmp(cur->key, key, ft_strlen(key)))
-		{
-			if (prev == NULL)
-			{
-				*data = cur->next;
-				if (*data)
-					(*data)->tail = cur->tail;
-			}
-			else
-			{
-				prev->next = cur->next;
-				if (cur->next == NULL)
-					(*data)->tail = prev;
-			}
-			free(cur->key);
-			free(cur->value);
-			free(cur);
-			return ;
-		}
-		prev = cur;
-		cur = cur->next;
-	}
 }
 
 void	clear_tuple(t_tuple **data)
