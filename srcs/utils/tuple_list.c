@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:51:08 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/16 19:31:48 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:20:16 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,12 @@ void	updata_value_from_key(t_tuple *data, char *key, char *new_value)
 		{
 			free(data->value);
 			data->value = new_value;
+			return ;
 		}
 		data = data->next;
 	}
+	if (new_value)
+		free(new_value);
 }
 
 void	remove_tuple(t_tuple **data, char *key)
@@ -64,7 +67,7 @@ void	remove_tuple(t_tuple **data, char *key)
 		if (ft_strlen(key) == ft_strlen(cur->key) && \
 			!ft_strncmp(cur->key, key, ft_strlen(key)))
 		{
-			if (prev == NULL) // Deleting head node
+			if (prev == NULL)
 			{
 				*data = cur->next;
 				if (*data)
@@ -73,7 +76,7 @@ void	remove_tuple(t_tuple **data, char *key)
 			else
 			{
 				prev->next = cur->next;
-				if (cur->next == NULL) // Updating tail
+				if (cur->next == NULL)
 					(*data)->tail = prev;
 			}
 			free(cur->key);

@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:07:15 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 21:35:25 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:18:09 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ void	clear_mem(char *pwd, char *new_path)
 {
 	if (pwd)
 	{
+		dprintf(2,"Do clear_pwd\n");
 		free(pwd);
 		pwd = NULL;
 	}
 	if (new_path)
 	{
+		dprintf(2,"Do clear_newPath\n");
 		free(new_path);
 		new_path = NULL;
 	}
@@ -55,7 +57,7 @@ int	change_dir(char *old_pwd, char *new_path, t_p *list)
 	}
 	temp = ft_getcwd();
 	if (temp == NULL)
-		return (-2);
+		return (-1);
 	updata_value_from_key(list->msh->tuple, "PWD", copy(temp));
 	updata_value_from_key(list->msh->tuple, "OLDPWD", copy(old_pwd));
 	free(temp);
