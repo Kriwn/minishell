@@ -43,8 +43,8 @@ char	*get_normal_variable_value(t_msh *shell, char **str)
 		return (ft_strdup("$"));
 	}
 	expanded_value = get_env_value(shell, var_name);
-	free(var_name);
 	(*str) += ft_strlen(var_name);
+	free(var_name);
 	return (expanded_value);
 }
 

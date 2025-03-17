@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:28:33 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/13 19:15:45 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:40:59 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	mutiple_exe(t_ast *ast, t_p *list)
 void	pipe_task(t_ast *ast, t_p *list)
 {
 	if (!ast)
-		;
+		return ;
 	if (ast->type == CMD_GROUP)
 		mutiple_exe(ast, list);
 	else if (ast->type == PIPE)
