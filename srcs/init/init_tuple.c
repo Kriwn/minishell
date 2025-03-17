@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_tuple.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:24:33 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/12 20:02:27 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:40:31 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	init_tuple(t_msh *data, char **env)
 {
 	size_t	i;
 	t_tuple	*new_node;
-	char	**temp;
 
 	i = -1;
 	while (env[++i])

@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:07:15 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/17 15:18:09 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:22:51 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,11 @@ void	clear_mem(char *pwd, char *new_path)
 {
 	if (pwd)
 	{
-		dprintf(2,"Do clear_pwd\n");
 		free(pwd);
 		pwd = NULL;
 	}
 	if (new_path)
 	{
-		dprintf(2,"Do clear_newPath\n");
 		free(new_path);
 		new_path = NULL;
 	}
