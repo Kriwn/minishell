@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/17 20:15:10 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:39:26 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ void	setup_signal(void)
 	ft_bzero(&act, sizeof(struct sigaction));
 }
 
-char	*ft_readline(t_msh *var)
+char	*ft_readline()
 {
 	char	*input;
 	char	*promt;
 
-	promt = get_promt(var);
+	promt = get_promt();
 	input = readline(promt);
 	if (promt)
 		free(promt);
@@ -62,7 +62,7 @@ void	msh_loop(t_msh *msh)
 {
 	while (1)
 	{
-		msh->input = ft_readline(msh);
+		msh->input = ft_readline();
 		if (!msh->input)
 		{
 			printf("%sEXIT!%s💥\n", RED, RESET);
@@ -86,9 +86,9 @@ void	msh_loop(t_msh *msh)
 int	main(int ac, char **av, char **env)
 {
 	t_msh	*msh;
-	char	*input;
-	int		status;
 
+	(void) ac;
+	(void) av;
 	msh = malloc(sizeof(t_msh));
 	if (!msh)
 		return (1);

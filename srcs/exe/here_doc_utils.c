@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 22:08:42 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/13 19:13:56 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:20:38 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	do_here_doc_task(t_ast *ast, t_p *list, int *isBuildIn)
 {
-	int	status;
 
-	status = 0;
 	if (!ast)
 		return ;
 	if (ast->type == HEREDOC)

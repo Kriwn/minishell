@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:03 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/17 20:20:37 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:39:35 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	mode_signal_exe(int mode)
 
 void	wait_all_process(t_p *list)
 {
-	size_t	i;
+	int		i;
 	int		status;
 	int		resault;
 

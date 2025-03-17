@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 12:19:27 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:19:22 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ t_ast	*msh_get_cmd(t_token **tokens)
 
 t_ast	*msh_get_tokens(t_token **tokens)
 {
-	t_msh	*msh;
-
 	if (!tokens || !*tokens)
 		return (NULL);
 	if (!validate_tokens(*tokens))

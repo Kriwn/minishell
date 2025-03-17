@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/17 19:43:09 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:18:06 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void		free_ast(t_ast *ast);
 void		ft_free(t_msh *data);
 void		ft_error(t_msh *data, char *word);
 void		cleanup_and_exit(t_msh *msh, int exit_code);
-char		*get_promt(t_msh *data);
+char		*get_promt(void);
 
 void		clean_up_token(t_token **tokens);
 
