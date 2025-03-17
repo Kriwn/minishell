@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:07:15 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/17 15:22:51 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:20:21 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	clear_mem(char *pwd, char *new_path)
 	}
 }
 
-char	*get_path(t_p *list, char *pwd)
+char	*get_path(t_p *list)
 {
 	char	*path;
 
@@ -76,7 +76,7 @@ int	msh_cd(t_p *list)
 	pwd = copy(get_value_from_key(list->msh->tuple, "PWD"));
 	if (!pwd)
 		pwd = ft_getcwd();
-	new_path = get_path(list, pwd);
+	new_path = get_path(list);
 	if (change_dir(pwd, new_path, list) == -1)
 	{
 		clear_mem(pwd, new_path);

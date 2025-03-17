@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:35:32 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 21:42:17 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:19:47 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,8 @@ int	msh_is_valid_number(char *str)
 int	msh_exit(t_p *list)
 {
 	int		exit_status;
-	t_msh	*msh;
 
 	exit_status = 0;
-	msh = NULL;
 	if (list->args[1])
 	{
 		if (msh_is_valid_number(list->args[1]))

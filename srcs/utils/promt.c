@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   promt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:17:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/17 19:51:14 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:17:53 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_error(t_msh *data, char *word)
 	exit(EXIT_FAILURE);
 }
 
-char	*get_promt(t_msh *data)
+char	*get_promt(void)
 {
 	return (ft_strdup("minishell: "));
 }
