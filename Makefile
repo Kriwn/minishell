@@ -27,6 +27,7 @@ INIT_SRC = $(addprefix $(INIT_DIR), $(INIT_FILE))
 UTILS_DIR = srcs/utils/
 UTILS_FILE =	utils.c			\
 				tuple_list.c	\
+				tuple_list2.c	\
 				promt.c
 UTILS_SRC = $(addprefix $(UTILS_DIR), $(UTILS_FILE))
 
