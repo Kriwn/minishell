@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:48:01 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/14 15:04:36 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:53:11 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,7 @@ int	init_here_doc(t_ast *ast, t_ast *temp, t_p *list)
 {
 	if (ast->type == HEREDOC_WORD)
 	{
-		dprintf(2,"ast->args[0]: %p\n", ast);
-		dprintf(2,"ast->args%p\n",ast->args);
-		dprintf(2,"ast->args[0]: %s\n", ast->args[0]);
-		// list->here_doc_cut = ast->args[0]; // here_not work
+		list->here_doc_cut = ast->args[0];
 	}
 	if (pipe(list->pipe) == -1)
 	{
@@ -81,7 +78,6 @@ int	do_here_doc(t_ast *ast, t_ast *temp, t_p *list)
 {
 	char	*getline;
 
-	dprintf(2, "heredoc\n");
 	if (init_here_doc(ast, temp, list) == -1)
 		return (-1);
 	while (1)
@@ -99,6 +95,5 @@ int	do_here_doc(t_ast *ast, t_ast *temp, t_p *list)
 	if (getline)
 		free(getline);
 	safe_close(&list->pipe[1]);
-	dprintf(2, "End function\n");
 	return (list->pipe[0]);
 }

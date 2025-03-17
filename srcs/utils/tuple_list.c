@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tuple_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:51:08 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/16 19:31:48 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:14:04 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,12 @@ void	remove_tuple(t_tuple **data, char *key)
 
 	cur = *data;
 	prev = NULL;
-
 	while (cur)
 	{
 		if (ft_strlen(key) == ft_strlen(cur->key) && \
 			!ft_strncmp(cur->key, key, ft_strlen(key)))
 		{
-			if (prev == NULL) // Deleting head node
+			if (prev == NULL)
 			{
 				*data = cur->next;
 				if (*data)
@@ -73,19 +72,18 @@ void	remove_tuple(t_tuple **data, char *key)
 			else
 			{
 				prev->next = cur->next;
-				if (cur->next == NULL) // Updating tail
+				if (cur->next == NULL)
 					(*data)->tail = prev;
 			}
 			free(cur->key);
 			free(cur->value);
 			free(cur);
-			return;
+			return ;
 		}
 		prev = cur;
 		cur = cur->next;
 	}
 }
-
 
 void	clear_tuple(t_tuple **data)
 {

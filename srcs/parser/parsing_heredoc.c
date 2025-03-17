@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 12:03:40 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/15 16:15:38 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:08:57 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,13 @@ void	free_heredoc_nodes(t_ast *node)
 		return ;
 	free_heredoc_nodes(node->left);
 	free_heredoc_nodes(node->right);
-	if (node->type == HEREDOC || node->type == HEREDOC_WORD)
+	if ((node->type == HEREDOC || node->type == HEREDOC_WORD) && node->args)
 	{
-		if (node->args)
-		{
+		if (node->args[0])
 			free(node->args[0]);
-			node->args[0] = NULL;
-			free(node->args);
-			node->args = NULL;
-		}
+		free(node->args);
 	}
 	free(node);
-	node = NULL;
 }
 
 t_ast	*create_heredoc_node(t_token **token)
@@ -48,7 +43,7 @@ t_ast	*create_heredoc_node(t_token **token)
 	return (heredoc_node);
 }
 
-t_ast	*create_heredoc_word_node(t_token **token)
+static t_ast	*init_heredoc_word_node(void)
 {
 	t_ast	*heredoc_word_node;
 
@@ -58,18 +53,35 @@ t_ast	*create_heredoc_word_node(t_token **token)
 	heredoc_word_node->args = malloc(sizeof(char *) * 2);
 	if (!heredoc_word_node->args)
 	{
-		free_ast(heredoc_word_node);
+		free(heredoc_word_node);
 		return (NULL);
 	}
+	heredoc_word_node->args[0] = NULL;
+	heredoc_word_node->args[1] = NULL;
+	return (heredoc_word_node);
+}
+
+t_ast	*create_heredoc_word_node(t_token **token)
+{
+	t_ast	*heredoc_word_node;
+	t_token	*next_token;
+
+	if (!token || !*token)
+		return (NULL);
+	heredoc_word_node = init_heredoc_word_node();
+	if (!heredoc_word_node)
+		return (NULL);
 	heredoc_word_node->args[0] = ft_strdup((*token)->cmd);
 	if (!heredoc_word_node->args[0])
 	{
-		free_heredoc_nodes(heredoc_word_node);
 		free(heredoc_word_node->args);
-		free_ast(heredoc_word_node);
+		free(heredoc_word_node);
 		return (NULL);
 	}
-	heredoc_word_node->args[1] = NULL;
+	next_token = (*token)->next;
+	free((*token)->cmd);
+	free(*token);
+	*token = next_token;
 	return (heredoc_word_node);
 }
 
@@ -77,7 +89,6 @@ t_ast	*msh_get_heredoc_word(t_token **token)
 {
 	t_ast	*heredoc_node;
 	t_ast	*heredoc_word_node;
-	t_token	*next_token;
 
 	if (!token || !*token || (*token)->type != HEREDOC)
 		return (NULL);
@@ -87,16 +98,15 @@ t_ast	*msh_get_heredoc_word(t_token **token)
 	heredoc_word_node = create_heredoc_word_node(token);
 	if (!heredoc_word_node)
 	{
-		free_cmd_args(heredoc_word_node);
-		free_cmd_tokens(token);
-		free_ast(heredoc_node);
+		free_heredoc_nodes(heredoc_node);
 		return (NULL);
 	}
 	heredoc_node->right = heredoc_word_node;
-	next_token = (*token)->next;
-	free_cmd_tokens(token);
-	*token = next_token;
 	if (*token && (*token)->type == HEREDOC)
+	{
 		heredoc_node->left = msh_get_heredoc_word(token);
+		if (!heredoc_node->left)
+			free_heredoc_nodes(heredoc_node);
+	}
 	return (heredoc_node);
 }

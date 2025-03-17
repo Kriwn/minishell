@@ -64,6 +64,7 @@ char	*handle_single_quotes(char **str)
 		*str = end;
 	return (segment);
 }
+
 char	*handle_double_quotes(t_msh *shell, char **str)
 {
 	char	*segment;
@@ -83,6 +84,7 @@ char	*handle_double_quotes(t_msh *shell, char **str)
 		*str = end;
 	return (expanded);
 }
+
 char	*handle_plain_text(char **str)
 {
 	int		len;

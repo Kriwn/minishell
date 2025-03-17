@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 12:03:44 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 12:19:22 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:08:12 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ t_ast	*msh_get_pipe(t_token **tokens)
 	while (*tokens && (*tokens)->next)
 	{
 		next_token = (*tokens)->next;
-		if (next_token->type == PIPE && (!next_token->next || next_token->next->type == PIPE))
+		if (next_token->type == PIPE && (!next_token->next || \
+			next_token->next->type == PIPE))
 			return (NULL);
 		if (next_token->type == PIPE)
 			return (create_pipe_node(tokens, tmp, next_token));

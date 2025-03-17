@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:37:20 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/16 02:02:47 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:17:01 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	open_in_file(char *argv, t_p *list, int *status)
 {
 	if (list->fd_in != -1)
-	safe_fd(list, 0);
+		safe_fd(list, 0);
 	list->fd_in = open(argv, O_RDONLY);
 	if (list->fd_in == -1)
 	{

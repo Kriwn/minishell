@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 19:02:41 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:03:51 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ int			handle_special_redirection(const char *input);
  * SRCS/TOKEN *
  **************/
 bool		check_tokens(t_token *tokens);
-void		free_token(t_token *tokens);
+void		free_token(t_token **token);
 t_token		*msh_parsing_input(t_msh *msh);
 t_token		*token_input(char *input);
 void		msh_count_pipe(t_msh *msh);
