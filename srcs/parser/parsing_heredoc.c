@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 12:03:40 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/17 17:50:08 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:23:39 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,23 @@ t_ast	*create_heredoc_word_node(t_token **token)
 	return (heredoc_word_node);
 }
 
+t_ast	*process_heredoc_redirection(t_ast *heredoc_word_node, t_token **token)
+{
+	t_ast	*next_redirect;
+
+	if (*token && (*token)->type >= INDIRECT && (*token)->type <= APPEND)
+	{
+		next_redirect = msh_get_redirect(token);
+		if (!next_redirect)
+		{
+			free_heredoc_nodes(heredoc_word_node);
+			return (NULL);
+		}
+		heredoc_word_node->right = next_redirect;
+	}
+	return (heredoc_word_node);
+}
+
 t_ast	*msh_get_heredoc_word(t_token **token)
 {
 	t_ast	*heredoc_node;
@@ -101,16 +118,11 @@ t_ast	*msh_get_heredoc_word(t_token **token)
 		free_heredoc_nodes(heredoc_node);
 		return (NULL);
 	}
-	heredoc_node->right = heredoc_word_node;
-	if (*token && (*token)->type >= INDIRECT && (*token)->type <= APPEND)
+	heredoc_node->right = process_heredoc_redirection(heredoc_word_node, token);
+	if (!heredoc_node->right)
 	{
-		t_ast *next_redirect = msh_get_redirect(token);
-		if (!next_redirect)
-		{
-			free_heredoc_nodes(heredoc_node);
-			return (NULL);
-		}
-		heredoc_word_node->right = next_redirect;
+		free_heredoc_nodes(heredoc_node);
+		return (NULL);
 	}
 	return (heredoc_node);
 }
