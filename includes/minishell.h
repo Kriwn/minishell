@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 19:02:41 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:26:22 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,14 +109,15 @@ void		process_expansion(t_msh *shell);
  * SRCS/PARSER *
  ***************/
 /** parsing_utils */
-int		validate_tokens(t_token *tokens);
-int		count_cmd_arg(t_token *current);
-void	add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count);
-void	free_cmd_tokens(t_token **tokens);
-void	free_cmd_args(t_ast *cmd_node);
+int			validate_tokens(t_token *tokens);
+int			count_cmd_arg(t_token *current);
+void		add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count);
+void		free_cmd_tokens(t_token **tokens);
+void		free_cmd_args(t_ast *cmd_node);
 
 /** parsing_pipe */
-t_ast		*create_pipe_node(t_token **tokens, t_token *tmp, t_token *next_token);
+t_ast		*create_pipe_node(t_token **tokens, \
+		t_token *tmp, t_token *next_token);
 t_ast		*msh_get_pipe(t_token **tokens);
 t_ast		*create_env_var_node(t_token *current);
 
@@ -157,7 +158,7 @@ int			handle_special_redirection(const char *input);
  * SRCS/TOKEN *
  **************/
 bool		check_tokens(t_token *tokens);
-void		free_token(t_token *tokens);
+void		free_token(t_token **token);
 t_token		*msh_parsing_input(t_msh *msh);
 t_token		*token_input(char *input);
 void		msh_count_pipe(t_msh *msh);

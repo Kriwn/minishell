@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:26:50 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/17 15:28:39 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:24:17 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	export_no_args(t_p *list)
 
 int	check_export(t_p *list)
 {
-	char **temp;
+	char	**temp;
 
 	temp = myft_split(list->args[1], '=');
 	if (!temp[0] || !temp[1])

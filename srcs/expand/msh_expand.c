@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:36:37 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 15:02:29 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:07:31 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	process_expansion(t_msh *shell)
 	current = shell->token;
 	while (current)
 	{
-		if (ft_strchr(current->cmd, '$') || ft_strchr(current->cmd, '"')
+		if (ft_strchr(current->cmd, '$') || ft_strchr(current->cmd, '"') \
 			|| ft_strchr(current->cmd, '\''))
 		{
 			expanded_cmd = expand_string(shell, current->cmd, 1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:20:30 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/16 02:00:32 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:16:04 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,3 @@ void	prepare_cmd(t_ast *ast, t_p *list, int *status)
 	prepare_cmd(ast->left, list, status);
 	prepare_cmd(ast->right, list, status);
 }
-
