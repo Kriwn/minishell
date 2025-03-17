@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/17 20:38:13 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/18 00:54:05 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	free_token(t_token **token)
 	t_token	*current;
 	t_token	*next;
 
-	if (!token || !*token) 
-		return;
+	if (!token || !*token)
+		return ;
 	current = *token;
 	while (current)
 	{

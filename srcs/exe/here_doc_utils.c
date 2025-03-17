@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 22:08:42 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/17 20:20:38 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/18 00:58:01 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	do_here_doc_task(t_ast *ast, t_p *list, int *isBuildIn)
 {
-
 	if (!ast)
 		return ;
 	if (ast->type == HEREDOC)

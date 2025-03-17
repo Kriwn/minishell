@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/17 23:18:28 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/18 00:52:29 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	setup_signal(void)
 	ft_bzero(&act, sizeof(struct sigaction));
 }
 
-char	*ft_readline()
+char	*ft_readline(void)
 {
 	char	*input;
 	char	*promt;

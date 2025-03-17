@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   promt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 21:17:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/17 20:17:53 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/18 00:57:05 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,21 @@
 // 	free(getpath);
 // 	return (ans);
 // }
+
+void	free_heredoc_nodes(t_ast *node)
+{
+	if (!node)
+		return ;
+	free_heredoc_nodes(node->left);
+	free_heredoc_nodes(node->right);
+	if (node->args)
+	{
+		if (node->args[0])
+			free(node->args[0]);
+		free(node->args);
+	}
+	free(node);
+}
 
 void	ft_error(t_msh *data, char *word)
 {

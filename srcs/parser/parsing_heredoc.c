@@ -6,33 +6,19 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 12:03:40 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/17 23:47:35 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/18 00:56:55 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_heredoc_nodes(t_ast *node)
-{
-	if (!node)
-		return ;
-	free_heredoc_nodes(node->left);
-	free_heredoc_nodes(node->right);
-	if ((node->type == HEREDOC || node->type == HEREDOC_WORD) && node->args)
-	{
-		if (node->args[0])
-			free(node->args[0]); 
-		free(node->args);
-	}
-	if (node->type == HEREDOC)
-		free(node);
-}
-
 t_ast	*create_heredoc_node(t_token **token)
 {
 	t_ast	*heredoc_node;
-	t_token *next_token;
+	t_token	*next_token;
 
+	if (!token || !*token || (*token)->type != HEREDOC)
+		return (NULL);
 	heredoc_node = msh_init_ast(HEREDOC);
 	if (!heredoc_node)
 		return (NULL);
@@ -49,7 +35,7 @@ t_ast	*create_heredoc_node(t_token **token)
 	return (heredoc_node);
 }
 
-static t_ast	*init_heredoc_word_node(void)
+t_ast	*allocate_heredoc_word(void)
 {
 	t_ast	*heredoc_word_node;
 
@@ -74,7 +60,7 @@ t_ast	*create_heredoc_word_node(t_token **token)
 
 	if (!token || !*token)
 		return (NULL);
-	heredoc_word_node = init_heredoc_word_node();
+	heredoc_word_node = allocate_heredoc_word();
 	if (!heredoc_word_node)
 		return (NULL);
 	heredoc_word_node->args[0] = ft_strdup((*token)->cmd);
@@ -91,46 +77,43 @@ t_ast	*create_heredoc_word_node(t_token **token)
 	return (heredoc_word_node);
 }
 
-t_ast	*process_heredoc_redirection(t_ast *heredoc_word_node, t_token **token)
+t_ast	*msh_get_heredoc_node(t_token **token)
 {
-	t_ast	*next_redirect;
+	t_ast	*new_heredoc;
 
-	if (!heredoc_word_node)
+	new_heredoc = create_heredoc_node(token);
+	if (!new_heredoc)
 		return (NULL);
-	if (*token && (*token)->type >= INDIRECT && (*token)->type <= APPEND)
+	new_heredoc->right = create_heredoc_word_node(token);
+	if (!new_heredoc->right)
 	{
-		next_redirect = msh_get_redirect(token);
-		if (!next_redirect)
-		{
-			free_heredoc_nodes(heredoc_word_node);
-			return (NULL);
-		}
-		heredoc_word_node->right = next_redirect;
+		free_heredoc_nodes(new_heredoc);
+		return (NULL);
 	}
-	return (heredoc_word_node);
+	return (new_heredoc);
 }
 
 t_ast	*msh_get_heredoc_word(t_token **token)
 {
-	t_ast	*heredoc_node;
-	t_ast	*heredoc_word_node;
+	t_ast	*heredoc_root;
+	t_ast	*last_heredoc;
+	t_ast	*new_heredoc;
 
-	if (!token || !*token || (*token)->type != HEREDOC)
-		return (NULL);
-	heredoc_node = create_heredoc_node(token);
-	if (!heredoc_node)
-		return (NULL);
-	heredoc_word_node = create_heredoc_word_node(token);
-	if (!heredoc_word_node)
+	heredoc_root = NULL;
+	last_heredoc = NULL;
+	while (token && *token && (*token)->type == HEREDOC)
 	{
-		free_heredoc_nodes(heredoc_node);
-		return (NULL);
+		new_heredoc = msh_get_heredoc_node(token);
+		if (!new_heredoc)
+		{
+			free_heredoc_nodes(heredoc_root);
+			return (NULL);
+		}
+		if (!heredoc_root)
+			heredoc_root = new_heredoc;
+		else
+			last_heredoc->left = new_heredoc;
+		last_heredoc = new_heredoc;
 	}
-	heredoc_node->right = process_heredoc_redirection(heredoc_word_node, token);
-	if (!heredoc_node->right)
-	{
-		free_heredoc_nodes(heredoc_node);
-		return (NULL);
-	}
-	return (heredoc_node);
+	return (heredoc_root);
 }

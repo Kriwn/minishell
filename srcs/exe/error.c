@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:39:56 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/13 17:06:36 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/18 00:57:43 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	ft_puterrorcmd(char *s, int errnum)
 	{
 		ft_puterrstr(s);
 		write(2, ": ", 2);
-		if (access(s,F_OK) == 0 && find_slash(s))
+		if (access(s, F_OK) == 0 && find_slash(s))
 			ft_puterrstr("Is a directory\n");
-		else if (access(s,R_OK) == 0)
+		else if (access(s, R_OK) == 0)
 		{
 			ft_puterrstr("command not found\n");
 			return (127);
