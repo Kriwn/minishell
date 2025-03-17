@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 17:38:01 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/17 19:36:43 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:36:40 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct p_pipe
 	int				iter;
 	int				*code;
 	char			*here_doc_cut;
+	t_ast			*ast;
 }	t_p;
 
 #endif
