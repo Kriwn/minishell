@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:26:50 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/18 00:53:31 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/19 19:54:45 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	export_no_args(t_p *list)
 	return (EXIT_SUCCESS);
 }
 
-int	check_export(t_p *list)
+char	**check_export(t_p *list)
 {
 	char	**temp;
 
@@ -65,22 +65,15 @@ int	check_export(t_p *list)
 	if (!temp[0] || !temp[1])
 	{
 		free2d(temp);
-		return (1);
+		return (NULL);
 	}
-	free2d(temp);
-	return (0);
+	return (temp);
 }
 
-int	msh_export(t_p *list)
+int	add_node(t_tuple **data, t_p *list)
 {
 	t_tuple	*new_node;
-	t_tuple	**data;
 
-	if (list->args[1] == NULL)
-		return (export_no_args(list));
-	data = &list->msh->tuple;
-	if (check_export(list))
-		return (EXIT_FAILURE);
 	new_node = malloc(sizeof(t_tuple));
 	if (new_node == NULL || make_tuple(new_node, list->args[1], '=') == NULL)
 		return (EXIT_FAILURE);
@@ -96,4 +89,25 @@ int	msh_export(t_p *list)
 		(*data)->tail = new_node;
 	}
 	return (EXIT_SUCCESS);
+}
+
+int	msh_export(t_p *list)
+{
+	t_tuple	**data;
+	char	**temp;
+
+	if (list->args[1] == NULL)
+		return (export_no_args(list));
+	data = &list->msh->tuple;
+	temp = check_export(list);
+	if (!temp)
+		return (EXIT_FAILURE);
+	if (get_value_from_key(*data, temp[0]))
+	{
+		updata_value_from_key(*data, temp[0], copy(temp[1]));
+		free2d(temp);
+		return (EXIT_SUCCESS);
+	}
+	free2d(temp);
+	return (add_node(data, list));
 }
