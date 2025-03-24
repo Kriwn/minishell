@@ -12,8 +12,8 @@ PATH_SRCS = srcs
 OBJ_DIR = objs
 
 # CC = cc
-CFLAGS = -Wall -Wextra -Werror -I$(PATH_HEADER) -I$(PATH_LIBFT) -g
-# CFLAGS = -g -I$(PATH_LIBFT) -I$(PATH_HEADER)
+# CFLAGS = -Wall -Wextra -Werror -I$(PATH_HEADER) -I$(PATH_LIBFT) -g
+CFLAGS = -g -I$(PATH_LIBFT) -I$(PATH_HEADER)
 LDFLAGS = -L$(PATH_LIBFT) -lft -lreadline
 
 RM = rm -rf

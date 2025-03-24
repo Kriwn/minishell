@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/17 20:18:06 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:56:36 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ void		test_delete_heredoc(t_token **tokens);
 void		display_ast_table(t_ast *ast, int level);
 void		display_tokens(t_token *tokens);
 void		display_ast(t_ast *ast, int idx);
+void		print_token_list(t_token *token);
 
 /************
  * SRCS/EXE *
