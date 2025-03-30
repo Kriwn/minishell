@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/31 01:22:58 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/31 01:43:23 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	msh_loop(t_msh *msh)
 			msh->ast = msh_get_tokens(&msh->token);
 			main_exe(msh);
 		}
-		display_ast_table(msh->ast, 0);
+		// display_ast_table(msh->ast, 0);
 	}
 }
 

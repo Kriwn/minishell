@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 01:18:08 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/31 01:22:26 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/31 02:44:35 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ int	allocate_cmd_args(t_ast *command_node, int arg_count)
 		return (0);
 	command_node->args = malloc(sizeof(char *) * (arg_count + 1));
 	if (!command_node->args)
-	{
-		free(command_node);
 		return (0);
-	}
 	return (1);
 }
 
@@ -39,9 +36,7 @@ int copy_command_args(t_ast *command_node, t_token **tokens)
 			command_node->args[i] = ft_strdup(current->cmd);
 			if (!command_node->args[i])
 			{
-				while (i > 0)
-					free(command_node->args[--i]);
-				free(command_node->args);
+				free_cmd_args(command_node);
 				return (0);
 			}
 			i++;
@@ -88,4 +83,3 @@ void	fill_command_args(t_ast *command_node, t_token *current)
 	}
 	command_node->args[i] = NULL;
 }
-
