@@ -62,14 +62,15 @@ EXPAND_FILE =	msh_expand.c		\
 EXPAND_SRC = $(addprefix $(EXPAND_DIR), $(EXPAND_FILE))
 
 PARSER_DIR = srcs/parser/
-PARSER_FILE =	msh_parsing.c		\
-				msh_syntax.c		\
-				syntax_utils_01.c	\
-				parsing_heredoc.c	\
-				parsing_pipe.c		\
-				parsing_redir.c		\
-				parsing_utils.c		\
-				msh_parsing_utils.c
+PARSER_FILE =	msh_parsing.c			\
+				msh_syntax.c			\
+				syntax_utils_01.c		\
+				parsing_heredoc.c		\
+				parsing_pipe.c			\
+				parsing_redir.c			\
+				parsing_utils.c			\
+				msh_parsing_support.c	\
+				msh_parsing_heredoc.c
 PARSER_SRC = $(addprefix $(PARSER_DIR), $(PARSER_FILE))
 
 TOKEN_DIR = srcs/token/

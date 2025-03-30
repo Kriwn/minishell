@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/30 23:13:59 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/31 01:21:31 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,17 @@ void		add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count);
 void		free_cmd_tokens(t_token **tokens);
 void		free_cmd_args(t_ast *cmd_node);
 
-/** parsing_utils_02 */
+/** parsing_heredoc */
 t_ast		*create_heredoc_node_command(t_token **tokens);
 t_ast		*handle_heredoc(t_token **tokens, t_ast *cmd_node);
 // t_ast		*handle_heredoc(t_token **tokens);
 int			init_cmd_node_args(t_ast *cmd_node, t_token **tokens);
 void		cleanup_cmd_node(t_ast *cmd_node);
+
+/** msh_parsing_suport */
+int			init_cmd_args(t_ast *cmd_node, t_token **tokens);
+int			copy_cmd_args(t_ast *cmd_node, t_token **tokens);
+void		process_heredoc_if_needed(t_token **tokens, t_ast *cmd_node);
 
 /** parsing_pipe */
 t_ast		*create_pipe_node(t_token **tokens, \

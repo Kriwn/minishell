@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   msh_parsing_utils.c                                :+:      :+:    :+:   */
+/*   msh_parsing_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:45:13 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/30 23:13:31 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/31 01:22:40 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_ast	*handle_heredoc(t_token **tokens, t_ast *cmd_node)
 {
 	t_ast	*heredoc_node;
 	t_ast	*heredoc_word_node;
+	t_ast	*current;
 
 	if (!tokens || !*tokens || !cmd_node)
 		return (NULL);
@@ -60,8 +61,20 @@ t_ast	*handle_heredoc(t_token **tokens, t_ast *cmd_node)
 		}
 		heredoc_node->right = heredoc_word_node;
 	}
-	cmd_node->right = heredoc_node;
+	current = cmd_node;
+	while (current->right)
+		current = current->right;
+	current->right = heredoc_node;
 	return (cmd_node);
+}
+
+void	process_heredoc_if_needed(t_token **tokens, t_ast *cmd_node)
+{
+	if (*tokens && (*tokens)->type == HEREDOC)
+	{
+		if (!handle_heredoc(tokens, cmd_node))
+			cleanup_cmd_node(cmd_node);
+	}
 }
 
 int	init_cmd_node_args(t_ast *cmd_node, t_token **tokens)
@@ -78,14 +91,4 @@ int	init_cmd_node_args(t_ast *cmd_node, t_token **tokens)
 	cmd_node->args[1] = NULL;
 	*tokens = (*tokens)->next;
 	return (1);
-}
-
-void	cleanup_cmd_node(t_ast *cmd_node)
-{
-	if (cmd_node->args)
-	{
-		free(cmd_node->args[0]);
-		free(cmd_node->args);
-	}
-	free(cmd_node);
 }
