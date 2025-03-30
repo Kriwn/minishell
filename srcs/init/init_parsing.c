@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 18:59:11 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/13 20:55:41 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/30 21:56:07 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,24 @@ t_ast	*file_ast_node(t_token *token)
 	free(token->cmd);
 	free(token);
 	return (node);
+}
+
+t_token	*msh_create_token(t_type type, char *value, size_t len)
+{
+	t_token	*token;
+
+	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	token->type = type;
+	token->cmd = ft_strndup(value, len);
+	if (!token->cmd)
+	{
+		free(token);
+		return (NULL);
+	}
+	token->next = NULL;
+	token->prev = NULL;
+	printf("Created token: Type=%d, Value=%s\n", type, token->cmd);
+	return (token);
 }

@@ -68,7 +68,8 @@ PARSER_FILE =	msh_parsing.c		\
 				parsing_heredoc.c	\
 				parsing_pipe.c		\
 				parsing_redir.c		\
-				parsing_utils.c
+				parsing_utils.c		\
+				msh_parsing_utils.c
 PARSER_SRC = $(addprefix $(PARSER_DIR), $(PARSER_FILE))
 
 TOKEN_DIR = srcs/token/

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 20:56:54 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/17 20:07:54 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/30 21:55:15 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,29 @@ void	parse_cmd(char **input, t_token **tokens)
 	char	*start;
 	int		in_quote;
 	char	quote_char;
+	t_token	*new_token;
 
 	start = *input;
 	in_quote = 0;
 	quote_char = '\0';
+	if (**input == '<' && *(*input + 1) == '<')
+	{
+		*input += 2;
+		while (**input && ft_strchr(" \t", **input))
+			(*input)++;
+		start = *input;
+		while (**input && !ft_strchr(" \t\n><|", **input))
+			(*input)++;
+		new_token = msh_create_token(HEREDOC, start, *input - start);
+		if (new_token)
+			add_token_to_list(tokens, new_token);
+		return;
+	}
 	while (**input)
 	{
 		update_quote_status(**input, &in_quote, &quote_char);
 		if (!in_quote && ft_strchr(" \t\n><|", **input))
-			break ;
+			break;
 		(*input)++;
 	}
 	add_word_token_if_valid(&start, input, tokens);

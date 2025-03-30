@@ -6,17 +6,12 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 12:04:29 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/14 12:10:07 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/30 22:47:40 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/** Note:
- * 🚨 Rule 1: No consecutive redirections or pipes
- * 🚨 Rule 2: No standalone redirections
- * 🚨 Rule 3: No leading or trailing pipes
- */
 int	validate_tokens(t_token *tokens)
 {
 	t_token	*prev;

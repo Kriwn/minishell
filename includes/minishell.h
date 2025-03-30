@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/30 16:40:02 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/30 23:13:59 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void		init_minishell(t_msh *data, char **env);
 /** init_parsing */
 t_ast		*file_ast_node(t_token *token);
 t_ast		*msh_init_ast(t_type type);
+t_token		*msh_create_token(t_type type, char *value, size_t len);
 
 /****************
  * SRCS/BUILTIN *
@@ -109,12 +110,19 @@ void		process_expansion(t_msh *shell);
 /***************
  * SRCS/PARSER *
  ***************/
-/** parsing_utils */
+/** parsing_utils_01 */
 int			validate_tokens(t_token *tokens);
 int			count_cmd_arg(t_token *current);
 void		add_cmd_arg(t_ast *cmd_node, t_token **tokens, int arg_count);
 void		free_cmd_tokens(t_token **tokens);
 void		free_cmd_args(t_ast *cmd_node);
+
+/** parsing_utils_02 */
+t_ast		*create_heredoc_node_command(t_token **tokens);
+t_ast		*handle_heredoc(t_token **tokens, t_ast *cmd_node);
+// t_ast		*handle_heredoc(t_token **tokens);
+int			init_cmd_node_args(t_ast *cmd_node, t_token **tokens);
+void		cleanup_cmd_node(t_ast *cmd_node);
 
 /** parsing_pipe */
 t_ast		*create_pipe_node(t_token **tokens, \

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/30 04:57:46 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/30 23:13:40 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ int	copy_command_args(t_ast *command_node, t_token **tokens)
 	int		i;
 	t_token	*current;
 
+	if (!command_node || !tokens || !*tokens)
+		return (0);
 	i = 0;
 	current = *tokens;
-	if (!command_node || !command_node->args)
+	if (!command_node->args)
 		return (0);
 	while (current && current->type == CMD)
 	{
@@ -70,29 +72,27 @@ void	fill_command_args(t_ast *command_node, t_token *current)
 
 t_ast	*msh_get_cmd(t_token **tokens)
 {
-	t_ast	*command_node;
-	int		arg_count;
+	t_ast	*cmd_node;
 
 	if (!tokens || !*tokens)
 		return (NULL);
-	command_node = msh_init_ast(CMD);
-	if (!command_node)
+	cmd_node = msh_init_ast(CMD);
+	if (!cmd_node)
 		return (NULL);
-	arg_count = count_cmd_arg(*tokens);
-	if (!allocate_cmd_args(command_node, arg_count))
+	if (!init_cmd_node_args(cmd_node, tokens))
 	{
-		free(command_node);
+		free(cmd_node);
 		return (NULL);
 	}
-	if (!copy_command_args(command_node, tokens))
+	if (*tokens && (*tokens)->type == HEREDOC)
 	{
-		free_cmd_args(command_node);
-		free_cmd_tokens(tokens);
-		free(command_node);
-		return (NULL);
+		if (!handle_heredoc(tokens, cmd_node))
+		{
+			cleanup_cmd_node(cmd_node);
+			return (NULL);
+		}
 	}
-	free_cmd_tokens(tokens);
-	return (command_node);
+	return (cmd_node);
 }
 
 t_ast	*msh_get_tokens(t_token **tokens)
