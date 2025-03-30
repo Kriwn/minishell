@@ -48,9 +48,10 @@ char	*get_normal_variable_value(t_msh *shell, char **str)
 	return (expanded_value);
 }
 
-char	*handle_single_quotes(char **str)
+char	*handle_single_quotes(t_msh *shell, char **str, int expand_vars)
 {
 	char	*segment;
+	char	*full_segment;
 	char	*end;
 
 	(*str)++;
@@ -58,11 +59,20 @@ char	*handle_single_quotes(char **str)
 	if (!end)
 		end = *str + ft_strlen(*str);
 	segment = ft_substr(*str, 0, end - *str);
+	if (expand_vars == 2)
+	{
+		char *temp = segment;
+		segment = expand_string(shell, segment, 1);
+		free(temp);
+	}
+	full_segment = ft_strjoin_for_other("'", segment);
+	full_segment = ft_strjoin_for_other(full_segment, "'");
+	free(segment);
 	if (*end == '\'')
 		*str = end + 1;
 	else
 		*str = end;
-	return (segment);
+	return (full_segment);
 }
 
 char	*handle_double_quotes(t_msh *shell, char **str)
@@ -76,7 +86,7 @@ char	*handle_double_quotes(t_msh *shell, char **str)
 	while (*end && *end != '"')
 		end++;
 	segment = ft_substr(*str, 0, end - *str);
-	expanded = expand_string(shell, segment, 1);
+	expanded = expand_string(shell, segment, 2);
 	free(segment);
 	if (*end == '"')
 		*str = end + 1;

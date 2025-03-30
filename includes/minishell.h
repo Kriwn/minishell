@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/24 16:56:36 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/30 16:40:02 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ int			msh_unset(t_p *list);
  * SRCS/EXPAND *
  ***************/
 /** expand_utils_01 */
-char		*handle_single_quotes(char **str);
+// char		*handle_single_quotes(char **str);
+char		*handle_single_quotes(t_msh *shell, char **str, int expand_vars);
 char		*handle_double_quotes(t_msh *shell, char **str);
 char		*handle_plain_text(char **str);
 char		*get_special_variable_value(t_msh *shell, char **str);

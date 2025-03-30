@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 08:36:37 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/17 17:07:31 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/03/30 16:40:30 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*expand_variable_value(t_msh *shell, char **str)
 char	*process_segment(t_msh *shell, char **str, int expand_vars)
 {
 	if (**str == '\'')
-		return (handle_single_quotes(str));
+		return (handle_single_quotes(shell, str, expand_vars));
 	else if (**str == '"')
 		return (handle_double_quotes(shell, str));
 	else if (**str == '$' && expand_vars)
