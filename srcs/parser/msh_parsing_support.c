@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 01:18:08 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/31 02:44:35 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/04/01 23:49:19 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,21 @@ int copy_command_args(t_ast *command_node, t_token **tokens)
 			command_node->args[i] = ft_strdup(current->cmd);
 			if (!command_node->args[i])
 			{
-				free_cmd_args(command_node);
+				while (i-- > 0)
+					free(command_node->args[i]);
+				free(command_node->args);
+				command_node->args = NULL;
 				return (0);
 			}
+			free(current->cmd);
+			current->cmd = NULL;
 			i++;
 		}
 		current = current->next;
 	}
 	command_node->args[i] = NULL;
-	*tokens = current;
+	free(*tokens);
+	*tokens = NULL;
 	return (1);
 }
 

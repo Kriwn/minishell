@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/03/31 01:43:23 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/04/02 00:01:14 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	msh_loop(t_msh *msh)
 		msh->input = ft_readline();
 		if (!msh->input)
 		{
-			printf("%sEXIT!%s💥\n", RED, RESET);
+			// printf("%sEXIT!%s💥\n", RED, RESET);
+			printf("exit\n");
 			cleanup_and_exit(msh, 0);
 		}
 		msh->token = msh_parsing_input(msh);
