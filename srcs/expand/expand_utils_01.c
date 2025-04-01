@@ -103,7 +103,7 @@ char	*handle_plain_text(char **str)
 	char	*segment;
 
 	len = 0;
-	while ((*str)[len] && (*str)[len] != '$' && (*str)[len] != '\''
+	while ((*str)[len] && (*str)[len] != '$' && (*str)[len] != '\'' \
 		&& (*str)[len] != '"')
 		len++;
 	segment = ft_substr(*str, 0, len);

@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 18:11:22 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/12 21:01:12 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/04/02 03:19:11 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ int	msh_echo(t_p *list)
 	n_flag = 0;
 	i = 1;
 	handle_fd(list);
+	if (!list->args[i]) // fix: NULL echo
+	{
+		handle_fd_out(saved_stdout, list);
+		return (0);
+	}
 	if (!ft_strncmp(list->args[i], "-n", 3))
 	{
 		n_flag = 1;

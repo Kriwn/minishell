@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:42:26 by jikarunw          #+#    #+#             */
-/*   Updated: 2024/12/27 22:57:05 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/04/02 03:19:54 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	msh_unset(t_p *list)
 {
+	if (!list->args[1])
+		return (EXIT_FAILURE);
 	remove_tuple(&list->msh->tuple, list->args[1]);
 	return (EXIT_SUCCESS);
 }
