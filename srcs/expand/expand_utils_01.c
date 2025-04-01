@@ -73,7 +73,7 @@ char	*handle_single_quotes(t_msh *shell, char **str, int expand_vars)
 	if (*end == '\'')
 		*str = end + 1;
 	else
-		*str = end;g
+		*str = end;
 	return (full_segment);
 }
 
