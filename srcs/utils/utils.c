@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 14:31:29 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/04/02 00:04:34 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/04/02 00:56:45 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	free_token(t_token **token)
 	current = *token;
 	while (current)
 	{
-		// printf("find segmentation fault\n");
 		next = current->next;
 		if (current->cmd)
 		{
@@ -88,8 +87,6 @@ void	cleanup_and_exit(t_msh *msh, int exit_code)
 		exit(exit_code);
 	if (msh->ast)
 		free_ast(msh->ast);
-	if (msh->token)
-		free_token(&msh->token);
 	clear_tuple(&msh->tuple);
 	if (msh->list)
 		free(msh->list);

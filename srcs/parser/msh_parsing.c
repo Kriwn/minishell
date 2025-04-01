@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/04/01 23:42:32 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/04/02 00:57:29 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ t_ast	*msh_get_cmd(t_token **tokens)
 		return (NULL);
 	}
 	process_heredoc_if_needed(tokens, cmd_node);
-	// if (tokens)
-		// free_cmd_tokens(tokens);
+	// free(*tokens);
 	return (cmd_node);
 }
 
