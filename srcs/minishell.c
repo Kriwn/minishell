@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
+/*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 08:25:02 by krwongwa          #+#    #+#             */
-/*   Updated: 2025/04/02 14:36:16 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/04/02 20:34:45 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	msh_loop(t_msh *msh)
 			msh->ast = msh_get_tokens(&msh->token);
 			main_exe(msh);
 		}
-		// display_ast_table(msh->ast, 0);
+		display_ast_table(msh->ast, 0);
 	}
 }
 
