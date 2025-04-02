@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 02:01:05 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/04/02 20:49:47 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/04/02 22:47:14 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,13 @@ t_ast	*msh_get_cmd(t_token **tokens)
 	cmd_node = msh_init_ast(CMD);
 	if (!cmd_node)
 		return (NULL);
-	if (!init_cmd_node_args(cmd_node, tokens))
+	if (!init_cmd_args(cmd_node, tokens) || !copy_cmd_args(cmd_node, tokens))
 	{
-		free(cmd_node);
+		cleanup_cmd_node(cmd_node);
 		return (NULL);
 	}
-	if (*tokens && (*tokens)->type == HEREDOC)
-	{
-		if (!handle_heredoc(tokens, cmd_node))
-		{
-			cleanup_cmd_node(cmd_node);
-			return (NULL);
-		}
-	}
+	process_heredoc_if_needed(tokens, cmd_node);
+	// free(*tokens);
 	return (cmd_node);
 }
 

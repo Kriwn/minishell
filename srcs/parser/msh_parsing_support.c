@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 01:18:08 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/04/02 20:38:52 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/04/02 22:47:47 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,4 @@ int	copy_cmd_args(t_ast *cmd_node, t_token **tokens)
 		return (0);
 	}
 	return (1);
-}
-
-void	fill_command_args(t_ast *command_node, t_token *current)
-{
-	int	i;
-
-	i = 0;
-	while (current && current->type != PIPE)
-	{
-		if (current->type == ENV_VAR)
-			command_node->left = create_env_var_node(current);
-		else
-			command_node->args[i++] = ft_strdup(current->cmd);
-		free(current->cmd);
-		current = current->next;
-	}
-	command_node->args[i] = NULL;
 }

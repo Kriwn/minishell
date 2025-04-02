@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 12:29:56 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/04/01 23:12:52 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/04/02 22:34:28 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ t_ast		*msh_get_redirect(t_token **tokens);
 /** msh_parsing */
 int			allocate_cmd_args(t_ast *command_node, int arg_count);
 int			copy_command_args(t_ast *command_node, t_token **tokens);
-void		fill_command_args(t_ast *command_node, t_token *current);
+void		fill_command_args(t_ast *command_node, t_token **tokens);
 t_ast		*msh_get_cmd(t_token **tokens);
 t_ast		*msh_get_tokens(t_token **tokens);
 

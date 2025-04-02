@@ -6,7 +6,7 @@
 /*   By: jikarunw <jikarunw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 22:45:13 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/04/02 20:54:04 by jikarunw         ###   ########.fr       */
+/*   Updated: 2025/04/02 22:47:28 by jikarunw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,15 @@ t_ast	*handle_heredoc(t_token **tokens, t_ast *cmd_node)
 		current = current->right;
 	current->right = heredoc_node;
 	return (cmd_node);
+}
+
+void	process_heredoc_if_needed(t_token **tokens, t_ast *cmd_node)
+{
+	if (*tokens && (*tokens)->type == HEREDOC)
+	{
+		if (!handle_heredoc(tokens, cmd_node))
+			cleanup_cmd_node(cmd_node);
+	}
 }
 
 int	init_cmd_node_args(t_ast *cmd_node, t_token **tokens)
