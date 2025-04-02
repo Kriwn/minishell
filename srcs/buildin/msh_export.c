@@ -6,7 +6,7 @@
 /*   By: krwongwa <krwongwa@student.42bangkok.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:26:50 by jikarunw          #+#    #+#             */
-/*   Updated: 2025/03/19 19:54:45 by krwongwa         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:15:51 by krwongwa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	**check_export(t_p *list)
 	char	**temp;
 
 	temp = myft_split(list->args[1], '=');
-	if (!temp[0] || !temp[1])
+	if (!temp[0])
 	{
 		free2d(temp);
 		return (NULL);
